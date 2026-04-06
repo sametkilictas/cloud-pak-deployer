@@ -1,0 +1,58 @@
+/**
+ * Header Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.header__cluster-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  height: 100%;
+  border-left: 1px solid var(--cds-border-subtle-01);
+  border-right: 1px solid var(--cds-border-subtle-01);
+}
+
+.header__cluster-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.header__cluster-version {
+  font-size: 0.75rem;
+  color: var(--cds-text-secondary);
+  padding: 0.125rem 0.5rem;
+  background-color: var(--cds-layer-accent-01);
+  border-radius: 12px;
+}
+
+.header__user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  height: 100%;
+  border-right: 1px solid var(--cds-border-subtle-01);
+}
+
+.header__username {
+  font-size: 0.875rem;
+  color: var(--cds-text-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1056px) {
+  .header__cluster-info,
+  .header__user-info {
+    display: none;
+  }
+}
+
+@media (max-width: 672px) {
+  .header__cluster-version {
+    display: none;
+  }
+}
+
+/* Made with Bob */

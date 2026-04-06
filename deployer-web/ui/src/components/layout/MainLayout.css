@@ -1,0 +1,51 @@
+/**
+ * Main Layout Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--cds-background);
+}
+
+.main-layout__container {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.main-layout__content {
+  flex: 1;
+  margin-left: 256px;
+  padding: 2rem;
+  transition: margin-left 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+  min-height: calc(100vh - 48px);
+}
+
+.main-layout__breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+.main-layout__page {
+  max-width: 1584px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1056px) {
+  .main-layout__content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 672px) {
+  .main-layout__content {
+    padding: 1rem;
+  }
+}
+
+/* Made with Bob */

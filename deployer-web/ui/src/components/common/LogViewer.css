@@ -1,0 +1,194 @@
+/**
+ * Log Viewer Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.log-viewer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.log-viewer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+  gap: 1rem;
+}
+
+.log-viewer__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.log-viewer__streaming-tag {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.log-viewer__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.log-viewer__level-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.log-viewer__level-tag--disabled {
+  opacity: 0.4;
+}
+
+.log-viewer__content {
+  overflow-y: auto;
+  background-color: var(--cds-layer-02);
+  position: relative;
+}
+
+.log-viewer__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--cds-text-secondary);
+  font-size: 0.875rem;
+}
+
+.log-viewer__logs {
+  font-family: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.log-viewer__entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+  transition: background-color 0.1s ease;
+}
+
+.log-viewer__entry:hover {
+  background-color: var(--cds-layer-hover-01);
+}
+
+.log-viewer__entry--error {
+  background-color: rgba(218, 30, 40, 0.05);
+}
+
+.log-viewer__entry--warning {
+  background-color: rgba(241, 194, 27, 0.05);
+}
+
+.log-viewer__entry--success {
+  background-color: rgba(36, 161, 72, 0.05);
+}
+
+.log-viewer__timestamp {
+  color: var(--cds-text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.log-viewer__level {
+  flex-shrink: 0;
+}
+
+.log-viewer__source {
+  color: var(--cds-text-secondary);
+  flex-shrink: 0;
+}
+
+.log-viewer__message {
+  color: var(--cds-text-primary);
+  word-break: break-word;
+  flex: 1;
+}
+
+.log-viewer__scroll-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.log-viewer__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--cds-border-subtle-01);
+  background-color: var(--cds-layer-01);
+}
+
+.log-viewer__count {
+  font-size: 0.75rem;
+  color: var(--cds-text-secondary);
+}
+
+/* Scrollbar styling */
+.log-viewer__content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.log-viewer__content::-webkit-scrollbar-track {
+  background: var(--cds-layer-02);
+}
+
+.log-viewer__content::-webkit-scrollbar-thumb {
+  background: var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.log-viewer__content::-webkit-scrollbar-thumb:hover {
+  background: var(--cds-border-strong-01);
+}
+
+/* Responsive adjustments */
+@media (max-width: 672px) {
+  .log-viewer__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .log-viewer__controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .log-viewer__entry {
+    flex-wrap: wrap;
+  }
+
+  .log-viewer__timestamp,
+  .log-viewer__level,
+  .log-viewer__source {
+    font-size: 0.625rem;
+  }
+}
+
+/* Made with Bob */

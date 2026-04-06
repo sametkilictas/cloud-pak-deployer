@@ -1,0 +1,111 @@
+/**
+ * Component Card Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.component-card {
+  position: relative;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.component-card:hover {
+  border-color: var(--cds-border-interactive);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.component-card.selected {
+  border-color: var(--cds-border-interactive);
+  background-color: var(--cds-layer-selected-01);
+}
+
+.component-card.auto-selected {
+  border-color: var(--cds-support-info);
+  background-color: var(--cds-layer-accent-01);
+}
+
+.component-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.component-card__title-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.component-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.component-card__check-icon {
+  color: var(--cds-support-success);
+  flex-shrink: 0;
+}
+
+.component-card__tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.component-card__description {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+.component-card__restrictions {
+  margin-bottom: 1rem;
+}
+
+.component-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cds-border-subtle-01);
+}
+
+.component-card__version {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--cds-border-subtle-01);
+  font-size: 0.75rem;
+  color: var(--cds-text-secondary);
+}
+
+.component-card__version-label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.component-card__version-value {
+  color: var(--cds-text-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 672px) {
+  .component-card__header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .component-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+/* Made with Bob */

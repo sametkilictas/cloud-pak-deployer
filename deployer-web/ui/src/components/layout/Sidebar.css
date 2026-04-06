@@ -1,0 +1,40 @@
+/**
+ * Sidebar Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.sidebar {
+  height: calc(100vh - 48px);
+  position: fixed;
+  top: 48px;
+  left: 0;
+  z-index: 8000;
+}
+
+/* Ensure proper spacing for content when sidebar is open */
+.sidebar + .main-content {
+  margin-left: 256px;
+  transition: margin-left 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.sidebar:not([aria-expanded="true"]) + .main-content {
+  margin-left: 48px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1056px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+  }
+
+  .sidebar[aria-expanded="true"] {
+    transform: translateX(0);
+  }
+
+  .sidebar + .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Made with Bob */

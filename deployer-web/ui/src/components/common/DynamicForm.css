@@ -1,0 +1,58 @@
+/**
+ * Dynamic Form Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.dynamic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dynamic-form__title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.dynamic-form__description {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+.dynamic-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dynamic-form__nested {
+  padding-left: 1rem;
+  border-left: 2px solid var(--cds-border-subtle-01);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dynamic-form__actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cds-border-subtle-01);
+}
+
+/* Responsive adjustments */
+@media (max-width: 672px) {
+  .dynamic-form__actions {
+    flex-direction: column;
+  }
+
+  .dynamic-form__actions button {
+    width: 100%;
+  }
+}
+
+/* Made with Bob */
