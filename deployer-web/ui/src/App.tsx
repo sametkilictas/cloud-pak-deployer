@@ -5,7 +5,7 @@
  * Handles authentication flow and route protection.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Theme } from '@carbon/react';
 import { useAuthStore } from './stores/authStore';
