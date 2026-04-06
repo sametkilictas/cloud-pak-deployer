@@ -1,0 +1,128 @@
+/**
+ * Progress Indicator Styles
+ * IBM Carbon Design System compliant styling
+ */
+
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.progress-indicator__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-indicator__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.progress-indicator__stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progress-indicator__percentage {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.progress-indicator__time {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+}
+
+.progress-indicator__bar {
+  height: 8px;
+  background-color: var(--cds-layer-02);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-indicator__bar-fill {
+  height: 100%;
+  background-color: var(--cds-interactive-01);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progress-indicator__stages {
+  margin: 1rem 0;
+}
+
+.progress-indicator__current-stage {
+  padding: 1rem;
+  background-color: var(--cds-layer-02);
+  border-radius: 4px;
+  border-left: 4px solid var(--cds-interactive-01);
+}
+
+.progress-indicator__current-stage-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.progress-indicator__current-stage-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.progress-indicator__current-stage-description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+.progress-indicator__icon--complete {
+  color: var(--cds-support-success);
+}
+
+.progress-indicator__icon--error {
+  color: var(--cds-support-error);
+}
+
+.progress-indicator__icon--in-progress {
+  color: var(--cds-interactive-01);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 672px) {
+  .progress-indicator__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .progress-indicator__stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Made with Bob */
