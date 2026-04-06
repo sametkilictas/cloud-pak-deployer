@@ -1,0 +1,2318 @@
+document:
+  title: IBM Software Hub 5.3.x software requirements
+  source:
+    url: https://www.ibm.com/docs/en/software-hub/5.3.x?topic=requirements-software
+  normalization_policy:
+    goal: cleaned_consistent_operational_yaml
+    naming_policy: Conservative standardization. Service names are normalized for consistency, but potentially distinct IBM services are not merged unless the source itself is explicit.
+    dependency_shape: typed_objects_option_b
+    schema_validated: true
+platform:
+  required_software:
+  - name: Red Hat OpenShift Container Platform
+    supported_versions:
+    - version: 4.14.0 or later fixes
+      documentation_urls:
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      cluster_sizing_architectures:
+      - x86_64
+      - ppc64le
+      - s390x
+    - version: 4.16.4 or later fixes
+      documentation_urls:
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      cluster_sizing_architectures:
+      - x86_64
+      - ppc64le
+      - s390x
+    - version: 4.17.0 or later fixes
+      documentation_urls:
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      cluster_sizing_architectures:
+      - x86_64
+      - ppc64le
+      - s390x
+    - version: 4.18.6 or later fixes
+      documentation_urls:
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      cluster_sizing_architectures:
+      - x86_64
+      - ppc64le
+      - s390x
+    - version: 4.19.0 or later fixes
+      documentation_urls:
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      cluster_sizing_architectures:
+      - x86_64
+      - ppc64le
+      - s390x
+    - version: 4.20.0 or later fixes
+      documentation_urls:
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      - https://docs.redhat.com/
+      cluster_sizing_architectures:
+      - x86_64
+      - ppc64le
+      - s390x
+    restrictions:
+    - Do not install the KubeVirt HyperConverged Cluster Operator from the Community Operator catalog source on the cluster.
+    references:
+    - name: Licenses and entitlements
+      url: https://www.ibm.com/docs/en/software-hub/5.3.x?topic=requirements-licenses-entitlements
+  - name: Red Hat OpenShift Container Platform cert-manager Operator
+    installed_by_default: false
+    required_when: cert-manager Operator is needed on the cluster
+    references:
+    - name: Version 4.14 documentation
+      url: https://docs.redhat.com/
+    - name: Version 4.16 documentation
+      url: https://docs.redhat.com/
+    - name: Version 4.17 documentation
+      url: https://docs.redhat.com/
+    - name: Version 4.18 documentation
+      url: https://docs.redhat.com/
+    - name: Version 4.19 documentation
+      url: https://docs.redhat.com/
+    - name: Version 4.20 documentation
+      url: https://docs.redhat.com/
+  - name: Kubernetes Metrics Server
+    required_when: default monitoring stack is disabled and pod/node usage metrics are needed
+    references:
+    - name: Kubernetes Metrics Server
+      url: https://github.com/kubernetes-sigs/metrics-server
+    notes:
+    - If neither the default monitoring stack nor Kubernetes Metrics Server is present, platform monitoring features in IBM Software Hub do not work.
+  supported_networking_protocols:
+  - IPv4 single-stack network
+  - IPv4/IPv6 dual-stack network
+  shared_cluster_components_without_additional_software_requirements:
+  - Scheduling service
+  - IBM License Service
+external_dependency_catalog:
+  items:
+  - name: Node Feature Discovery Operator
+    type: operator
+    version_selection_rule: Depends on the Red Hat OpenShift Container Platform version in use.
+    required_version_channel: stable
+    references:
+    - name: OpenShift Operator Life Cycles
+      url: https://access.redhat.com/support/policy/updates/openshift
+  - name: NVIDIA GPU Operator
+    type: operator
+    version_selection_rule: Depends on the Red Hat OpenShift Container Platform version in use.
+    required_version_channel: generally available
+    references:
+    - name: NVIDIA GPU Operator Life Cycle
+      url: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html
+    - name: OpenShift Operator Life Cycles
+      url: https://access.redhat.com/support/policy/updates/openshift
+  - name: Red Hat OpenShift AI
+    type: platform_software
+    version_matrix:
+    - ibm_software_hub_release: 5.3.1
+      release_date: February 2026
+      required_version: 2.25.1
+    - ibm_software_hub_release: 5.3.0
+      release_date: December 2025
+      required_version: '2.25'
+  - name: Multicloud Object Gateway
+    type: platform_software
+    version_selection_rule: Depends on the Red Hat OpenShift Container Platform version in use.
+  - name: Red Hat OpenShift Serverless Knative Eventing
+    type: platform_software
+    version_selection_rule: Depends on the Red Hat OpenShift Container Platform version in use.
+    references:
+    - name: OpenShift Operator Life Cycles
+      url: https://access.redhat.com/support/policy/updates/openshift
+services:
+- name: AI Factsheets
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: IBM Knowledge Catalog
+      type: service
+    - name: OpenPages
+      type: service
+    - name: Watson OpenScale
+      type: service
+    - name: Watson Machine Learning
+      type: service
+    - name: Watson Studio
+      type: service
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes:
+  - If AI Factsheets is installed with only Watson Studio, AI use cases can be created in only one catalog.
+  references: []
+- name: Anaconda Repository for IBM Cloud Pak for Data
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references:
+  - name: Anaconda installation requirements
+    url: https://team-docs.anaconda.com/
+- name: Analytics Engine powered by Apache Spark
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Cognos Analytics
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Content store
+      type: external_system
+      notes:
+      - Can be an integrated Db2 database or an external relational database.
+    - name: Audit database
+      type: external_system
+      notes:
+      - Audit records can optionally be stored in the content store.
+    - name: SMTP server
+      type: external_system
+      notes:
+      - Required only for email notification feature.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Cognos Dashboards
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Data Gate
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: IBM z/OS
+      type: external_system
+      notes:
+      - Version 2.4 or later; product code 5650-ZOS.
+    - name: Db2 Connect Unlimited Edition license
+      type: license
+      notes:
+      - Required to establish a JDBC connection to Db2 for z/OS.
+    - name: Db2 for z/OS
+      type: external_system
+      notes:
+      - 'Supported versions: V12 with required APAR fixes and Function Level 505 or higher, or V13.'
+    - name: Distributed data facility secure port with AT-TLS
+      type: network_requirement
+    conditional:
+    - condition:
+        expression: remote Db2 target database is used
+      requires:
+      - name: Db2 for Linux, UNIX, and Windows
+        type: external_system
+        notes:
+        - Version 12.1 or higher.
+  service_dependencies:
+    required:
+    - name: Db2
+      type: service
+    - name: Db2 Warehouse
+      type: service
+    optional:
+    - name: IBM Knowledge Catalog
+      type: service
+      notes:
+      - Automatically publishes metadata about Data Gate tables to catalogs.
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Data Privacy
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: IBM Knowledge Catalog
+      type: service
+    - name: IBM Knowledge Catalog Premium
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes:
+  - At least one of the listed services must already be installed.
+  references: []
+- name: Data Product Hub
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Analytics Engine powered by Apache Spark
+      type: service
+      install_behavior: auto_installed
+    - name: Data Refinery
+      type: service
+      install_behavior: auto_installed
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Data Refinery
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Data Replication
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: DataStage
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: Orchestration Pipelines
+      type: service
+      notes:
+      - Enables conversion of DataStage sequence jobs to pipelines.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Data Virtualization
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Db2 Data Management Console
+      type: service
+      install_behavior: auto_installed
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Db2U
+      type: component
+      original_name: db2u
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Db2
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: Db2 Data Management Console
+      type: service
+      notes:
+      - Provides a graphical user interface for SQL execution and a runtime monitoring interface.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Db2U
+      type: component
+      original_name: db2u
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Db2 Big SQL
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Remote data storage
+      type: external_system
+      notes:
+      - Examples include a Hadoop cluster on Cloudera Data Platform Version 7.1.9 SP1 or object storage.
+    - name: Supported object storage
+      type: external_system
+      notes:
+      - IBM Cloud Object Storage, Amazon Web Services object storage, IBM Storage Scale object storage, and Red Hat OpenShift Data Foundation are supported.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: Db2 Data Management Console
+      type: service
+      notes:
+      - Provides a graphical user interface for SQL execution and a runtime monitoring interface.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Db2U
+      type: component
+      original_name: db2u
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Db2 Data Management Console
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Db2 Warehouse
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: Db2 Data Management Console
+      type: service
+      notes:
+      - Provides a graphical user interface for SQL execution and a runtime monitoring interface.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Db2U
+      type: component
+      original_name: db2u
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Decision Optimization
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Watson Studio
+      type: service
+    - name: Watson Machine Learning
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: EDB Postgres
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Cloud Native PostgreSQL
+      type: component
+      original_name: postgresql
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Execution Engine for Apache Hadoop
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Execution Engine for Apache Hadoop RPM installation
+      type: external_system
+      notes:
+      - Must be installed on a Hadoop cluster.
+    - name: Same-network Hadoop cluster
+      type: network_requirement
+      notes:
+      - The Hadoop cluster must be in the same network as the IBM Software Hub deployment.
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Watson Studio
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: IBM Knowledge Catalog
+  restrictions:
+  - Cannot be installed in the same IBM Software Hub instance as IBM Knowledge Catalog Premium.
+  - Cannot be installed in the same IBM Software Hub instance as IBM Knowledge Catalog Standard.
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Analytics Engine powered by Apache Spark
+      type: service
+      install_behavior: auto_installed
+    - name: Data Refinery
+      type: service
+      install_behavior: auto_installed
+    optional:
+    - name: Data Privacy
+      type: service
+    - name: IBM Manta Data Lineage
+      type: service
+    - name: MANTA Automated Data Lineage
+      type: service
+    conditional:
+    - condition:
+        expression: data quality feature is installed
+      installs:
+      - name: DataStage Enterprise
+        type: service
+        install_behavior: auto_installed
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional:
+    - condition:
+        expression: relationship explorer and semantic search feature is enabled
+      installs:
+      - name: Neo4j
+        type: component
+        original_name: ibm_neo4j
+        install_behavior: auto_installed
+      - name: FoundationDB
+        type: component
+        original_name: opencontent_fdb
+        install_behavior: auto_installed
+      notes:
+      - The source states one of these dependencies is installed.
+  version_constraints: []
+  notes: []
+  references: []
+- name: IBM Knowledge Catalog Premium
+  restrictions:
+  - Cannot be installed in the same IBM Software Hub instance as IBM Knowledge Catalog.
+  - Cannot be installed in the same IBM Software Hub instance as IBM Knowledge Catalog Standard.
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required:
+    - name: IBM Knowledge Catalog
+      type: service
+      install_behavior: auto_installed
+    optional:
+    - name: Data Privacy
+      type: service
+    - name: IBM Manta Data Lineage
+      type: service
+    - name: MANTA Automated Data Lineage
+      type: service
+    conditional:
+    - condition:
+        expression: data quality feature is installed
+      installs:
+      - name: DataStage Enterprise
+        type: service
+        install_behavior: auto_installed
+  component_dependencies:
+    auto_installed: []
+    conditional:
+    - condition:
+        expression: gen AI based features are enabled
+      installs:
+      - name: Inference foundation models
+        type: component
+        original_name: watsonx_ai_ifm
+        install_behavior: auto_installed
+    - condition:
+        expression: relationship explorer and semantic search feature is enabled
+      installs:
+      - name: Neo4j
+        type: component
+        original_name: ibm_neo4j
+        install_behavior: auto_installed
+      - name: FoundationDB
+        type: component
+        original_name: opencontent_fdb
+        install_behavior: auto_installed
+      notes:
+      - The source states one of these dependencies is installed.
+  version_constraints: []
+  notes: []
+  references: []
+- name: IBM Knowledge Catalog Standard
+  restrictions:
+  - Cannot be installed in the same IBM Software Hub instance as IBM Knowledge Catalog.
+  - Cannot be installed in the same IBM Software Hub instance as IBM Knowledge Catalog Premium.
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required:
+    - name: IBM Knowledge Catalog
+      type: service
+      install_behavior: auto_installed
+    optional:
+    - name: IBM Manta Data Lineage
+      type: service
+    - name: MANTA Automated Data Lineage
+      type: service
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional:
+    - condition:
+        expression: gen AI based features are enabled
+      installs:
+      - name: Inference foundation models
+        type: component
+        original_name: watsonx_ai_ifm
+        install_behavior: auto_installed
+    - condition:
+        expression: relationship explorer and semantic search feature is enabled
+      installs:
+      - name: Neo4j
+        type: component
+        original_name: ibm_neo4j
+        install_behavior: auto_installed
+      - name: FoundationDB
+        type: component
+        original_name: opencontent_fdb
+        install_behavior: auto_installed
+      notes:
+      - The source states one of these dependencies is installed.
+  version_constraints: []
+  notes: []
+  references: []
+- name: IBM Manta Data Lineage
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: IBM Knowledge Catalog
+      type: service
+    - name: IBM Knowledge Catalog Premium
+      type: service
+    - name: IBM Knowledge Catalog Standard
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes:
+  - At least one of the listed services must already be installed.
+  - 'Ensure enableKnowledgeGraph: True and useFDB: False when installing IBM Knowledge Catalog.'
+  references: []
+- name: IBM Master Data Management
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: IBM Knowledge Catalog
+      type: service
+      notes:
+      - Enables profiling, automapping, data quality workflows, and data governance capabilities.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Neo4j
+      type: component
+      original_name: ibm_neo4j
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: RabbitMQ
+      type: component
+      original_name: opencontent_rabbitmq
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: opencontent_redis
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints:
+  - applies_when: new installation
+    component_behavior:
+      auto_installed:
+      - Common core services (ccs)
+      - Neo4j (ibm_neo4j)
+      - OpenSearch (opencontent_opensearch)
+      - RabbitMQ (opencontent_rabbitmq)
+      - Redis (opencontent_redis)
+  - applies_when: upgrade from 5.1.1 or later with existing Neo4j database
+    component_behavior:
+      upgraded_to_latest:
+      - Common core services (ccs)
+      - Neo4j (ibm_neo4j)
+      - OpenSearch (opencontent_opensearch)
+      - RabbitMQ (opencontent_rabbitmq)
+      - Redis (opencontent_redis)
+  - applies_when: upgrade from 4.8.x or 5.1.0
+    component_behavior:
+      upgraded_to_latest:
+      - Common core services (ccs)
+      - FoundationDB (fdb_k8s and opencontent_fdb)
+      - OpenSearch (opencontent_opensearch)
+      - RabbitMQ (opencontent_rabbitmq)
+      - Redis (opencontent_redis)
+  notes: []
+  references: []
+- name: IBM StreamSets
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Informix
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Informix
+      type: component
+      original_name: informix
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: MANTA Automated Data Lineage
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: IBM Knowledge Catalog
+      type: service
+    - name: IBM Knowledge Catalog Premium
+      type: service
+    - name: IBM Knowledge Catalog Standard
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes:
+  - At least one of the listed services must already be installed.
+  references: []
+- name: MongoDB
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: MongoDB
+      type: component
+      original_name: mongodb
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: OpenPages
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: external database is used instead of automatically provisioned Db2 database
+      requires:
+      - name: IBM Db2 on Linux
+        type: external_system
+      - name: Oracle
+        type: external_system
+      - name: Amazon RDS for Oracle
+        type: external_system
+      notes:
+      - One of the listed databases is required.
+  service_dependencies:
+    required: []
+    optional:
+    - name: AI Factsheets
+      type: service
+      notes:
+      - Enables review of machine learning models and related activities as part of enterprise risk and compliance monitoring.
+    - name: Cognos Analytics
+      type: service
+    - name: IBM Knowledge Catalog
+      type: service
+    - name: watsonx Assistant
+      type: service
+    - name: Watson Discovery
+      type: service
+    - name: Watson OpenScale
+      type: service
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Db2 as a service
+      type: component
+      original_name: db2aaservice
+      install_behavior: auto_installed
+    - name: Db2U
+      type: component
+      original_name: db2u
+      install_behavior: auto_installed
+    - name: RabbitMQ
+      type: component
+      original_name: opencontent_rabbitmq
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Orchestration Pipelines
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: DataStage
+      type: service
+      notes:
+      - Provides additional nodes when installed.
+    - name: Watson Machine Learning
+      type: service
+      notes:
+      - Provides additional nodes when installed.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Planning Analytics
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Planning Analytics for Microsoft Excel plug-in
+      type: client_software
+      notes:
+      - Required only to use Microsoft Excel.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Product Master
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: database outside IBM Software Hub is used
+      requires:
+      - name: IBM Db2
+        type: external_system
+      - name: Oracle
+        type: external_system
+      notes:
+      - One of the listed databases is required.
+  service_dependencies:
+    required:
+    - name: Db2
+      type: service
+      notes:
+      - Required only when connecting to an integrated database.
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: RStudio Server Runtimes
+  original_name: RStudio® Server Runtimes
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Watson Studio
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: SPSS Modeler
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Watson Studio
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Canvas
+      type: component
+      original_name: canvasbase
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Synthetic Data Generator
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: watsonx.ai
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Canvas
+      type: component
+      original_name: canvasbase
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Unstructured Data Integration
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: watsonx.ai
+      type: service
+    - name: watsonx.data
+      type: service
+    - name: watsonx.data intelligence
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Voice Gateway
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Watson Speech to Text
+      type: service
+    - name: Watson Text to Speech
+      type: service
+    - name: watsonx Assistant
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Watson Discovery
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Multicloud Object Gateway
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Cloud Native PostgreSQL
+      type: component
+      original_name: postgresql
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: RabbitMQ
+      type: component
+      original_name: opencontent_rabbitmq
+      install_behavior: auto_installed
+    - name: Watson Gateway
+      type: component
+      original_name: watson_gateway
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Watson Machine Learning
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: deep learning or models that require GPUs are used
+      requires:
+      - name: Node Feature Discovery Operator
+        type: operator
+        install_behavior: must_exist
+      - name: NVIDIA GPU Operator
+        type: operator
+        install_behavior: must_exist
+  service_dependencies:
+    required: []
+    optional: []
+    conditional:
+    - condition:
+        expression: deep learning is used
+      requires:
+      - name: Scheduling service
+        type: shared_cluster_component
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Watson OpenScale
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: external database is used
+      requires:
+      - name: Db2 Enterprise Server Edition
+        type: external_system
+        notes:
+        - Version 11.5 or later.
+  service_dependencies:
+    required:
+    - name: Db2
+      type: service
+    - name: Db2 Warehouse
+      type: service
+    - name: EDB Postgres
+      type: service
+    optional:
+    - name: Watson Studio
+      type: service
+      notes:
+      - Enables AutoAI models, Jupyter Notebooks, and a demo environment.
+    - name: Watson Machine Learning
+      type: service
+      notes:
+      - Enables deployed models for bias/drift checks and automatic payload logging.
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes:
+  - At least one supported integrated database instance is required when connecting to an integrated database.
+  references: []
+- name: Watson Speech services
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Multicloud Object Gateway
+      type: platform_software
+      install_behavior: must_exist
+    conditional:
+    - condition:
+        expression: enrichment features are used
+      requires:
+      - name: Node Feature Discovery Operator
+        type: operator
+        install_behavior: must_exist
+      - name: NVIDIA GPU Operator
+        type: operator
+        install_behavior: must_exist
+      - name: Red Hat OpenShift AI
+        type: platform_software
+        install_behavior: must_exist
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Cloud Native PostgreSQL
+      type: component
+      original_name: postgresql
+      install_behavior: auto_installed
+    - name: RabbitMQ
+      type: component
+      original_name: opencontent_rabbitmq
+      install_behavior: auto_installed
+    - name: Watson Gateway
+      type: component
+      original_name: watson_gateway
+      install_behavior: auto_installed
+    conditional:
+    - condition:
+        expression: enrichments feature is enabled
+      installs:
+      - name: Common core services
+        type: component
+        original_name: ccs
+        install_behavior: auto_installed
+      - name: Inference foundation models
+        type: component
+        original_name: watsonx_ai_ifm
+        install_behavior: auto_installed
+      - name: OpenSearch
+        type: component
+        original_name: opencontent_opensearch
+        install_behavior: auto_installed
+  version_constraints: []
+  notes: []
+  references: []
+- name: Watson Studio
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Data Refinery
+      type: service
+      install_behavior: auto_installed
+    - name: Watson Studio Runtimes
+      type: service
+      install_behavior: auto_installed
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: Watson Studio Runtimes
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: GPU runtimes are used
+      requires:
+      - name: Node Feature Discovery Operator
+        type: operator
+        install_behavior: must_exist
+      - name: NVIDIA GPU Operator
+        type: operator
+        install_behavior: must_exist
+  service_dependencies:
+    required:
+    - name: Watson Studio
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx.ai
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required: []
+    optional:
+    - name: watsonx.governance
+      type: service
+      notes:
+      - Enables governance of generative AI assets.
+    conditional:
+    - condition:
+        expression: full watsonx.ai service is installed
+      installs:
+      - name: Watson Studio
+        type: service
+        install_behavior: auto_installed
+      - name: Watson Machine Learning
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: lightweight engine is installed
+      installs: []
+      notes:
+      - The lightweight engine does not install any other services.
+  component_dependencies:
+    auto_installed: []
+    conditional:
+    - condition:
+        expression: full watsonx.ai service is installed
+      installs:
+      - name: Common core services
+        type: component
+        original_name: ccs
+        install_behavior: auto_installed
+      - name: Inference foundation models
+        type: component
+        original_name: watsonx_ai_ifm
+        install_behavior: auto_installed
+      - name: OpenSearch
+        type: component
+        original_name: opencontent_opensearch
+        install_behavior: auto_installed
+    - condition:
+        expression: watsonx.ai lightweight engine is installed
+      installs:
+      - name: Inference foundation models
+        type: component
+        original_name: watsonx_ai_ifm
+        install_behavior: auto_installed
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Assistant
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Multicloud Object Gateway
+      type: platform_software
+      install_behavior: must_exist
+    - name: Red Hat OpenShift Serverless Knative Eventing
+      type: platform_software
+      install_behavior: must_exist
+    conditional:
+    - condition:
+        expression: conversational skills or conversational search features are used
+      requires:
+      - name: Node Feature Discovery Operator
+        type: operator
+        install_behavior: must_exist
+      - name: NVIDIA GPU Operator
+        type: operator
+        install_behavior: must_exist
+      - name: Red Hat OpenShift AI
+        type: platform_software
+        install_behavior: must_exist
+  service_dependencies:
+    required: []
+    optional:
+    - name: Watson Discovery
+      type: service
+      notes:
+      - Enables adding a search skill when conversational search is not used.
+    conditional:
+    - condition:
+        expression: conversational search is used
+      requires:
+      - name: Watson Discovery
+        type: service
+      - name: Elasticsearch
+        type: external_system
+      notes:
+      - The source says Watson Discovery or Elasticsearch.
+  component_dependencies:
+    auto_installed:
+    - name: Cloud Native PostgreSQL
+      type: component
+      original_name: postgresql
+      install_behavior: auto_installed
+    - name: etcd
+      type: component
+      original_name: opencontent_etcd
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    - name: Watson data governor
+      type: component
+      original_name: data_governor
+      install_behavior: auto_installed
+    - name: Watson Gateway
+      type: component
+      original_name: watson_gateway
+      install_behavior: auto_installed
+    conditional:
+    - condition:
+        expression: GPU features are enabled for conversational skills and conversational search
+      installs:
+      - name: Common core services
+        type: component
+        original_name: ccs
+        install_behavior: auto_installed
+      - name: Inference foundation models
+        type: component
+        original_name: watsonx_ai_ifm
+        install_behavior: auto_installed
+      - name: OpenSearch
+        type: component
+        original_name: opencontent_opensearch
+        install_behavior: auto_installed
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx BI
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required:
+    - name: watsonx.data
+      type: service
+    - name: watsonx.data intelligence
+      type: service
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints:
+  - applies_when: IBM Software Hub version 5.3.1 and later
+    service_requirements:
+    - watsonx.data is required
+  notes: []
+  references: []
+- name: watsonx Code Assistant
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: watsonx Code Assistant Base
+      type: component
+      original_name: wca_base
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Code Assistant for Red Hat Ansible Lightspeed
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    - name: Red Hat Ansible Lightspeed subscription
+      type: subscription
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: watsonx Code Assistant Base
+      type: component
+      original_name: wca_base
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Code Assistant for Z
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    - name: External Db2 database
+      type: external_system
+    - name: Visual Studio Code
+      type: client_software
+      notes:
+      - Required on end-user workstations.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: watsonx Code Assistant Base
+      type: component
+      original_name: wca_base
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Code Assistant for Z Agentic
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    - name: Visual Studio Code
+      type: client_software
+      notes:
+      - Required on end-user workstations.
+    conditional: []
+  service_dependencies:
+    required:
+    - name: watsonx Code Assistant
+      type: service
+    optional: []
+    conditional:
+    - condition:
+        expression: service is installed
+      installs:
+      - name: watsonx Code Assistant for Z Code Explanation
+        type: service
+        install_behavior: auto_installed
+      - name: watsonx Code Assistant for Z Code Generation
+        type: service
+        install_behavior: auto_installed
+      - name: watsonx Code Assistant for Z Understand
+        type: service
+        install_behavior: auto_installed
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: watsonx Code Assistant Base
+      type: component
+      original_name: wca_base
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Code Assistant for Z Code Explanation
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    - name: Visual Studio Code
+      type: client_software
+      notes:
+      - Required on end-user workstations.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Code Assistant for Z Code Generation
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    - name: Visual Studio Code
+      type: client_software
+      notes:
+      - Required on end-user workstations.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx Code Assistant for Z Understand
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    - name: Visual Studio Code
+      type: client_software
+      notes:
+      - Required on end-user workstations.
+    conditional: []
+  service_dependencies:
+    required: []
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    - name: watsonx Code Assistant Base
+      type: component
+      original_name: wca_base
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints:
+  - applies_when: IBM Software Hub version 5.3.0
+    service_behavior:
+      auto_installed_services:
+      - watsonx Code Assistant for Z Code Explanation
+  - applies_when: IBM Software Hub version 5.3.1 and later
+    service_behavior:
+      service_dependencies: none
+  notes: []
+  references: []
+- name: watsonx.data
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: Milvus indexes that require GPUs are used
+      requires:
+      - name: Node Feature Discovery Operator
+        type: operator
+        install_behavior: must_exist
+      - name: NVIDIA GPU Operator
+        type: operator
+        install_behavior: must_exist
+  service_dependencies:
+    required:
+    - name: Analytics Engine powered by Apache Spark
+      type: service
+      install_behavior: auto_installed
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed: []
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx.data Premium
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Data Product Hub
+      type: service
+      install_behavior: auto_installed
+    - name: DataStage Enterprise
+      type: service
+      install_behavior: auto_installed
+    - name: IBM Unstructured Data Integration
+      type: service
+      install_behavior: auto_installed
+    - name: IBM Knowledge Catalog Premium
+      type: service
+      install_behavior: auto_installed
+    - name: IBM Manta Data Lineage
+      type: service
+      install_behavior: auto_installed
+    - name: watsonx.data intelligence
+      type: service
+      install_behavior: auto_installed
+    - name: watsonx.data
+      type: service
+      install_behavior: auto_installed
+    - name: watsonx.ai
+      type: service
+      install_behavior: auto_installed
+    - name: Watson Machine Learning
+      type: service
+      install_behavior: auto_installed
+    - name: Watson Studio
+      type: service
+      install_behavior: auto_installed
+    optional: []
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: FoundationDB
+      type: component
+      original_name: opencontent_fdb
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: Neo4j
+      type: component
+      original_name: ibm_neo4j
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx.data integration
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: data observability is enabled
+      requires:
+      - name: External PostgreSQL database
+        type: external_system
+    - condition:
+        expression: unstructured data integration is enabled
+      requires:
+      - name: watsonx.ai
+        type: service
+      - name: watsonx.data
+        type: service
+      - name: watsonx.data intelligence
+        type: service
+  service_dependencies:
+    required: []
+    optional: []
+    conditional:
+    - condition:
+        expression: bulk extract, transform, and load (ETL) operations are enabled
+      installs:
+      - name: DataStage Enterprise Plus
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: real-time streaming is enabled
+      installs:
+      - name: StreamSets
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: data observability is enabled
+      installs:
+      - name: Data Observability
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: unstructured data integration is enabled
+      installs:
+      - name: Unstructured Data Integration
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: replication is enabled
+      installs:
+      - name: Data Replication
+        type: service
+        install_behavior: auto_installed
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx.data intelligence
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional:
+    - condition:
+        expression: required model runs on GPU
+      requires:
+      - name: Node Feature Discovery Operator
+        type: operator
+        install_behavior: must_exist
+      - name: NVIDIA GPU Operator
+        type: operator
+        install_behavior: must_exist
+      - name: Red Hat OpenShift AI
+        type: platform_software
+        install_behavior: must_exist
+    - condition:
+        expression: required model runs on CPU
+      requires: []
+      notes:
+      - No external dependencies are required for CPU execution.
+  service_dependencies:
+    required: []
+    optional: []
+    conditional:
+    - condition:
+        expression: data governance and catalogs are enabled
+      installs:
+      - name: IBM Knowledge Catalog Premium
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: data quality is enabled
+      installs:
+      - name: DataStage Enterprise
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: data sharing is enabled
+      installs:
+      - name: Data Product Hub
+        type: service
+        install_behavior: auto_installed
+    - condition:
+        expression: data lineage is enabled
+      installs:
+      - name: IBM Manta Data Lineage
+        type: service
+        install_behavior: auto_installed
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: FoundationDB
+      type: component
+      original_name: opencontent_fdb
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: Neo4j
+      type: component
+      original_name: ibm_neo4j
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes: []
+  references: []
+- name: watsonx.governance
+  restrictions: []
+  external_dependencies:
+    required: []
+    conditional: []
+  service_dependencies:
+    required:
+    - name: Watson Machine Learning
+      type: service
+      install_behavior: auto_installed
+    - name: Db2
+      type: service
+    - name: Db2 Warehouse
+      type: service
+    - name: EDB Postgres
+      type: service
+    optional:
+    - name: Cognos Analytics
+      type: service
+      notes:
+      - Enables reports and dashboards.
+    - name: watsonx.ai
+      type: service
+      notes:
+      - Enables building and deploying generative AI assets.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: Db2 as a service
+      type: component
+      original_name: db2aaservice
+      install_behavior: auto_installed
+    - name: Db2U
+      type: component
+      original_name: db2u
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: RabbitMQ
+      type: component
+      original_name: opencontent_rabbitmq
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    conditional: []
+  version_constraints: []
+  notes:
+  - At least one supported integrated database instance is required for watsonx.governance Model Management when using an integrated database.
+  references: []
+- name: watsonx Orchestrate
+  restrictions: []
+  external_dependencies:
+    required:
+    - name: Node Feature Discovery Operator
+      type: operator
+      install_behavior: must_exist
+    - name: NVIDIA GPU Operator
+      type: operator
+      install_behavior: must_exist
+    - name: Red Hat OpenShift AI
+      type: platform_software
+      install_behavior: must_exist
+    conditional:
+    - condition:
+        expression: models are hosted locally
+      requires:
+      - name: Multicloud Object Gateway
+        type: platform_software
+        install_behavior: must_exist
+      - name: Red Hat OpenShift Serverless Knative Eventing
+        type: platform_software
+        install_behavior: must_exist
+  service_dependencies:
+    required:
+    - name: watsonx Assistant
+      type: service
+      install_behavior: auto_installed
+    - name: watsonx.data
+      type: service
+      install_behavior: auto_installed
+    optional:
+    - name: IBM Robotic Process Automation
+      type: service
+      notes:
+      - Optional if Robotic Process Automation bots are used as skills in watsonx Orchestrate.
+    conditional: []
+  component_dependencies:
+    auto_installed:
+    - name: Cloud Native PostgreSQL
+      type: component
+      original_name: postgresql
+      install_behavior: auto_installed
+    - name: Common core services
+      type: component
+      original_name: ccs
+      install_behavior: auto_installed
+    - name: etcd
+      type: component
+      original_name: opencontent_etcd
+      install_behavior: auto_installed
+    - name: Inference foundation models
+      type: component
+      original_name: watsonx_ai_ifm
+      install_behavior: auto_installed
+    - name: OpenSearch
+      type: component
+      original_name: opencontent_opensearch
+      install_behavior: auto_installed
+    - name: RabbitMQ
+      type: component
+      original_name: opencontent_rabbitmq
+      install_behavior: auto_installed
+    - name: Redis
+      type: component
+      original_name: ibm_redis_cp
+      install_behavior: auto_installed
+    - name: Watson data governor
+      type: component
+      original_name: data_governor
+      install_behavior: auto_installed
+    - name: Watson Gateway
+      type: component
+      original_name: watson_gateway
+      install_behavior: auto_installed
+    conditional:
+    - condition:
+        expression: models are hosted locally
+      installs:
+      - name: OpenSearch
+        type: component
+        original_name: opencontent_opensearch
+        install_behavior: auto_installed
+      notes:
+      - The source marks one component as installed only when models are hosted locally.
+  version_constraints: []
+  notes:
+  - The source says the listed Node Feature Discovery Operator, NVIDIA GPU Operator, and Red Hat OpenShift AI software is required only if models are hosted locally.
+  references: []
+supported_web_browsers:
+  browsers:
+  - Mozilla Firefox
+  - Google Chrome
+  - Microsoft Edge
+  recommended_browser: Mozilla Firefox
+  recommended_version_policy: Use the latest available version or the latest version approved by your enterprise.
