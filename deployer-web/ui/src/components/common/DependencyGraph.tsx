@@ -59,10 +59,12 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
 }) => {
   const [showLabels, setShowLabels] = React.useState(true);
   const [showOnlySelected, setShowOnlySelected] = React.useState(false);
-  const [hoveredNode, setHoveredNode] = React.useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = React.useState<GraphNode | null>(null);
   const [containerWidth, setContainerWidth] = React.useState<number>(800);
   const graphRef = React.useRef<any>();
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const [tooltipContent, setTooltipContent] = React.useState<string>('');
+  const [tooltipPosition, setTooltipPosition] = React.useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   // Update container width on mount and resize
   React.useEffect(() => {
@@ -151,9 +153,25 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
     return { nodes, links };
   }, [components, selectedComponents, autoSelectedComponents, conflictedComponents, showOnlySelected]);
 
+  // Configure D3 forces for better node spacing
+  React.useEffect(() => {
+    if (graphRef.current) {
+      const fg = graphRef.current;
+      
+      // Increase link distance for better spacing
+      fg.d3Force('link')?.distance(120);
+      
+      // Increase charge force to push nodes apart
+      fg.d3Force('charge')?.strength(-400);
+      
+      // Reheat simulation
+      fg.d3ReheatSimulation();
+    }
+  }, [graphData]);
+
   // Node color based on type with hover effect
   const getNodeColor = useCallback((node: GraphNode) => {
-    const isHovered = hoveredNode === node.id;
+    const isHovered = hoveredNode?.id === node.id;
     
     switch (node.type) {
       case 'selected':
@@ -169,19 +187,54 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
     }
   }, [hoveredNode]);
 
-  // Link color based on dependency type
+  // Link color based on dependency type with increased opacity
   const getLinkColor = useCallback((link: GraphLink) => {
     switch (link.type) {
       case 'required':
-        return '#da1e28'; // IBM Red 60
+        return 'rgba(218, 30, 40, 0.8)'; // IBM Red 60 with opacity
       case 'optional':
-        return '#198038'; // IBM Green 60
+        return 'rgba(25, 128, 56, 0.8)'; // IBM Green 60 with opacity
       case 'conditional':
-        return '#f1c21b'; // IBM Yellow 30
+        return 'rgba(241, 194, 27, 0.9)'; // IBM Yellow 30 with opacity
       default:
-        return '#8d8d8d';
+        return 'rgba(141, 141, 141, 0.6)';
     }
   }, []);
+
+  // Get dependencies for a node
+  const getNodeDependencies = useCallback((node: GraphNode) => {
+    const deps: string[] = [];
+    
+    // Service dependencies
+    node.component.serviceDependencies?.forEach(dep => {
+      deps.push(`${dep.name} (${dep.relationship})`);
+    });
+    
+    // Component dependencies
+    node.component.componentDependencies?.forEach(dep => {
+      deps.push(`${dep.name} (${dep.installBehavior})`);
+    });
+    
+    return deps;
+  }, []);
+
+  // Handle node hover
+  const handleNodeHover = useCallback((node: GraphNode | null, event?: MouseEvent) => {
+    setHoveredNode(node);
+    
+    if (node && event) {
+      const deps = getNodeDependencies(node);
+      const content = `
+        <strong>${node.name}</strong><br/>
+        <em>Type: ${node.type}</em><br/>
+        ${deps.length > 0 ? `<br/><strong>Dependencies:</strong><br/>${deps.join('<br/>')}` : '<br/>No dependencies'}
+      `;
+      setTooltipContent(content);
+      setTooltipPosition({ x: event.clientX + 10, y: event.clientY + 10 });
+    } else {
+      setTooltipContent('');
+    }
+  }, [getNodeDependencies]);
 
   // Handle node click
   const handleNodeClick = useCallback((node: GraphNode) => {
@@ -271,7 +324,7 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
           nodeCanvasObject={(node: any, ctx: any, globalScale: any) => {
             const label = node.name;
             const fontSize = 12 / globalScale;
-            const isHovered = hoveredNode === node.id;
+            const isHovered = hoveredNode?.id === node.id;
             const nodeSize = isHovered ? 10 : 8;
             
             ctx.font = `${fontSize}px Sans-Serif`;
@@ -326,17 +379,74 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
             }
           }}
           linkColor={(link: any) => getLinkColor(link)}
-          linkWidth={2}
-          linkDirectionalArrowLength={6}
+          linkWidth={3}
+          linkDirectionalArrowLength={8}
           linkDirectionalArrowRelPos={1}
-          linkLabel={(link: any) => link.label}
+          linkDirectionalParticles={2}
+          linkDirectionalParticleWidth={2}
+          linkCanvasObjectMode={() => 'after'}
+          linkCanvasObject={(link: any, ctx: any) => {
+            const MAX_FONT_SIZE = 4;
+            const LABEL_NODE_MARGIN = 1.5;
+            
+            const start = link.source;
+            const end = link.target;
+            
+            // Calculate label position (middle of link)
+            const textPos = {
+              x: start.x + (end.x - start.x) / 2,
+              y: start.y + (end.y - start.y) / 2
+            };
+            
+            const relLink = { x: end.x - start.x, y: end.y - start.y };
+            const maxTextLength = Math.sqrt(Math.pow(relLink.x, 2) + Math.pow(relLink.y, 2)) - LABEL_NODE_MARGIN * 2;
+            
+            let textAngle = Math.atan2(relLink.y, relLink.x);
+            // Maintain label vertical orientation for legibility
+            if (textAngle > Math.PI / 2) textAngle = -(Math.PI - textAngle);
+            if (textAngle < -Math.PI / 2) textAngle = -(-Math.PI - textAngle);
+            
+            const label = link.label || link.type;
+            
+            // Draw label background
+            ctx.font = `${MAX_FONT_SIZE}px Sans-Serif`;
+            const textWidth = ctx.measureText(label).width;
+            const bckgDimensions = [textWidth, MAX_FONT_SIZE].map(n => n + MAX_FONT_SIZE * 0.5);
+            
+            ctx.save();
+            ctx.translate(textPos.x, textPos.y);
+            ctx.rotate(textAngle);
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.fillRect(-bckgDimensions[0] / 2, -bckgDimensions[1] / 2, bckgDimensions[0], bckgDimensions[1]);
+            
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#161616';
+            ctx.fillText(label, 0, 0);
+            ctx.restore();
+          }}
           onNodeClick={handleNodeClick}
-          onNodeHover={(node: any) => setHoveredNode(node ? node.id : null)}
+          onNodeHover={(node: any, prevNode: any) => handleNodeHover(node, window.event as MouseEvent)}
           cooldownTicks={100}
           d3AlphaDecay={0.02}
           d3VelocityDecay={0.3}
         />
       </div>
+
+      {tooltipContent && (
+        <div
+          className="dependency-graph__tooltip"
+          style={{
+            position: 'fixed',
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y}px`,
+            pointerEvents: 'none',
+            zIndex: 1000
+          }}
+          dangerouslySetInnerHTML={{ __html: tooltipContent }}
+        />
+      )}
 
       <div className="dependency-graph__legend">
         <h4 className="dependency-graph__legend-title">Legend</h4>

@@ -94,6 +94,28 @@
   flex-shrink: 0;
 }
 
+.dependency-graph__tooltip {
+  background-color: rgba(22, 22, 22, 0.95);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  z-index: 1000;
+}
+
+.dependency-graph__tooltip strong {
+  color: #78a9ff;
+  font-weight: 600;
+}
+
+.dependency-graph__tooltip em {
+  color: #a8a8a8;
+  font-style: normal;
+}
+
 /* Responsive adjustments */
 @media (max-width: 672px) {
   .dependency-graph__controls {
