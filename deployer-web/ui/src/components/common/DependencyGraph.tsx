@@ -60,7 +60,22 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
   const [showLabels, setShowLabels] = React.useState(true);
   const [showOnlySelected, setShowOnlySelected] = React.useState(false);
   const [hoveredNode, setHoveredNode] = React.useState<string | null>(null);
+  const [containerWidth, setContainerWidth] = React.useState<number>(800);
   const graphRef = React.useRef<any>();
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  // Update container width on mount and resize
+  React.useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   // Build graph data from components
   const graphData = useMemo<GraphData>(() => {
@@ -241,10 +256,11 @@ export const DependencyGraph: React.FC<DependencyGraphProps> = ({
         </div>
       </div>
 
-      <div className="dependency-graph__canvas">
+      <div className="dependency-graph__canvas" ref={containerRef}>
         <ForceGraph2D
           ref={graphRef}
           graphData={graphData}
+          width={containerWidth}
           height={height}
           nodeLabel={(node: any) => {
             const depCount = node.dependencyCount || 0;
