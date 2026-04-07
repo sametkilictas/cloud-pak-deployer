@@ -5,17 +5,18 @@
  * Handles authentication flow and route protection.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Theme } from '@carbon/react';
 import { useAuthStore } from './stores/authStore';
+import { useThemeStore } from './stores/themeStore';
 import { ROUTES } from './constants/routes';
 import { MainLayout } from './components/layout';
+import { LoginPage } from './pages/LoginPage';
+import { DashboardPage } from './pages/DashboardPage';
+import { ComponentSelectionPage } from './pages/ComponentSelectionPage';
 
 // Placeholder page components - will be implemented
-const LoginPage = () => <div className="flex-center full-height"><h1>Login Page</h1></div>;
-const DashboardPage = () => <div className="p-4"><h1>Dashboard</h1><p>Welcome to Cloud Pak Deployer</p></div>;
-const ComponentsPage = () => <div className="p-4"><h1>Components</h1><p>Select components to deploy</p></div>;
 const ConfigurationPage = () => <div className="p-4"><h1>Configuration</h1><p>Configure your deployment</p></div>;
 const DeploymentPage = () => <div className="p-4"><h1>Deployment</h1><p>Monitor deployment progress</p></div>;
 const HistoryPage = () => <div className="p-4"><h1>History</h1><p>View deployment history</p></div>;
@@ -44,9 +45,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
  */
 export const App: React.FC = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const { theme } = useThemeStore();
+  // Used in conditional rendering below
+  void isAuthenticated;
+
+  // Apply theme to document element for Carbon Design System
+  useEffect(() => {
+    document.documentElement.setAttribute('data-carbon-theme', theme === 'dark' ? 'g100' : 'white');
+  }, [theme]);
 
   return (
-    <Theme theme="g100">
+    <Theme theme={theme === 'dark' ? 'g100' : 'white'}>
       <BrowserRouter>
         <Routes>
           {/* Public routes */}
@@ -78,7 +87,7 @@ export const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <MainLayout currentPath={ROUTES.COMPONENTS}>
-                  <ComponentsPage />
+                  <ComponentSelectionPage />
                 </MainLayout>
               </ProtectedRoute>
             }
@@ -89,7 +98,7 @@ export const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <MainLayout currentPath={ROUTES.COMPONENTS_SELECT}>
-                  <ComponentsPage />
+                  <ComponentSelectionPage />
                 </MainLayout>
               </ProtectedRoute>
             }
@@ -100,7 +109,7 @@ export const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <MainLayout currentPath={ROUTES.COMPONENTS_DEPENDENCIES}>
-                  <ComponentsPage />
+                  <ComponentSelectionPage />
                 </MainLayout>
               </ProtectedRoute>
             }

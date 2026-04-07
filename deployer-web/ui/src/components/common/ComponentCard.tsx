@@ -1,11 +1,19 @@
 /**
  * Component Card
  * Displays a Cloud Pak component with selection controls and dependency info
+ * Enhanced with status indicators, dependency badges, and external requirements
  */
 
 import React from 'react';
 import { Tile, Checkbox, Button, Tag } from '@carbon/react';
-import { Information, CheckmarkFilled } from '@carbon/icons-react';
+import {
+  Information,
+  CheckmarkFilled,
+  WarningAlt,
+  Locked,
+  Network_3,
+  DataBase
+} from '@carbon/icons-react';
 import { Component } from '@/types';
 import './ComponentCard.css';
 
@@ -13,6 +21,9 @@ interface ComponentCardProps {
   component: Component;
   isSelected: boolean;
   isAutoSelected: boolean;
+  isConflicted?: boolean;
+  dependencyCount?: number;
+  externalDependencyCount?: number;
   onSelect: () => void;
   onDeselect: () => void;
   onShowInfo: () => void;
@@ -22,6 +33,9 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
   component,
   isSelected,
   isAutoSelected,
+  isConflicted = false,
+  dependencyCount = 0,
+  externalDependencyCount = 0,
   onSelect,
   onDeselect,
   onShowInfo
@@ -41,19 +55,39 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
     <Tile
       className={`component-card ${isSelected ? 'selected' : ''} ${
         isAutoSelected ? 'auto-selected' : ''
-      }`}
+      } ${isConflicted ? 'conflicted' : ''}`}
     >
+      {/* Status Indicator Bar */}
+      {(isSelected || isAutoSelected || isConflicted) && (
+        <div className={`component-card__status-bar ${
+          isConflicted ? 'status-bar--error' :
+          isAutoSelected ? 'status-bar--info' :
+          'status-bar--success'
+        }`} />
+      )}
+
       <div className="component-card__header">
         <div className="component-card__title-section">
           <h4 className="component-card__title">{component.name}</h4>
-          {isSelected && (
+          {isSelected && !isConflicted && (
             <CheckmarkFilled className="component-card__check-icon" size={20} />
+          )}
+          {isConflicted && (
+            <WarningAlt className="component-card__warning-icon" size={20} />
+          )}
+          {isAutoSelected && (
+            <Locked className="component-card__lock-icon" size={16} />
           )}
         </div>
         <div className="component-card__tags">
           {isAutoSelected && (
             <Tag type="blue" size="sm">
               Auto-selected
+            </Tag>
+          )}
+          {isConflicted && (
+            <Tag type="red" size="sm">
+              Conflict
             </Tag>
           )}
           {component.category && (
@@ -66,11 +100,33 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
 
       <p className="component-card__description">{component.description}</p>
 
-      {component.restrictions.length > 0 && (
-        <div className="component-card__restrictions">
-          <Tag type="red" size="sm">
-            Has restrictions
-          </Tag>
+      {/* Dependency Indicators */}
+      {(dependencyCount > 0 || externalDependencyCount > 0 || component.restrictions.length > 0) && (
+        <div className="component-card__indicators">
+          {dependencyCount > 0 && (
+            <div className="component-card__indicator">
+              <Network_3 size={16} />
+              <span className="component-card__indicator-text">
+                {dependencyCount} {dependencyCount === 1 ? 'dependency' : 'dependencies'}
+              </span>
+            </div>
+          )}
+          {externalDependencyCount > 0 && (
+            <div className="component-card__indicator">
+              <DataBase size={16} />
+              <span className="component-card__indicator-text">
+                {externalDependencyCount} external {externalDependencyCount === 1 ? 'requirement' : 'requirements'}
+              </span>
+            </div>
+          )}
+          {component.restrictions.length > 0 && (
+            <div className="component-card__indicator component-card__indicator--warning">
+              <WarningAlt size={16} />
+              <span className="component-card__indicator-text">
+                {component.restrictions.length} {component.restrictions.length === 1 ? 'restriction' : 'restrictions'}
+              </span>
+            </div>
+          )}
         </div>
       )}
 
@@ -89,7 +145,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           onClick={onShowInfo}
           iconDescription="View dependencies"
         >
-          Dependencies
+          Details
         </Button>
       </div>
 

@@ -3,6 +3,14 @@
  * Defines the structure for Cloud Pak components and their dependencies
  */
 
+import type {
+  ExternalDependencies,
+  ServiceDependencies,
+  ComponentDependencies,
+  VersionConstraint,
+  DocumentationReference
+} from './dependency.types';
+
 export type ComponentCategory =
   | 'AI & Machine Learning'
   | 'Data Management'
@@ -15,6 +23,11 @@ export type ComponentState = 'removed' | 'installed';
 
 export type ComponentSize = 'small' | 'medium' | 'large';
 
+export type DependencyType = 'required' | 'optional' | 'conditional';
+
+/**
+ * Base Component interface (backward compatible)
+ */
 export interface Component {
   id: string;
   name: string;
@@ -29,8 +42,37 @@ export interface Component {
   state: ComponentState;
   version?: string;
   size?: ComponentSize;
+  // Dependency structure for graph visualization (simplified)
+  dependencies?: {
+    required: string[];
+    optional: string[];
+    conditional: Array<{
+      condition: string;
+      requires: string[];
+    }>;
+  };
 }
 
+/**
+ * Enhanced Component interface with full YAML structure
+ */
+export interface CloudPakComponentEnhanced extends Component {
+  original_name: string;                    // Original component name in deployer
+  external_dependencies: ExternalDependencies;
+  service_dependencies: ServiceDependencies;
+  component_dependencies: ComponentDependencies;
+  version_constraints: VersionConstraint[];
+  notes: string[];
+  references: DocumentationReference[];
+}
+
+// Type alias for backward compatibility
+export type CloudPakComponent = Component;
+
+/**
+ * Simplified dependency interfaces for backward compatibility
+ * These are used by the existing Component interface
+ */
 export interface ExternalDependency {
   name: string;
   type: 'operator' | 'platform_software' | 'external_system' | 'license' | 'client_software';
@@ -81,9 +123,9 @@ export interface DependencyEdge {
 }
 
 export interface Conflict {
-  component1: string;
-  component2: string;
-  reason: string;
+  type: 'incompatible' | 'version_mismatch' | 'missing_dependency' | 'restriction_violation';
+  components: string[];
+  message: string;
   severity: 'error' | 'warning';
 }
 
@@ -120,6 +162,28 @@ export interface ResolutionResult {
   autoSelected: string[];
   conflicts: Conflict[];
   explanations: Record<string, string[]>;
+  externalDependencies?: string[];
+}
+
+export interface DependencyExplanation {
+  direct: Array<{
+    id: string;
+    name: string;
+    type: 'service' | 'component';
+    reason: string;
+  }>;
+  transitive: Array<{
+    id: string;
+    name: string;
+    via: string;
+    reason: string;
+  }>;
+  external: Array<{
+    name: string;
+    type: string;
+    reason: string;
+  }>;
+  conflicts: Conflict[];
 }
 
 export interface ValidationResult {

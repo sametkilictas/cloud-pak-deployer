@@ -12,5 +12,7 @@ export { LogViewer } from './LogViewer';
 export type { LogEntry } from './LogViewer';
 export { ProgressIndicator } from './ProgressIndicator';
 export type { DeploymentStage } from './ProgressIndicator';
+export { ConflictWarning } from './ConflictWarning';
+export { DependencyDetailPanel } from './DependencyDetailPanel';
 
 // Made with Bob

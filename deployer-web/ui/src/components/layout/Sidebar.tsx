@@ -76,7 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/components/select')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/components/select');
             }}
@@ -86,7 +86,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/components/dependencies')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/components/dependencies');
             }}
@@ -103,7 +103,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/configuration/edit')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/configuration/edit');
             }}
@@ -113,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/configuration/preview')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/configuration/preview');
             }}
@@ -123,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/configuration/validate')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/configuration/validate');
             }}
@@ -140,7 +140,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/deployment/start')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/deployment/start');
             }}
@@ -150,7 +150,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/deployment/status')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/deployment/status');
             }}
@@ -160,7 +160,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <SideNavMenuItem
             href="#"
             isActive={isActive('/deployment/logs')}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.preventDefault();
               handleNavigation('/deployment/logs');
             }}

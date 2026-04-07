@@ -24,12 +24,14 @@ interface DeploymentStore {
   clearLogs: () => void;
   downloadLogs: () => void;
   resetDeployment: () => void;
+  simulateDeployment: () => void;
 }
 
 // Mock deployment stages for simulation
 const DEPLOYMENT_STAGES: DeploymentStage[] = [
   'validate',
   'prepare',
+  'mirror',
   'provision-infra',
   'configure-infra',
   'install-cloud-pak',
@@ -40,6 +42,13 @@ const DEPLOYMENT_STAGES: DeploymentStage[] = [
 
 // Mock log messages for each stage
 const STAGE_LOGS: Record<DeploymentStage, string[]> = {
+  mirror: [
+    'Starting image mirroring...',
+    'Connecting to source registry...',
+    'Mirroring Cloud Pak images...',
+    'Mirroring operator images...',
+    'Image mirroring complete'
+  ],
   validate: [
     'Starting deployment validation...',
     'Checking configuration file syntax...',

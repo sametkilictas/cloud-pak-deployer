@@ -8,7 +8,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
-import './index.css';
+import './index.scss';
 
 // Error boundary for catching and displaying errors
 class ErrorBoundary extends React.Component<

@@ -3,9 +3,6 @@
  * IBM Carbon Design System theme and global styles
  */
 
-/* Import IBM Carbon styles */
-@import '@carbon/react/css/index.css';
-
 /* Import IBM Plex fonts */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 

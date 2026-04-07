@@ -11,6 +11,7 @@ interface AuthStore {
   isAuthenticated: boolean;
   clusterInfo: ClusterInfo | null;
   token: string | null;
+  user: string | null;
   error: string | null;
   isLoading: boolean;
 
@@ -27,6 +28,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   isAuthenticated: false,
   clusterInfo: null,
   token: null,
+  user: null,
   error: null,
   isLoading: false,
 
@@ -65,6 +67,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         isAuthenticated: true,
         clusterInfo,
         token,
+        user: 'admin', // Mock user - in real implementation, extract from token or API
         isLoading: false,
         error: null
       });

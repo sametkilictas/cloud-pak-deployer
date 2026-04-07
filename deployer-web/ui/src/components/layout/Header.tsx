@@ -23,8 +23,9 @@ import {
   HeaderGlobalAction,
   SkipToContent
 } from '@carbon/react';
-import { UserAvatar, Logout, Information } from '@carbon/icons-react';
+import { UserAvatar, Logout, Information, Asleep, Light } from '@carbon/icons-react';
 import { useAuthStore } from '../../stores/authStore';
+import { useThemeStore } from '../../stores/themeStore';
 import './Header.css';
 
 interface HeaderProps {
@@ -33,6 +34,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { isAuthenticated, user, clusterInfo, logout } = useAuthStore();
+  const { theme, toggleTheme } = useThemeStore();
 
   const handleLogout = () => {
     logout();
@@ -122,9 +124,17 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
                   {user && (
                     <div className="header__user-info">
                       <UserAvatar size={16} />
-                      <span className="header__username">{user.username}</span>
+                      <span className="header__username">{user}</span>
                     </div>
                   )}
+
+                  <HeaderGlobalAction
+                    aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+                    tooltipAlignment="end"
+                    onClick={toggleTheme}
+                  >
+                    {theme === 'light' ? <Asleep size={20} /> : <Light size={20} />}
+                  </HeaderGlobalAction>
 
                   <HeaderGlobalAction
                     aria-label="Logout"

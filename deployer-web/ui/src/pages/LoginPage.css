@@ -1,0 +1,211 @@
+/**
+ * Login Page Styles - Improved Visual Hierarchy
+ */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f62fe 0%, #001d6c 100%);
+  padding: 2rem;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.login-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.login-subtitle {
+  font-size: 1.125rem;
+  color: #d0e2ff;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.login-card-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #161616;
+  margin: 0 0 1rem 0;
+}
+
+.login-card-description {
+  font-size: 1rem;
+  color: #525252;
+  margin: 0 0 2.5rem 0;
+  line-height: 1.5;
+}
+
+.login-error {
+  margin-bottom: 2rem;
+}
+
+.login-button {
+  width: 100%;
+  max-width: none;
+  justify-content: center;
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.login-help {
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.login-help h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #161616;
+  margin: 0 0 1.5rem 0;
+}
+
+.login-help ol {
+  margin: 0;
+  padding-left: 1.75rem;
+  color: #525252;
+}
+
+.login-help li {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  padding-left: 0.5rem;
+}
+
+.login-help li:last-child {
+  margin-bottom: 0;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.login-footer p {
+  color: #d0e2ff;
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.login-footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: border-color 0.2s ease;
+}
+
+.login-footer a:hover {
+  border-bottom-color: #ffffff;
+}
+
+/* Carbon component overrides for better visibility */
+.login-card .cds--text-input {
+  background-color: #ffffff;
+  border: 1px solid #8d8d8d;
+  border-bottom: 2px solid #8d8d8d;
+  min-height: 48px;
+  color: #161616 !important;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.login-card .cds--text-input:focus {
+  outline: 2px solid #0f62fe;
+  outline-offset: -2px;
+  border-color: #0f62fe;
+}
+
+.login-card .cds--text-input::placeholder {
+  color: #6f6f6f;
+  opacity: 1;
+}
+
+.login-card .cds--label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161616;
+  margin-bottom: 0.5rem;
+}
+
+.login-card .cds--form__helper-text {
+  font-size: 0.8125rem;
+  color: #525252;
+  margin-top: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 672px) {
+  .login-page {
+    padding: 1rem;
+  }
+
+  .login-title {
+    font-size: 2rem;
+  }
+
+  .login-subtitle {
+    font-size: 1rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-card-title {
+    font-size: 1.5rem;
+  }
+
+  .login-help {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .login-help ol {
+    padding-left: 1.25rem;
+  }
+
+  .login-help li {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 673px) and (max-width: 1056px) {
+  .login-card {
+    padding: 2.5rem;
+  }
+}
+
+/* Made with Bob */

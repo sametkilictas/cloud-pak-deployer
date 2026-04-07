@@ -5,7 +5,8 @@
 
 import { create } from 'zustand';
 import { Component, DependencyGraph, Conflict } from '@/types';
-import { DependencyResolver } from '@/services/dependency/DependencyResolver';
+import { DependencyResolver } from '../services/dependency/DependencyResolver';
+import { DependencyResolverEnhanced, DependencyExplanation } from '../services/dependency/DependencyResolverEnhanced';
 import { MOCK_COMPONENTS } from '@/constants/mockComponents';
 
 interface ComponentStore {
@@ -16,9 +17,11 @@ interface ComponentStore {
   dependencyGraph: DependencyGraph;
   conflicts: Conflict[];
   explanations: Record<string, string[]>;
+  externalDependencies: Set<string>;
   isLoading: boolean;
   error: string | null;
   resolver: DependencyResolver | null;
+  resolverEnhanced: DependencyResolverEnhanced | null;
   searchTerm: string;
   categoryFilter: string | null;
 
@@ -43,6 +46,7 @@ interface ComponentStore {
     reason: string;
   }>;
   getDependencyChain: (componentId: string) => string[];
+  getComponentExplanation: (componentId: string) => DependencyExplanation;
 }
 
 export const useComponentStore = create<ComponentStore>((set, get) => ({
@@ -53,9 +57,11 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
   dependencyGraph: { nodes: [], edges: [] },
   conflicts: [],
   explanations: {},
+  externalDependencies: new Set(),
   isLoading: false,
   error: null,
   resolver: null,
+  resolverEnhanced: null,
   searchTerm: '',
   categoryFilter: null,
 
@@ -66,10 +72,12 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
     try {
       const components = MOCK_COMPONENTS;
       const resolver = new DependencyResolver(components);
+      const resolverEnhanced = new DependencyResolverEnhanced(components);
 
       set({
         components,
         resolver,
+        resolverEnhanced,
         isLoading: false
       });
     } catch (error) {
@@ -82,10 +90,10 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
 
   // Select a component
   selectComponent: (componentId: string) => {
-    const { selectedComponents, resolver } = get();
+    const { selectedComponents, resolverEnhanced } = get();
 
-    if (!resolver) {
-      console.error('Resolver not initialized');
+    if (!resolverEnhanced) {
+      console.error('Enhanced resolver not initialized');
       return;
     }
 
@@ -93,14 +101,20 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
     const newSelected = new Set(selectedComponents);
     newSelected.add(componentId);
 
-    // Resolve dependencies
-    const result = resolver.resolveDependencies(newSelected);
+    // Resolve dependencies using enhanced resolver
+    const result = resolverEnhanced.resolveDependenciesEnhanced(
+      Array.from(newSelected),
+      {
+        platformVersion: '5.3.0',
+        installationOptions: {}
+      }
+    );
 
     // Build visual graph
-    const graph = resolver.buildDependencyGraph(new Set(result.resolved));
+    const graph = resolverEnhanced.buildDependencyGraph(result.resolved);
 
     // Update auto-selected flag in graph nodes
-    graph.nodes.forEach(node => {
+    graph.nodes.forEach((node: any) => {
       node.autoSelected = result.autoSelected.includes(node.id);
     });
 
@@ -109,13 +123,14 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
       autoSelectedComponents: new Set(result.autoSelected),
       conflicts: result.conflicts,
       explanations: result.explanations,
+      externalDependencies: new Set(result.externalDependencies || []),
       dependencyGraph: graph
     });
   },
 
   // Deselect a component
   deselectComponent: (componentId: string) => {
-    const { selectedComponents, autoSelectedComponents, resolver } = get();
+    const { selectedComponents, autoSelectedComponents, resolverEnhanced } = get();
 
     // Cannot deselect auto-selected components
     if (autoSelectedComponents.has(componentId)) {
@@ -123,8 +138,8 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
       return;
     }
 
-    if (!resolver) {
-      console.error('Resolver not initialized');
+    if (!resolverEnhanced) {
+      console.error('Enhanced resolver not initialized');
       return;
     }
 
@@ -132,14 +147,20 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
     const newSelected = new Set(selectedComponents);
     newSelected.delete(componentId);
 
-    // Resolve dependencies for remaining components
-    const result = resolver.resolveDependencies(newSelected);
+    // Resolve dependencies for remaining components using enhanced resolver
+    const result = resolverEnhanced.resolveDependenciesEnhanced(
+      Array.from(newSelected),
+      {
+        platformVersion: '5.3.0',
+        installationOptions: {}
+      }
+    );
 
     // Build visual graph
-    const graph = resolver.buildDependencyGraph(new Set(result.resolved));
+    const graph = resolverEnhanced.buildDependencyGraph(result.resolved);
 
     // Update auto-selected flag in graph nodes
-    graph.nodes.forEach(node => {
+    graph.nodes.forEach((node: any) => {
       node.autoSelected = result.autoSelected.includes(node.id);
     });
 
@@ -148,6 +169,7 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
       autoSelectedComponents: new Set(result.autoSelected),
       conflicts: result.conflicts,
       explanations: result.explanations,
+      externalDependencies: new Set(result.externalDependencies || []),
       dependencyGraph: graph
     });
   },
@@ -170,14 +192,20 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
 
   // Manually trigger dependency resolution (useful after config changes)
   resolveDependencies: () => {
-    const { selectedComponents, resolver } = get();
+    const { selectedComponents, resolverEnhanced } = get();
 
-    if (!resolver) return;
+    if (!resolverEnhanced) return;
 
-    const result = resolver.resolveDependencies(selectedComponents);
-    const graph = resolver.buildDependencyGraph(new Set(result.resolved));
+    const result = resolverEnhanced.resolveDependenciesEnhanced(
+      Array.from(selectedComponents),
+      {
+        platformVersion: '5.3.0',
+        installationOptions: {}
+      }
+    );
+    const graph = resolverEnhanced.buildDependencyGraph(result.resolved);
 
-    graph.nodes.forEach(node => {
+    graph.nodes.forEach((node: any) => {
       node.autoSelected = result.autoSelected.includes(node.id);
     });
 
@@ -186,6 +214,7 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
       autoSelectedComponents: new Set(result.autoSelected),
       conflicts: result.conflicts,
       explanations: result.explanations,
+      externalDependencies: new Set(result.externalDependencies || []),
       dependencyGraph: graph
     });
   },
@@ -197,6 +226,7 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
       autoSelectedComponents: new Set(),
       conflicts: [],
       explanations: {},
+      externalDependencies: new Set(),
       dependencyGraph: { nodes: [], edges: [] }
     });
   },
@@ -256,9 +286,17 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
 
   // Get optional dependencies for a component
   getOptionalDependencies: (componentId: string) => {
-    const { resolver } = get();
+    const { resolver, components } = get();
     if (!resolver) return [];
-    return resolver.getOptionalDependencies(componentId);
+    const depIds = resolver.getOptionalDependencies(componentId);
+    return depIds.map(id => {
+      const comp = components.find(c => c.id === id);
+      return {
+        id,
+        name: comp?.name || id,
+        reason: 'Optional dependency'
+      };
+    });
   },
 
   // Get dependency chain for a component
@@ -266,6 +304,18 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
     const { resolver } = get();
     if (!resolver) return [];
     return resolver.getDependencyChain(componentId);
+  },
+
+  // Get comprehensive dependency explanation for a component
+  getComponentExplanation: (componentId: string): DependencyExplanation => {
+    const { resolverEnhanced, selectedComponents } = get();
+    if (!resolverEnhanced) {
+      return { direct: [], transitive: [], external: [], conflicts: [] };
+    }
+    return resolverEnhanced.getDependencyExplanation(
+      componentId,
+      Array.from(selectedComponents)
+    );
   }
 }));
 
