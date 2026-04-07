@@ -6,9 +6,13 @@
 .component-card {
   position: relative;
   padding: 1rem;
+  margin-bottom: 1.5rem !important;
   transition: all 0.2s ease;
   border: 2px solid transparent;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
 }
 
 .component-card:hover {
@@ -24,6 +28,32 @@
 .component-card.auto-selected {
   border-color: var(--cds-support-info);
   background-color: var(--cds-layer-accent-01);
+}
+
+.component-card.conflicted {
+  border-color: var(--cds-support-error);
+  background-color: var(--cds-layer-01);
+}
+
+.component-card__status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+}
+
+.component-card__status-bar.status-bar--success {
+  background-color: var(--cds-support-success);
+}
+
+.component-card__status-bar.status-bar--info {
+  background-color: var(--cds-support-info);
+}
+
+.component-card__status-bar.status-bar--error {
+  background-color: var(--cds-support-error);
 }
 
 .component-card__header {
@@ -52,6 +82,16 @@
   flex-shrink: 0;
 }
 
+.component-card__warning-icon {
+  color: var(--cds-support-error);
+  flex-shrink: 0;
+}
+
+.component-card__lock-icon {
+  color: var(--cds-support-info);
+  flex-shrink: 0;
+}
+
 .component-card__tags {
   display: flex;
   gap: 0.5rem;
@@ -63,10 +103,38 @@
   font-size: 0.875rem;
   color: var(--cds-text-secondary);
   line-height: 1.5;
+  flex-grow: 1;
 }
 
-.component-card__restrictions {
+.component-card__indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: var(--cds-layer-02);
+  border-radius: 4px;
+}
+
+.component-card__indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+}
+
+.component-card__indicator svg {
+  flex-shrink: 0;
+  color: var(--cds-icon-secondary);
+}
+
+.component-card__indicator--warning svg {
+  color: var(--cds-support-warning);
+}
+
+.component-card__indicator-text {
+  line-height: 1.5;
 }
 
 .component-card__footer {

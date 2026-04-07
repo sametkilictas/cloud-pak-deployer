@@ -1,0 +1,249 @@
+/**
+ * Component Selection Page Styles
+ */
+
+.component-selection-page {
+  padding-top: 1.5rem;
+}
+
+/* Page Header */
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.page-header h1 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: var(--cds-text-primary, #161616);
+}
+
+.page-subtitle {
+  font-size: 1.125rem;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Selection Summary */
+.selection-summary {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--cds-layer-01, #ffffff);
+  border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  border-radius: 4px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.summary-icon {
+  color: var(--cds-support-success, #24a148);
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary, #525252);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cds-text-primary, #161616);
+}
+
+.summary-item.auto-selected .summary-label {
+  color: var(--cds-text-secondary, #525252);
+}
+
+.summary-item.auto-selected .summary-value {
+  color: var(--cds-support-info, #0f62fe);
+}
+
+/* Controls Section */
+.controls-section {
+  margin-bottom: 2rem;
+}
+
+.controls-section .cds--search {
+  margin-bottom: 1.5rem;
+}
+
+.controls-section .cds--tabs {
+  margin-bottom: 0;
+}
+
+/* Components Grid */
+.components-grid-section {
+  margin-bottom: 3rem;
+}
+
+.no-results {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--cds-text-secondary, #525252);
+}
+
+.no-results p {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* Dependency Section */
+.dependency-section {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: var(--cds-layer-01, #ffffff);
+  border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  border-radius: 4px;
+}
+
+.dependency-section h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--cds-text-primary, #161616);
+}
+
+.section-subtitle {
+  font-size: 0.9375rem;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0 0 1.5rem 0;
+}
+
+/* Action Buttons */
+.action-buttons {
+  position: sticky;
+  bottom: 0;
+  padding: 1.5rem 0;
+  background-color: var(--cds-background, #ffffff);
+  border-top: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  z-index: 100;
+}
+
+/* Component Details Modal */
+.component-details-modal {
+  padding: 1rem 0;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--cds-text-primary, #161616);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.detail-section p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0;
+}
+
+.detail-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detail-section ul li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  font-size: 0.9375rem;
+  color: var(--cds-text-secondary, #525252);
+}
+
+.detail-section ul li:last-child {
+  border-bottom: none;
+}
+
+.detail-section ul li strong {
+  color: var(--cds-text-primary, #161616);
+  font-weight: 600;
+}
+
+.notes-list {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+
+.notes-list li {
+  padding: 0.25rem 0;
+  border-bottom: none;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary, #6f6f6f);
+}
+
+/* Responsive Design */
+@media (max-width: 672px) {
+  .page-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .selection-summary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dependency-section {
+    padding: 1.5rem;
+  }
+
+  .dependency-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons .cds--btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 673px) and (max-width: 1056px) {
+  .selection-summary {
+    flex-wrap: wrap;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .controls-section,
+  .action-buttons {
+    display: none;
+  }
+
+  .dependency-section {
+    break-inside: avoid;
+  }
+}
+
+/* Made with Bob */
