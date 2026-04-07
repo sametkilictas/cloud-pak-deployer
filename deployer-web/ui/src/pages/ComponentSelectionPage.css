@@ -4,6 +4,8 @@
 
 .component-selection-page {
   padding-top: 1.5rem;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Page Header */
@@ -84,6 +86,13 @@
 /* Components Grid */
 .components-grid-section {
   margin-bottom: 3rem;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.components-grid-section .cds--grid {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .no-results {
@@ -104,6 +113,8 @@
   background-color: var(--cds-layer-01, #ffffff);
   border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
   border-radius: 4px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .dependency-section h2 {
