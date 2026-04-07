@@ -11,6 +11,8 @@
   border: 1px solid var(--cds-border-subtle-01);
   border-radius: 4px;
   padding: 1rem;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .dependency-graph__controls {
@@ -38,6 +40,13 @@
   border: 1px solid var(--cds-border-subtle-01);
   border-radius: 4px;
   overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+}
+
+.dependency-graph__canvas svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .dependency-graph__legend {
