@@ -1113,6 +1113,448 @@ export const WATSON_SPEECH_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 1 - Enhanced Schemas (Part 1 of 2)
+// ============================================================================
+
+/**
+ * watsonx.data Schema
+ */
+export const WATSONX_DATA_SCHEMA: ComponentConfigSchema = {
+  componentName: 'watsonx_data',
+  displayName: 'watsonx.data',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'enable_lite_milvus',
+          label: 'Enable Lite Milvus',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable lightweight Milvus vector database'
+        },
+        {
+          name: 'scaleConfig',
+          label: 'Scale Configuration',
+          type: 'select',
+          required: false,
+          defaultValue: 'small',
+          options: [
+            { value: 'small', label: 'Small' },
+            { value: 'medium', label: 'Medium' },
+            { value: 'large', label: 'Large' }
+          ],
+          helpText: 'Deployment scale configuration'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx.governance Schema
+ */
+export const WATSONX_GOVERNANCE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'watsonx_governance',
+  displayName: 'watsonx.governance',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'installType',
+          label: 'Install Type',
+          type: 'select',
+          required: false,
+          defaultValue: 'all',
+          options: [
+            { value: 'all', label: 'All Components' },
+            { value: 'factsheet', label: 'Factsheet Only' },
+            { value: 'openpages', label: 'OpenPages Only' },
+            { value: 'openscale', label: 'OpenScale Only' }
+          ],
+          helpText: 'Type of governance installation'
+        },
+        {
+          name: 'enableFactsheet',
+          label: 'Enable Factsheet',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable AI Factsheets for model documentation'
+        },
+        {
+          name: 'enableOpenpages',
+          label: 'Enable OpenPages',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable OpenPages for GRC'
+        },
+        {
+          name: 'enableOpenscale',
+          label: 'Enable OpenScale',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable Watson OpenScale for model monitoring'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx Orchestrate Schema
+ */
+export const WATSONX_ORCHESTRATE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'watsonx_orchestrate',
+  displayName: 'watsonx Orchestrate',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'installMode',
+          label: 'Install Mode',
+          type: 'select',
+          required: false,
+          defaultValue: 'agentic',
+          options: [
+            { value: 'agentic', label: 'Agentic' },
+            { value: 'standard', label: 'Standard' }
+          ],
+          helpText: 'Installation mode for watsonx Orchestrate'
+        },
+        {
+          name: 'watsonxAI.watsonxaiifm',
+          label: 'Enable watsonx.ai IFM',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable watsonx.ai foundation models'
+        }
+      ]
+    }
+  ],
+  supportsInstances: true,
+  instanceSchema: {
+    sections: [
+      {
+        id: 'instance-basic',
+        title: 'Instance Configuration',
+        fields: [
+          createInstanceNameField('wxo-instance'),
+          createInstanceDescriptionField('watsonx Orchestrate instance')
+        ]
+      }
+    ]
+  },
+  supportsModels: false
+};
+
+/**
+ * IBM Knowledge Catalog Premium Schema
+ */
+export const IKC_PREMIUM_SCHEMA: ComponentConfigSchema = {
+  componentName: 'ikc_premium',
+  displayName: 'IBM Knowledge Catalog - Premium',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'enableDataQuality',
+          label: 'Enable Data Quality',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable data quality analysis'
+        },
+        {
+          name: 'enableKnowledgeGraph',
+          label: 'Enable Knowledge Graph',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable knowledge graph capabilities'
+        },
+        {
+          name: 'useFDB',
+          label: 'Use FDB',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Use FoundationDB for metadata storage'
+        },
+        {
+          name: 'enableAISearch',
+          label: 'Enable AI Search',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable AI-powered search'
+        },
+        {
+          name: 'enableSemanticAutomation',
+          label: 'Enable Semantic Automation',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable semantic automation features'
+        },
+        {
+          name: 'enableSemanticEnrichment',
+          label: 'Enable Semantic Enrichment',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable semantic enrichment of metadata'
+        },
+        {
+          name: 'enableSemanticEmbedding',
+          label: 'Enable Semantic Embedding',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable semantic embedding generation'
+        },
+        {
+          name: 'enableTextToSql',
+          label: 'Enable Text-to-SQL',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable natural language to SQL conversion'
+        },
+        {
+          name: 'enableModelsOn',
+          label: 'Enable Models On',
+          type: 'select',
+          required: false,
+          defaultValue: 'cpu',
+          options: [
+            { value: 'cpu', label: 'CPU' },
+            { value: 'gpu', label: 'GPU' }
+          ],
+          helpText: 'Hardware acceleration for AI models'
+        },
+        {
+          name: 'customModelTextToSQL',
+          label: 'Custom Model for Text-to-SQL',
+          type: 'text',
+          required: false,
+          defaultValue: 'granite-3-3-8b-instruct',
+          helpText: 'Custom model ID for text-to-SQL feature'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * IBM Knowledge Catalog Standard Schema
+ */
+export const IKC_STANDARD_SCHEMA: ComponentConfigSchema = {
+  componentName: 'ikc_standard',
+  displayName: 'IBM Knowledge Catalog - Standard',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'enableKnowledgeGraph',
+          label: 'Enable Knowledge Graph',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable knowledge graph capabilities'
+        },
+        {
+          name: 'useFDB',
+          label: 'Use FDB',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Use FoundationDB for metadata storage'
+        },
+        {
+          name: 'enableAISearch',
+          label: 'Enable AI Search',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable AI-powered search'
+        },
+        {
+          name: 'enableSemanticAutomation',
+          label: 'Enable Semantic Automation',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable semantic automation features'
+        },
+        {
+          name: 'enableSemanticEnrichment',
+          label: 'Enable Semantic Enrichment',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable semantic enrichment of metadata'
+        },
+        {
+          name: 'enableSemanticEmbedding',
+          label: 'Enable Semantic Embedding',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable semantic embedding generation'
+        },
+        {
+          name: 'enableTextToSql',
+          label: 'Enable Text-to-SQL',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable natural language to SQL conversion'
+        },
+        {
+          name: 'enableModelsOn',
+          label: 'Enable Models On',
+          type: 'select',
+          required: false,
+          defaultValue: 'cpu',
+          options: [
+            { value: 'cpu', label: 'CPU' },
+            { value: 'gpu', label: 'GPU' }
+          ],
+          helpText: 'Hardware acceleration for AI models'
+        },
+        {
+          name: 'customModelTextToSQL',
+          label: 'Custom Model for Text-to-SQL',
+          type: 'text',
+          required: false,
+          defaultValue: 'granite-3-3-8b-instruct',
+          helpText: 'Custom model ID for text-to-SQL feature'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -1140,6 +1582,13 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'openpages': OPENPAGES_SCHEMA,
   'spss': SPSS_SCHEMA,
   'dods': DODS_SCHEMA,
+
+  // Batch 1 - Part 1 (5 schemas)
+  'watsonx_data': WATSONX_DATA_SCHEMA,
+  'watsonx_governance': WATSONX_GOVERNANCE_SCHEMA,
+  'watsonx_orchestrate': WATSONX_ORCHESTRATE_SCHEMA,
+  'ikc_premium': IKC_PREMIUM_SCHEMA,
+  'ikc_standard': IKC_STANDARD_SCHEMA,
   
   // Additional components can be added here
   // For components without specific schemas, a default schema will be used
