@@ -2461,6 +2461,189 @@ export const SYNTHETICDATA_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 3 - Remaining Component Schemas (Part 3 of 4)
+// ============================================================================
+
+/**
+ * Data Integration for Unstructured Data Schema
+ */
+export const UDP_SCHEMA: ComponentConfigSchema = {
+  componentName: 'udp',
+  displayName: 'Data Integration for Unstructured Data',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Voice Gateway Schema
+ */
+export const VOICE_GATEWAY_SCHEMA: ComponentConfigSchema = {
+  componentName: 'voice-gateway',
+  displayName: 'Voice Gateway',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'replicas',
+          label: 'Number of Replicas',
+          type: 'number',
+          required: false,
+          defaultValue: 1,
+          min: 1,
+          max: 10,
+          helpText: 'Number of Voice Gateway replicas'
+        },
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx Code Assistant Schema
+ */
+export const WCA_SCHEMA: ComponentConfigSchema = {
+  componentName: 'wca',
+  displayName: 'watsonx Code Assistant',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'similarity_feature.enabled',
+          label: 'Similarity Feature Enabled',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable similarity feature'
+        },
+        {
+          name: 'rag_enabled.enabled',
+          label: 'RAG Enabled',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable Retrieval-Augmented Generation'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx Code Assistant for Red Hat Ansible Lightspeed Schema
+ */
+export const WCA_ANSIBLE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'wca-ansible',
+  displayName: 'watsonx Code Assistant for Red Hat Ansible Lightspeed',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx Code Assistant for Z Schema
+ */
+export const WCA_Z_SCHEMA: ComponentConfigSchema = {
+  componentName: 'wca-z',
+  displayName: 'watsonx Code Assistant for Z',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -2509,7 +2692,7 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'replication': REPLICATION_SCHEMA,
   'rstudio': RSTUDIO_SCHEMA,
   
-  // Batch 3 - Remaining Component Schemas (10 schemas so far)
+  // Batch 3 - Remaining Component Schemas (15 schemas so far)
   'bigsql': BIGSQL_SCHEMA,
   'dashboard': DASHBOARD_SCHEMA,
   'datagate': DATAGATE_SCHEMA,
@@ -2520,6 +2703,11 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'productmaster': PRODUCTMASTER_SCHEMA,
   'streamsets': STREAMSETS_SCHEMA,
   'syntheticdata': SYNTHETICDATA_SCHEMA,
+  'udp': UDP_SCHEMA,
+  'voice-gateway': VOICE_GATEWAY_SCHEMA,
+  'wca': WCA_SCHEMA,
+  'wca-ansible': WCA_ANSIBLE_SCHEMA,
+  'wca-z': WCA_Z_SCHEMA,
   
   // Additional components can be added here
   // For components without specific schemas, a default schema will be used
