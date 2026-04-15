@@ -1,0 +1,38 @@
+/**
+ * ModelConfigurationSection Styles
+ */
+
+.model-config-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.model-config-section__header {
+  margin-bottom: 1.5rem;
+}
+
+.model-config-section__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--cds-text-primary);
+}
+
+.model-config-section__description {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  margin-bottom: 0;
+}
+
+.model-config-section .cds--data-table-container {
+  margin-top: 1rem;
+}
+
+.model-config-section .cds--inline-notification {
+  margin-bottom: 1rem;
+}
+
+/* Made with Bob */

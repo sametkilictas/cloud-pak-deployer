@@ -18,7 +18,9 @@ import { useComponentStore } from '../../stores/componentStore';
 import { useConfigStore } from '../../stores/configStore';
 import { getComponentSchema, hasComponentSchema } from '../../schemas/componentSchemas';
 import { ConfigurationForm } from './ConfigurationForm';
+import { ModelConfigurationSection } from './ModelConfigurationSection';
 import { Component } from '../../types';
+import { WATSONX_AI_MODELS } from '../../data/watsonxAiModels';
 import './ComponentConfigSection.css';
 
 interface ComponentConfigSectionProps {
@@ -170,7 +172,8 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
       <div className="component-config-section__content">
         <Accordion>
           {configurableComponents.map((component: Component) => {
-            const schema = getComponentSchema(component.id);
+            // CRITICAL: Use originalName for schema lookup (schemas are registered by originalName)
+            const schema = getComponentSchema(component.originalName);
             // CRITICAL: Use originalName to match cartridge name in config
             const config = componentConfigs[component.originalName] || {};
             const isValid = validationStatus[component.id] !== false;
@@ -183,10 +186,10 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                 open={isExpanded}
                 onHeadingClick={() => toggleExpanded(component.id)}
               >
-                <span className="component-config-section__accordion-content">
+                <div className="component-config-section__accordion-content">
                   {/* Component Header with Tags */}
-                  <span className="component-config-section__component-header">
-                    <span className="component-config-section__component-tags">
+                  <div className="component-config-section__component-header">
+                    <div className="component-config-section__component-tags">
                       {component.category && (
                         <Tag type="cool-gray" size="sm">
                           {component.category}
@@ -202,15 +205,15 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                           Configured
                         </Tag>
                       )}
-                    </span>
-                  </span>
+                    </div>
+                  </div>
 
                   {/* Component Description */}
                   {component.description && (
-                    <span className="component-config-section__component-description">
+                    <div className="component-config-section__component-description">
                       <Information size={16} />
                       <span>{component.description}</span>
-                    </span>
+                    </div>
                   )}
 
                   {/* Configuration Form */}
@@ -220,7 +223,25 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                       values={config}
                       onChange={(fieldName: string, value: any) => {
                         // CRITICAL: Pass originalName to match cartridge name
-                        handleConfigChange(component.originalName, { ...config, [fieldName]: value });
+                        // Handle nested installation_options fields
+                        const updatedConfig = { ...config };
+                        
+                        // Check if this field belongs to installation_options section
+                        const installationOptionsSection = schema.sections.find(s => s.id === 'installation_options' || s.id === 'advanced' || s.id === 'features');
+                        const isInstallationOption = installationOptionsSection?.fields.some(f => f.name === fieldName);
+                        
+                        if (isInstallationOption) {
+                          // Nest under installation_options
+                          updatedConfig.installation_options = {
+                            ...(config.installation_options || {}),
+                            [fieldName]: value
+                          };
+                        } else {
+                          // Top-level field
+                          updatedConfig[fieldName] = value;
+                        }
+                        
+                        handleConfigChange(component.originalName, updatedConfig);
                       }}
                       onValidate={(results) => {
                         const isValid = results.every(r => r.valid);
@@ -236,7 +257,18 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                       hideCloseButton
                     />
                   )}
-                </span>
+
+                  {/* Model Configuration Section (for components that support models) */}
+                  {schema?.supportsModels && component.originalName === 'watsonx_ai' && (
+                    <ModelConfigurationSection
+                      availableModels={WATSONX_AI_MODELS}
+                      selectedModels={config.models || []}
+                      onChange={(models) => {
+                        handleConfigChange(component.originalName, { ...config, models });
+                      }}
+                    />
+                  )}
+                </div>
               </AccordionItem>
             );
           })}

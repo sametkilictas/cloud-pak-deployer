@@ -2,9 +2,11 @@
  * Config Generator Service
  * Generates valid config.yaml for cloud-pak-deployer backend
  * Uses component.originalName to ensure correct cartridge names
+ * Merges user configuration with defaults from reference-config.yaml
  */
 
 import { Component } from '@/types';
+import { mergeWithDefaults } from './referenceConfigDefaults';
 
 export interface CartridgeConfig {
   name: string;
@@ -83,13 +85,17 @@ export function generateCartridges(
       continue;
     }
 
-    const config = componentConfigs[component.id] || {};
+    // Get user configuration (if any)
+    const userConfig = componentConfigs[component.originalName] || {};
+    
+    // Merge with reference defaults - defaults provide base, user config overrides
+    const mergedConfig = mergeWithDefaults(component.originalName, userConfig);
     
     const cartridge: CartridgeConfig = {
       name: component.originalName, // ← CRITICAL: Use originalName, not id
       description: component.description,
-      state: config.state || 'installed',
-      ...config
+      state: userConfig.state || 'installed',
+      ...mergedConfig
     };
 
     // Remove undefined values

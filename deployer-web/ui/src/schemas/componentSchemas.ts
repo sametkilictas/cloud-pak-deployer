@@ -1555,6 +1555,397 @@ export const IKC_STANDARD_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 1 - Enhanced Schemas (Part 2 of 2)
+// ============================================================================
+
+/**
+ * watsonx.data intelligence Schema
+ */
+export const WATSONX_DATAINTELLIGENCE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'watsonx_dataintelligence',
+  displayName: 'watsonx.data intelligence',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'enableAISearch',
+          label: 'Enable AI Search',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable AI-powered search capabilities'
+        },
+        {
+          name: 'enableContentLinkingForTextToSql',
+          label: 'Enable Content Linking for Text-to-SQL',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable content linking for natural language queries'
+        },
+        {
+          name: 'enableDataGovernanceCatalog',
+          label: 'Enable Data Governance Catalog',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable data governance and cataloging'
+        },
+        {
+          name: 'enableDataLineage',
+          label: 'Enable Data Lineage',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable data lineage tracking'
+        },
+        {
+          name: 'enableDataProduct',
+          label: 'Enable Data Product',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable data product management'
+        },
+        {
+          name: 'enableDataQuality',
+          label: 'Enable Data Quality',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable data quality analysis'
+        },
+        {
+          name: 'enableGenerativeAICapabilities',
+          label: 'Enable Generative AI Capabilities',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable generative AI features'
+        },
+        {
+          name: 'enableKnowledgeGraph',
+          label: 'Enable Knowledge Graph',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable knowledge graph capabilities'
+        },
+        {
+          name: 'enableModelsOn',
+          label: 'Enable Models On',
+          type: 'select',
+          required: false,
+          defaultValue: 'cpu',
+          options: [
+            { value: 'cpu', label: 'CPU' },
+            { value: 'gpu', label: 'GPU' }
+          ],
+          helpText: 'Hardware acceleration for AI models'
+        },
+        {
+          name: 'enableSemanticEmbedding',
+          label: 'Enable Semantic Embedding',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable semantic embedding generation'
+        },
+        {
+          name: 'enableSemanticEnrichment',
+          label: 'Enable Semantic Enrichment',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable semantic enrichment of metadata'
+        },
+        {
+          name: 'enableTextToSql',
+          label: 'Enable Text-to-SQL',
+          type: 'boolean',
+          required: false,
+          defaultValue: false,
+          helpText: 'Enable natural language to SQL conversion'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
+// Batch 2 - Additional Component Schemas (Part 1 of 2)
+// ============================================================================
+
+/**
+ * Db2 Warehouse Schema
+ */
+export const DB2WH_SCHEMA: ComponentConfigSchema = {
+  componentName: 'db2wh',
+  displayName: 'Db2 Warehouse',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Db2 Data Management Console Schema
+ */
+export const DMC_SCHEMA: ComponentConfigSchema = {
+  componentName: 'dmc',
+  displayName: 'Db2 Data Management Console',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: true,
+  instanceSchema: {
+    sections: [
+      {
+        id: 'instance-basic',
+        title: 'Instance Configuration',
+        fields: [
+          createInstanceNameField('data-management-console'),
+          createInstanceDescriptionField('Data Management Console'),
+          createSizeField(false),
+          createStorageSizeField('storage_size_gb', 'Storage Size', 50)
+        ]
+      }
+    ]
+  },
+  supportsModels: false
+};
+
+/**
+ * EDB Postgres Schema
+ */
+export const EDB_CP4D_SCHEMA: ComponentConfigSchema = {
+  componentName: 'edb_cp4d',
+  displayName: 'EDB Postgres',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: true,
+  instanceSchema: {
+    sections: [
+      {
+        id: 'instance-basic',
+        title: 'Instance Configuration',
+        fields: [
+          createInstanceNameField('instance1'),
+          {
+            name: 'version',
+            label: 'PostgreSQL Version',
+            type: 'select',
+            required: false,
+            defaultValue: '15.4',
+            options: [
+              { value: '15.4', label: '15.4' },
+              { value: '14.9', label: '14.9' },
+              { value: '13.12', label: '13.12' }
+            ],
+            helpText: 'PostgreSQL version to install'
+          },
+          {
+            name: 'type',
+            label: 'Instance Type',
+            type: 'select',
+            required: false,
+            defaultValue: 'Standard',
+            options: [
+              { value: 'Standard', label: 'Standard' },
+              { value: 'HighAvailability', label: 'High Availability' }
+            ],
+            helpText: 'Deployment type'
+          },
+          {
+            name: 'members',
+            label: 'Number of Members',
+            type: 'number',
+            required: false,
+            defaultValue: 1,
+            min: 1,
+            max: 5,
+            helpText: 'Number of database members'
+          },
+          createStorageSizeField('size_gb', 'Storage Size', 50),
+          {
+            name: 'resource_request_cpu',
+            label: 'CPU Request',
+            type: 'number',
+            required: false,
+            defaultValue: 1,
+            min: 1,
+            max: 16,
+            helpText: 'CPU cores requested'
+          },
+          {
+            name: 'resource_request_memory',
+            label: 'Memory Request',
+            type: 'text',
+            required: false,
+            defaultValue: '4Gi',
+            placeholder: '4Gi',
+            helpText: 'Memory requested (e.g., 4Gi, 8Gi)'
+          },
+          {
+            name: 'resource_limit_cpu',
+            label: 'CPU Limit',
+            type: 'number',
+            required: false,
+            defaultValue: 1,
+            min: 1,
+            max: 16,
+            helpText: 'Maximum CPU cores'
+          },
+          {
+            name: 'resource_limit_memory',
+            label: 'Memory Limit',
+            type: 'text',
+            required: false,
+            defaultValue: '4Gi',
+            placeholder: '4Gi',
+            helpText: 'Maximum memory (e.g., 4Gi, 8Gi)'
+          }
+        ]
+      }
+    ]
+  },
+  supportsModels: false
+};
+
+/**
+ * AI Factsheets Schema
+ */
+export const FACTSHEET_SCHEMA: ComponentConfigSchema = {
+  componentName: 'factsheet',
+  displayName: 'AI Factsheets',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Execution Engine for Apache Hadoop Schema
+ */
+export const HEE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'hee',
+  displayName: 'Execution Engine for Apache Hadoop',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -1583,12 +1974,20 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'spss': SPSS_SCHEMA,
   'dods': DODS_SCHEMA,
 
-  // Batch 1 - Part 1 (5 schemas)
+  // Batch 1 - Enhanced Schemas (5 + 1 schemas)
   'watsonx_data': WATSONX_DATA_SCHEMA,
   'watsonx_governance': WATSONX_GOVERNANCE_SCHEMA,
   'watsonx_orchestrate': WATSONX_ORCHESTRATE_SCHEMA,
   'ikc_premium': IKC_PREMIUM_SCHEMA,
   'ikc_standard': IKC_STANDARD_SCHEMA,
+  'watsonx_dataintelligence': WATSONX_DATAINTELLIGENCE_SCHEMA,
+  
+  // Batch 2 - Additional Component Schemas (5 schemas)
+  'db2wh': DB2WH_SCHEMA,
+  'dmc': DMC_SCHEMA,
+  'edb_cp4d': EDB_CP4D_SCHEMA,
+  'factsheet': FACTSHEET_SCHEMA,
+  'hee': HEE_SCHEMA,
   
   // Additional components can be added here
   // For components without specific schemas, a default schema will be used

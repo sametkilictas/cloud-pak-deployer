@@ -98,11 +98,19 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({
   }, [values]);
 
   // Render a single form field based on its type
-  const renderField = useCallback((field: FormFieldSchema) => {
+  const renderField = useCallback((field: FormFieldSchema, sectionId?: string) => {
     if (!shouldShowField(field)) return null;
     if (field.hidden) return null;
 
-    const value = values[field.name] ?? field.defaultValue;
+    // Check if value is in installation_options or at top level
+    let value = values[field.name];
+    if (value === undefined && (sectionId === 'installation_options' || sectionId === 'advanced' || sectionId === 'features')) {
+      value = values.installation_options?.[field.name];
+    }
+    if (value === undefined) {
+      value = field.defaultValue;
+    }
+    
     const error = getFieldError(field.name);
     const isInvalid = showValidation && touched[field.name] && !!error;
     const isDisabled = disabled || field.disabled;
@@ -290,7 +298,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({
         <span className="config-form__fields">
           {section.fields.map(field => (
             <span key={field.name} className="config-form__field">
-              {renderField(field)}
+              {renderField(field, section.id)}
             </span>
           ))}
         </span>
