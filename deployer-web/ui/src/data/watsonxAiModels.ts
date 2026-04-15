@@ -1,6 +1,6 @@
-s/**
+/**
  * watsonx.ai Foundation Models
- * 
+ *
  * Complete list of available foundation models for watsonx.ai
  * Extracted from reference-config.yaml
  */
