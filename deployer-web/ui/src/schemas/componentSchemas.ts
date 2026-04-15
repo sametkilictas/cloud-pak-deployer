@@ -1946,6 +1946,220 @@ export const HEE_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 2 - Additional Component Schemas (Part 2 of 2)
+// ============================================================================
+
+/**
+ * MANTA Automated Lineage Schema
+ */
+export const MANTAFLOW_SCHEMA: ComponentConfigSchema = {
+  componentName: 'mantaflow',
+  displayName: 'MANTA Automated Lineage',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * IBM Match 360 Schema
+ */
+export const MATCH360_SCHEMA: ComponentConfigSchema = {
+  componentName: 'match360',
+  displayName: 'IBM Match 360',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'scaleConfig',
+          label: 'Scale Configuration',
+          type: 'select',
+          required: false,
+          defaultValue: 'x-small',
+          options: [
+            { value: 'x-small', label: 'Extra Small' },
+            { value: 'small', label: 'Small' },
+            { value: 'medium', label: 'Medium' },
+            { value: 'large', label: 'Large' }
+          ],
+          helpText: 'Deployment scale configuration'
+        },
+        {
+          name: 'onboard_timeout',
+          label: 'Onboard Timeout (seconds)',
+          type: 'number',
+          required: false,
+          defaultValue: 300,
+          min: 60,
+          max: 3600,
+          helpText: 'Timeout for onboarding operations'
+        },
+        {
+          name: 'ccs_http_timeout',
+          label: 'CCS HTTP Timeout (ms)',
+          type: 'number',
+          required: false,
+          defaultValue: 2000,
+          min: 1000,
+          max: 10000,
+          helpText: 'HTTP timeout for CCS service'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * MongoDB for Cloud Pak for Data Schema
+ */
+export const MONGODB_SCHEMA: ComponentConfigSchema = {
+  componentName: 'mongodb',
+  displayName: 'MongoDB for Cloud Pak for Data',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Data Replication Schema
+ */
+export const REPLICATION_SCHEMA: ComponentConfigSchema = {
+  componentName: 'replication',
+  displayName: 'Data Replication',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'replication_license_type',
+          label: 'License Type',
+          type: 'select',
+          required: false,
+          defaultValue: 'IDRC',
+          options: [
+            { value: 'IDRC', label: 'IDRC' },
+            { value: 'IIDR', label: 'IIDR' }
+          ],
+          helpText: 'Replication license type'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * RStudio Server with R 3.6 Schema
+ */
+export const RSTUDIO_SCHEMA: ComponentConfigSchema = {
+  componentName: 'rstudio',
+  displayName: 'RStudio Server with R 3.6',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -1982,12 +2196,17 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'ikc_standard': IKC_STANDARD_SCHEMA,
   'watsonx_dataintelligence': WATSONX_DATAINTELLIGENCE_SCHEMA,
   
-  // Batch 2 - Additional Component Schemas (5 schemas)
+  // Batch 2 - Additional Component Schemas (10 schemas)
   'db2wh': DB2WH_SCHEMA,
   'dmc': DMC_SCHEMA,
   'edb_cp4d': EDB_CP4D_SCHEMA,
   'factsheet': FACTSHEET_SCHEMA,
   'hee': HEE_SCHEMA,
+  'mantaflow': MANTAFLOW_SCHEMA,
+  'match360': MATCH360_SCHEMA,
+  'mongodb': MONGODB_SCHEMA,
+  'replication': REPLICATION_SCHEMA,
+  'rstudio': RSTUDIO_SCHEMA,
   
   // Additional components can be added here
   // For components without specific schemas, a default schema will be used
