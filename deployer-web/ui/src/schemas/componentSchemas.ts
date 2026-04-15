@@ -2160,6 +2160,156 @@ export const RSTUDIO_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 3 - Remaining Component Schemas (Part 1 of 4)
+// ============================================================================
+
+/**
+ * Db2 Big SQL Schema
+ */
+export const BIGSQL_SCHEMA: ComponentConfigSchema = {
+  componentName: 'bigsql',
+  displayName: 'Db2 Big SQL',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Cognos Dashboards Schema
+ */
+export const DASHBOARD_SCHEMA: ComponentConfigSchema = {
+  componentName: 'dashboard',
+  displayName: 'Cognos Dashboards',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Db2 Data Gate Schema
+ */
+export const DATAGATE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'datagate',
+  displayName: 'Db2 Data Gate',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * IBM MANTA Data Lineage Schema
+ */
+export const DATALINEAGE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'datalineage',
+  displayName: 'IBM MANTA Data Lineage',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Data Product Hub Schema
+ */
+export const DATAPRODUCT_SCHEMA: ComponentConfigSchema = {
+  componentName: 'dataproduct',
+  displayName: 'Data Product Hub',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -2207,6 +2357,13 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'mongodb': MONGODB_SCHEMA,
   'replication': REPLICATION_SCHEMA,
   'rstudio': RSTUDIO_SCHEMA,
+  
+  // Batch 3 - Remaining Component Schemas (5 schemas so far)
+  'bigsql': BIGSQL_SCHEMA,
+  'dashboard': DASHBOARD_SCHEMA,
+  'datagate': DATAGATE_SCHEMA,
+  'datalineage': DATALINEAGE_SCHEMA,
+  'dataproduct': DATAPRODUCT_SCHEMA,
   
   // Additional components can be added here
   // For components without specific schemas, a default schema will be used
