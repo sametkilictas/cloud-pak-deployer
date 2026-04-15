@@ -2644,6 +2644,317 @@ export const WCA_Z_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 3 - Remaining Component Schemas (Part 4 of 4 - FINAL)
+// ============================================================================
+
+/**
+ * Watson Machine Learning Accelerator Schema
+ */
+export const WML_ACCELERATOR_SCHEMA: ComponentConfigSchema = {
+  componentName: 'wml-accelerator',
+  displayName: 'Watson Machine Learning Accelerator',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'replicas',
+          label: 'Number of Replicas',
+          type: 'number',
+          required: false,
+          defaultValue: 1,
+          min: 1,
+          max: 10,
+          helpText: 'Number of WML Accelerator replicas'
+        },
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Orchestration Pipelines Schema
+ */
+export const WS_PIPELINES_SCHEMA: ComponentConfigSchema = {
+  componentName: 'ws-pipelines',
+  displayName: 'Orchestration Pipelines',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'rbsimage',
+          label: 'RBS Image',
+          type: 'select',
+          required: false,
+          defaultValue: 'rbs-ext',
+          options: [
+            { value: 'rbs-ext', label: 'RBS Extended' },
+            { value: 'rbs-std', label: 'RBS Standard' }
+          ],
+          helpText: 'Runtime base image selection'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Watson Studio Runtimes Schema
+ */
+export const WS_RUNTIMES_SCHEMA: ComponentConfigSchema = {
+  componentName: 'ws-runtimes',
+  displayName: 'Watson Studio Runtimes',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'kinds',
+          label: 'Runtime Kinds',
+          type: 'multiselect',
+          required: false,
+          defaultValue: [],
+          options: [
+            { value: 'ibm-cpd-ws-runtime-241-pygpu', label: 'Python 3.11 GPU (2.4.1)' },
+            { value: 'ibm-cpd-ws-runtime-251-pygpu', label: 'Python 3.11 GPU (2.5.1)' },
+            { value: 'ibm-cpd-ws-runtime-241-r', label: 'R 4.3 (2.4.1)' },
+            { value: 'ibm-cpd-ws-runtime-251-r', label: 'R 4.3 (2.5.1)' }
+          ],
+          helpText: 'Select runtime environments to install'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx.data Premium Schema
+ */
+export const WATSONX_DATA_PREMIUM_SCHEMA: ComponentConfigSchema = {
+  componentName: 'watsonx_data_premium',
+  displayName: 'watsonx.data Premium',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'wxd_premium_enable_models_on',
+          label: 'Enable Models On',
+          type: 'select',
+          required: false,
+          defaultValue: 'gpu',
+          options: [
+            { value: 'cpu', label: 'CPU' },
+            { value: 'gpu', label: 'GPU' }
+          ],
+          helpText: 'Hardware acceleration for AI models'
+        },
+        {
+          name: 'licenseType',
+          label: 'License Type',
+          type: 'select',
+          required: false,
+          defaultValue: 'premium',
+          options: [
+            { value: 'premium', label: 'Premium' },
+            { value: 'standard', label: 'Standard' }
+          ],
+          helpText: 'License type for watsonx.data'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * watsonx.data integration Schema
+ */
+export const WATSONX_DATAINTEGRATION_SCHEMA: ComponentConfigSchema = {
+  componentName: 'watsonx_dataintegration',
+  displayName: 'watsonx.data integration',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'installation_options',
+      title: 'Installation Options',
+      collapsible: true,
+      defaultCollapsed: true,
+      fields: [
+        {
+          name: 'enableBatchBulkETL',
+          label: 'Enable Batch/Bulk ETL',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable batch and bulk ETL capabilities'
+        },
+        {
+          name: 'enableRealtimeStreaming',
+          label: 'Enable Real-time Streaming',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable real-time data streaming'
+        },
+        {
+          name: 'enableDataObservability',
+          label: 'Enable Data Observability',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable data observability features'
+        },
+        {
+          name: 'enableUnstructuredDataIntegration',
+          label: 'Enable Unstructured Data Integration',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable integration of unstructured data'
+        },
+        {
+          name: 'enableReplication',
+          label: 'Enable Replication',
+          type: 'boolean',
+          required: false,
+          defaultValue: true,
+          helpText: 'Enable data replication capabilities'
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Scheduler Schema
+ */
+export const SCHEDULER_SCHEMA: ComponentConfigSchema = {
+  componentName: 'scheduler',
+  displayName: 'Scheduler',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'removed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -2692,7 +3003,7 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'replication': REPLICATION_SCHEMA,
   'rstudio': RSTUDIO_SCHEMA,
   
-  // Batch 3 - Remaining Component Schemas (15 schemas so far)
+  // Batch 3 - Remaining Component Schemas (21 schemas - COMPLETE!)
   'bigsql': BIGSQL_SCHEMA,
   'dashboard': DASHBOARD_SCHEMA,
   'datagate': DATAGATE_SCHEMA,
@@ -2708,9 +3019,14 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'wca': WCA_SCHEMA,
   'wca-ansible': WCA_ANSIBLE_SCHEMA,
   'wca-z': WCA_Z_SCHEMA,
+  'wml-accelerator': WML_ACCELERATOR_SCHEMA,
+  'ws-pipelines': WS_PIPELINES_SCHEMA,
+  'ws-runtimes': WS_RUNTIMES_SCHEMA,
+  'watsonx_data_premium': WATSONX_DATA_PREMIUM_SCHEMA,
+  'watsonx_dataintegration': WATSONX_DATAINTEGRATION_SCHEMA,
+  'scheduler': SCHEDULER_SCHEMA,
   
-  // Additional components can be added here
-  // For components without specific schemas, a default schema will be used
+  // All 55 components now have schemas! (excluding wca-z-ce which is not in reference-config.yaml)
 };
 
 // ============================================================================
