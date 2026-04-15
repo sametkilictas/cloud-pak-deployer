@@ -32,6 +32,7 @@ export type {
 } from './dependency.types';
 
 export * from './config.types';
+export * from './configuration.types';
 export * from './api.types';
 
 // Made with Bob

@@ -1,0 +1,267 @@
+/**
+ * ConfigurationForm Component Styles
+ */
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Error summary */
+.config-form__error-summary {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Sections container */
+.config-form__sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Individual section */
+.config-form__section {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.config-form__section-title {
+  display: block;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.config-form__section-description {
+  display: block;
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+.config-form__section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Fields container */
+.config-form__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Individual field */
+.config-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make certain fields span full width */
+.config-form__field--full-width {
+  grid-column: 1 / -1;
+}
+
+/* Accordion styling for collapsible sections */
+.config-form__sections .cds--accordion {
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.config-form__sections .cds--accordion__item {
+  border-top: none;
+}
+
+.config-form__sections .cds--accordion__heading {
+  background-color: var(--cds-layer-01);
+}
+
+.config-form__sections .cds--accordion__heading:hover {
+  background-color: var(--cds-layer-hover-01);
+}
+
+.config-form__sections .cds--accordion__content {
+  padding: 1.5rem;
+  background-color: var(--cds-layer-01);
+}
+
+/* Form actions */
+.config-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cds-border-subtle-01);
+}
+
+/* Field-specific adjustments */
+.config-form__field .cds--text-input,
+.config-form__field .cds--number-input,
+.config-form__field .cds--select,
+.config-form__field .cds--text-area {
+  width: 100%;
+}
+
+.config-form__field .cds--toggle {
+  margin-top: 0.5rem;
+}
+
+/* Number input adjustments */
+.config-form__field .cds--number-input__controls {
+  display: flex;
+}
+
+/* Multi-select adjustments */
+.config-form__field .cds--multi-select {
+  width: 100%;
+}
+
+/* Helper text styling */
+.config-form__field .cds--form__helper-text {
+  font-size: 0.75rem;
+  color: var(--cds-text-helper);
+  margin-top: 0.25rem;
+}
+
+/* Invalid field styling */
+.config-form__field .cds--text-input--invalid,
+.config-form__field .cds--number-input--invalid,
+.config-form__field .cds--select--invalid,
+.config-form__field .cds--text-area--invalid {
+  outline: 2px solid var(--cds-support-error);
+  outline-offset: -2px;
+}
+
+.config-form__field .cds--form-requirement {
+  color: var(--cds-support-error);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Disabled field styling */
+.config-form__field .cds--text-input:disabled,
+.config-form__field .cds--number-input:disabled,
+.config-form__field .cds--select:disabled,
+.config-form__field .cds--text-area:disabled,
+.config-form__field .cds--toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Label styling */
+.config-form__field .cds--label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Required field indicator */
+.config-form__field .cds--label--required::after {
+  content: ' *';
+  color: var(--cds-support-error);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .config-form__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .config-form__section {
+    padding: 1rem;
+  }
+
+  .config-form__actions {
+    flex-direction: column;
+  }
+
+  .config-form__actions button {
+    width: 100%;
+  }
+}
+
+/* Focus states */
+.config-form__field .cds--text-input:focus,
+.config-form__field .cds--number-input:focus,
+.config-form__field .cds--select:focus,
+.config-form__field .cds--text-area:focus {
+  outline: 2px solid var(--cds-focus);
+  outline-offset: -2px;
+}
+
+/* Placeholder styling */
+.config-form__field .cds--text-input::placeholder,
+.config-form__field .cds--text-area::placeholder {
+  color: var(--cds-text-placeholder);
+  opacity: 1;
+}
+
+/* Toggle label alignment */
+.config-form__field .cds--toggle__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Select dropdown styling */
+.config-form__field .cds--select-input {
+  height: 2.5rem;
+}
+
+/* Textarea styling */
+.config-form__field .cds--text-area {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+/* Number input button styling */
+.config-form__field .cds--number__control-btn {
+  background-color: var(--cds-layer-01);
+  border-left: 1px solid var(--cds-border-subtle-01);
+}
+
+.config-form__field .cds--number__control-btn:hover {
+  background-color: var(--cds-layer-hover-01);
+}
+
+/* Multi-select dropdown */
+.config-form__field .cds--list-box__menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Checkbox styling in multi-select */
+.config-form__field .cds--checkbox-label {
+  font-size: 0.875rem;
+}
+
+/* Animation for field appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.config-form__field {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Made with Bob */

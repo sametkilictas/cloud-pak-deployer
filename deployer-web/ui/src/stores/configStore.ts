@@ -6,6 +6,8 @@
 import { create } from 'zustand';
 import { CloudPakConfig, GlobalConfig, CartridgeConfig, SavedConfiguration } from '@/types';
 import yaml from 'js-yaml';
+import { generateConfigYAML } from '../services/configGenerator';
+import { useComponentStore } from './componentStore';
 
 interface ConfigStore {
   // State
@@ -117,10 +119,12 @@ export const useConfigStore = create<ConfigStore>((set, get) => ({
   },
 
   // Update component-specific configuration
+  // NOTE: componentId can be either UI id or originalName - we match by cartridge name
   updateComponentConfig: (componentId: string, config: Partial<CartridgeConfig>) => {
     set(state => {
       if (!state.configuration) return state;
 
+      // Match by cartridge name (which should be originalName)
       const cartridges = state.configuration.cp4d[0].cartridges.map(c =>
         c.name === componentId ? { ...c, ...config } : c
       );
@@ -141,6 +145,7 @@ export const useConfigStore = create<ConfigStore>((set, get) => ({
   },
 
   // Set component state (installed/removed)
+  // NOTE: componentId should be originalName to match cartridge name
   setComponentState: (componentId: string, state: 'installed' | 'removed') => {
     get().updateComponentConfig(componentId, { state });
   },
@@ -151,10 +156,31 @@ export const useConfigStore = create<ConfigStore>((set, get) => ({
     if (!configuration) return '';
 
     try {
-      return yaml.dump(configuration, {
+      // Get selected components from component store
+      const selectedComponents = useComponentStore.getState().getSelectedComponentsList();
+      
+      // Get component configurations from the configuration store
+      const componentConfigs: Record<string, any> = {};
+      if (configuration.cp4d && configuration.cp4d[0]?.cartridges) {
+        configuration.cp4d[0].cartridges.forEach(cartridge => {
+          componentConfigs[cartridge.name] = cartridge;
+        });
+      }
+      
+      // Use the proper config generator to build complete config
+      const generatedConfig = generateConfigYAML(
+        selectedComponents,
+        componentConfigs,
+        configuration.global_config,
+        configuration.openshift?.[0]
+      );
+      
+      // Convert to YAML string
+      return yaml.dump(generatedConfig, {
         indent: 2,
         lineWidth: -1,
-        noRefs: true
+        noRefs: true,
+        sortKeys: false
       });
     } catch (error) {
       console.error('Failed to generate YAML:', error);

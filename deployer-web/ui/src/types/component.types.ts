@@ -42,6 +42,8 @@ export interface Component {
   state: ComponentState;
   version?: string;
   size?: ComponentSize;
+  disabled?: boolean;
+  disabledReason?: string;
   // Dependency structure for graph visualization (simplified)
   dependencies?: {
     required: string[];

@@ -1,0 +1,143 @@
+/**
+ * TestConfigModal Styles
+ */
+
+.test-config-modal__content {
+  padding: 1rem 0;
+}
+
+.test-config-modal__header {
+  margin-bottom: 1.5rem;
+}
+
+.test-config-modal__description {
+  color: var(--cds-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.test-config-modal__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.test-config-modal__overall {
+  margin-bottom: 1.5rem;
+}
+
+.test-config-modal__tests {
+  margin-bottom: 1.5rem;
+}
+
+.test-config-modal__test-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.test-config-modal__test-title span {
+  flex: 1;
+}
+
+.test-config-modal__icon--success {
+  color: var(--cds-support-success);
+}
+
+.test-config-modal__icon--warning {
+  color: var(--cds-support-warning);
+}
+
+.test-config-modal__icon--error {
+  color: var(--cds-support-error);
+}
+
+.test-config-modal__icon--info {
+  color: var(--cds-support-info);
+}
+
+.test-config-modal__test-content {
+  padding: 1rem 0;
+}
+
+.test-config-modal__test-content > p {
+  margin: 0 0 1rem 0;
+  color: var(--cds-text-primary);
+}
+
+.test-config-modal__details {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  background: var(--cds-layer-01);
+  border-left: 3px solid var(--cds-support-error);
+  padding: 0.75rem 1rem;
+}
+
+.test-config-modal__details li {
+  color: var(--cds-text-error);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.test-config-modal__details li:first-child {
+  margin-top: 0;
+}
+
+.test-config-modal__details li:last-child {
+  margin-bottom: 0;
+}
+
+.test-config-modal__info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: var(--cds-layer-01);
+  border-left: 3px solid var(--cds-support-info);
+  color: var(--cds-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.test-config-modal__info svg {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  color: var(--cds-support-info);
+}
+
+.test-config-modal__metadata {
+  padding-top: 1rem;
+  border-top: 1px solid var(--cds-border-subtle);
+}
+
+.test-config-modal__timestamp {
+  color: var(--cds-text-secondary);
+  font-size: 0.75rem;
+  margin: 0;
+  text-align: right;
+}
+
+/* Accordion customization */
+.test-config-modal .cds--accordion__item {
+  border-top: 1px solid var(--cds-border-subtle);
+}
+
+.test-config-modal .cds--accordion__item:last-child {
+  border-bottom: 1px solid var(--cds-border-subtle);
+}
+
+.test-config-modal .cds--accordion__heading {
+  padding: 1rem 0;
+}
+
+.test-config-modal .cds--accordion__content {
+  padding: 0 0 1rem 0;
+}
+
+/* Made with Bob */

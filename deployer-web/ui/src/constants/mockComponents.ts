@@ -1618,7 +1618,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Not available in current Cloud Pak for Data version'
   },
   {
     id: 'ibm-knowledge-catalog',
@@ -2023,7 +2025,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Not supported in Cloud Pak for Data'
   },
   {
     id: 'ibm-streamsets',
@@ -2195,7 +2199,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Infrastructure component, not user-installable'
   },
   {
     id: 'synthetic-data-generator',
@@ -2377,7 +2383,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Coming soon in future release'
   },
   {
     id: 'wca-z-agentic',
@@ -2416,7 +2424,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Coming soon in future release'
   },
   {
     id: 'wca-z-code-generation',
@@ -2455,7 +2465,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Coming soon in future release'
   },
   {
     id: 'wca-z-understand',
@@ -2494,7 +2506,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Coming soon in future release'
   },
   {
     id: 'ibm-rpa',
@@ -2510,7 +2524,9 @@ export const MOCK_COMPONENTS: Component[] = [
       fields: []
     },
     state: 'removed',
-    version: '5.3.0'
+    version: '5.3.0',
+    disabled: true,
+    disabledReason: 'Not supported in Cloud Pak for Data'
   },
   {
     id: 'watson-ml-accelerator',

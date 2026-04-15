@@ -1,0 +1,215 @@
+/**
+ * YAMLPreview Component Styles
+ */
+
+.yaml-preview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Header */
+.yaml-preview__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+  background-color: var(--cds-layer-02);
+}
+
+.yaml-preview__title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.yaml-preview__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.yaml-preview__stats {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.yaml-preview__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Error notifications */
+.yaml-preview__errors {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+}
+
+/* Content area */
+.yaml-preview__content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  background-color: var(--cds-layer-01);
+}
+
+.yaml-preview__code-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.yaml-preview__code-wrapper pre {
+  margin: 0 !important;
+  height: 100%;
+}
+
+.yaml-preview__code-wrapper code {
+  font-family: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace !important;
+}
+
+/* Line with error highlighting */
+.yaml-preview__line--error {
+  border-left: 3px solid var(--cds-support-error);
+  padding-left: 0.5rem !important;
+}
+
+/* Error indicators */
+.yaml-preview__error-indicators {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  pointer-events: none;
+}
+
+.yaml-preview__error-indicator {
+  position: absolute;
+  pointer-events: all;
+  color: var(--cds-support-error);
+  cursor: help;
+  z-index: 10;
+}
+
+.yaml-preview__error-indicator svg {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Empty state */
+.yaml-preview__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: var(--cds-text-secondary);
+}
+
+.yaml-preview__empty svg {
+  margin-bottom: 1rem;
+  color: var(--cds-icon-secondary);
+}
+
+.yaml-preview__empty p {
+  margin: 0.5rem 0;
+}
+
+.yaml-preview__empty-hint {
+  font-size: 0.875rem;
+  color: var(--cds-text-helper);
+}
+
+/* Footer */
+.yaml-preview__footer {
+  display: flex;
+  gap: 2rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--cds-border-subtle-01);
+  background-color: var(--cds-layer-02);
+  font-size: 0.75rem;
+}
+
+.yaml-preview__footer-info {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.yaml-preview__footer-label {
+  color: var(--cds-text-secondary);
+  font-weight: 600;
+}
+
+.yaml-preview__footer-value {
+  color: var(--cds-text-primary);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Loading state */
+.yaml-preview--loading {
+  opacity: 0.6;
+}
+
+.yaml-preview--loading .yaml-preview__content {
+  padding: 1rem;
+}
+
+/* Scrollbar styling */
+.yaml-preview__content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.yaml-preview__content::-webkit-scrollbar-track {
+  background: var(--cds-layer-01);
+}
+
+.yaml-preview__content::-webkit-scrollbar-thumb {
+  background: var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.yaml-preview__content::-webkit-scrollbar-thumb:hover {
+  background: var(--cds-border-strong-01);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .yaml-preview__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .yaml-preview__title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .yaml-preview__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .yaml-preview__footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Dark theme adjustments */
+[data-carbon-theme="g100"] .yaml-preview__code-wrapper code,
+[data-carbon-theme="g90"] .yaml-preview__code-wrapper code {
+  background-color: #262626 !important;
+}
+
+/* Made with Bob */

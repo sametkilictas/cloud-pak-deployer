@@ -1,0 +1,249 @@
+/**
+ * GlobalConfigSection Component Styles
+ */
+
+.global-config-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+/* Header */
+.global-config-section__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+}
+
+.global-config-section__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.global-config-section__description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+/* Content */
+.global-config-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Field Groups */
+.global-config-section__group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.global-config-section__group-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+/* Fields Container */
+.global-config-section__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.global-config-section__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.global-config-section__field--full {
+  grid-column: 1 / -1;
+}
+
+/* Toggles Container */
+.global-config-section__toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.global-config-section__toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.global-config-section__toggle-help {
+  margin: 0;
+  margin-left: 3rem;
+  font-size: 0.75rem;
+  color: var(--cds-text-helper);
+  line-height: 1.4;
+}
+
+/* Accordion Content */
+.global-config-section__accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+/* Accordion Styling */
+.global-config-section .cds--accordion {
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.global-config-section .cds--accordion__item {
+  border-top: none;
+}
+
+.global-config-section .cds--accordion__heading {
+  background-color: var(--cds-layer-02);
+}
+
+.global-config-section .cds--accordion__heading:hover {
+  background-color: var(--cds-layer-hover-02);
+}
+
+.global-config-section .cds--accordion__content {
+  padding: 1.5rem;
+  background-color: var(--cds-layer-01);
+}
+
+/* Notice */
+.global-config-section__notice {
+  margin-top: 0.5rem;
+}
+
+/* Form Group Overrides */
+.global-config-section .cds--form-group {
+  margin: 0;
+}
+
+/* Input Styling */
+.global-config-section .cds--text-input,
+.global-config-section .cds--select-input {
+  width: 100%;
+}
+
+.global-config-section .cds--text-input__field-wrapper {
+  width: 100%;
+}
+
+/* Helper Text */
+.global-config-section .cds--form__helper-text {
+  font-size: 0.75rem;
+  color: var(--cds-text-helper);
+  margin-top: 0.25rem;
+}
+
+/* Invalid State */
+.global-config-section .cds--text-input--invalid,
+.global-config-section .cds--select--invalid {
+  outline: 2px solid var(--cds-support-error);
+  outline-offset: -2px;
+}
+
+.global-config-section .cds--form-requirement {
+  color: var(--cds-support-error);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Disabled State */
+.global-config-section .cds--text-input:disabled,
+.global-config-section .cds--select:disabled,
+.global-config-section .cds--toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Label Styling */
+.global-config-section .cds--label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Toggle Styling */
+.global-config-section .cds--toggle {
+  margin-top: 0;
+}
+
+.global-config-section .cds--toggle__label {
+  display: flex;
+  align-items: center;
+}
+
+/* Inline Notification Styling */
+.global-config-section .cds--inline-notification {
+  max-width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Focus States */
+.global-config-section .cds--text-input:focus,
+.global-config-section .cds--select:focus {
+  outline: 2px solid var(--cds-focus);
+  outline-offset: -2px;
+}
+
+/* Placeholder Styling */
+.global-config-section .cds--text-input::placeholder {
+  color: var(--cds-text-placeholder);
+  opacity: 1;
+}
+
+/* Select Dropdown */
+.global-config-section .cds--select-input {
+  height: 2.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .global-config-section {
+    padding: 1rem;
+  }
+
+  .global-config-section__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .global-config-section__toggle-help {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.global-config-section {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Made with Bob */

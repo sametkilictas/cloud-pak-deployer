@@ -1,12 +1,12 @@
 /**
  * Main Application Component
- * 
+ *
  * Root component that sets up routing, theme, and global providers.
  * Handles authentication flow and route protection.
  */
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { Theme } from '@carbon/react';
 import { useAuthStore } from './stores/authStore';
 import { useThemeStore } from './stores/themeStore';
@@ -15,16 +15,17 @@ import { MainLayout } from './components/layout';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ComponentSelectionPage } from './pages/ComponentSelectionPage';
+import { ConfigurationPage } from './pages/ConfigurationPage';
 
 // Placeholder page components - will be implemented
-const ConfigurationPage = () => <div className="p-4"><h1>Configuration</h1><p>Configure your deployment</p></div>;
 const DeploymentPage = () => <div className="p-4"><h1>Deployment</h1><p>Monitor deployment progress</p></div>;
 const HistoryPage = () => <div className="p-4"><h1>History</h1><p>View deployment history</p></div>;
 const DocumentationPage = () => <div className="p-4"><h1>Documentation</h1><p>Help and documentation</p></div>;
 
 /**
- * Protected Route Component
+ * Protected Route Component with Navigation
  * Redirects to login if user is not authenticated
+ * Provides navigation callback to children
  */
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -38,6 +39,29 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
   
   return <>{children}</>;
+};
+
+/**
+ * Layout Wrapper with Navigation
+ * Wraps MainLayout with navigation functionality
+ */
+interface LayoutWrapperProps {
+  currentPath: string;
+  children: React.ReactNode;
+}
+
+const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ currentPath, children }) => {
+  const navigate = useNavigate();
+  
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+  
+  return (
+    <MainLayout currentPath={currentPath} onNavigate={handleNavigate}>
+      {children}
+    </MainLayout>
+  );
 };
 
 /**
@@ -75,9 +99,9 @@ export const App: React.FC = () => {
             path={ROUTES.DASHBOARD}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.DASHBOARD}>
+                <LayoutWrapper currentPath={ROUTES.DASHBOARD}>
                   <DashboardPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -86,9 +110,9 @@ export const App: React.FC = () => {
             path={ROUTES.COMPONENTS}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.COMPONENTS}>
+                <LayoutWrapper currentPath={ROUTES.COMPONENTS}>
                   <ComponentSelectionPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -97,9 +121,9 @@ export const App: React.FC = () => {
             path={ROUTES.COMPONENTS_SELECT}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.COMPONENTS_SELECT}>
+                <LayoutWrapper currentPath={ROUTES.COMPONENTS_SELECT}>
                   <ComponentSelectionPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -108,9 +132,9 @@ export const App: React.FC = () => {
             path={ROUTES.COMPONENTS_DEPENDENCIES}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.COMPONENTS_DEPENDENCIES}>
+                <LayoutWrapper currentPath={ROUTES.COMPONENTS_DEPENDENCIES}>
                   <ComponentSelectionPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -119,9 +143,9 @@ export const App: React.FC = () => {
             path={ROUTES.CONFIGURATION}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.CONFIGURATION}>
+                <LayoutWrapper currentPath={ROUTES.CONFIGURATION}>
                   <ConfigurationPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -130,9 +154,9 @@ export const App: React.FC = () => {
             path={ROUTES.CONFIGURATION_EDIT}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.CONFIGURATION_EDIT}>
+                <LayoutWrapper currentPath={ROUTES.CONFIGURATION_EDIT}>
                   <ConfigurationPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -141,9 +165,9 @@ export const App: React.FC = () => {
             path={ROUTES.CONFIGURATION_PREVIEW}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.CONFIGURATION_PREVIEW}>
+                <LayoutWrapper currentPath={ROUTES.CONFIGURATION_PREVIEW}>
                   <ConfigurationPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -152,9 +176,9 @@ export const App: React.FC = () => {
             path={ROUTES.CONFIGURATION_VALIDATE}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.CONFIGURATION_VALIDATE}>
+                <LayoutWrapper currentPath={ROUTES.CONFIGURATION_VALIDATE}>
                   <ConfigurationPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -163,9 +187,9 @@ export const App: React.FC = () => {
             path={ROUTES.DEPLOYMENT}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.DEPLOYMENT}>
+                <LayoutWrapper currentPath={ROUTES.DEPLOYMENT}>
                   <DeploymentPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -174,9 +198,9 @@ export const App: React.FC = () => {
             path={ROUTES.DEPLOYMENT_START}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.DEPLOYMENT_START}>
+                <LayoutWrapper currentPath={ROUTES.DEPLOYMENT_START}>
                   <DeploymentPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -185,9 +209,9 @@ export const App: React.FC = () => {
             path={ROUTES.DEPLOYMENT_STATUS}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.DEPLOYMENT_STATUS}>
+                <LayoutWrapper currentPath={ROUTES.DEPLOYMENT_STATUS}>
                   <DeploymentPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -196,9 +220,9 @@ export const App: React.FC = () => {
             path={ROUTES.DEPLOYMENT_LOGS}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.DEPLOYMENT_LOGS}>
+                <LayoutWrapper currentPath={ROUTES.DEPLOYMENT_LOGS}>
                   <DeploymentPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -207,9 +231,9 @@ export const App: React.FC = () => {
             path={ROUTES.HISTORY}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.HISTORY}>
+                <LayoutWrapper currentPath={ROUTES.HISTORY}>
                   <HistoryPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />
@@ -218,9 +242,9 @@ export const App: React.FC = () => {
             path={ROUTES.DOCUMENTATION}
             element={
               <ProtectedRoute>
-                <MainLayout currentPath={ROUTES.DOCUMENTATION}>
+                <LayoutWrapper currentPath={ROUTES.DOCUMENTATION}>
                   <DocumentationPage />
-                </MainLayout>
+                </LayoutWrapper>
               </ProtectedRoute>
             }
           />

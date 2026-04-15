@@ -1,0 +1,263 @@
+/**
+ * ComponentConfigSection Component Styles
+ */
+
+.component-config-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.component-config-section--empty {
+  padding: 2rem;
+}
+
+/* Header */
+.component-config-section__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.component-config-section__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.component-config-section__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.component-config-section__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.component-config-section__description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+.component-config-section__summary {
+  display: flex;
+  gap: 2rem;
+  padding-top: 0.5rem;
+}
+
+.component-config-section__summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.component-config-section__summary-label {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+}
+
+.component-config-section__summary-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+/* Content */
+.component-config-section__content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Accordion Customization */
+.component-config-section .cds--accordion {
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.component-config-section .cds--accordion__item {
+  border-top: 1px solid var(--cds-border-subtle-01);
+}
+
+.component-config-section .cds--accordion__item:first-child {
+  border-top: none;
+}
+
+.component-config-section .cds--accordion__heading {
+  background-color: var(--cds-layer-01);
+  padding: 1rem 1.5rem;
+}
+
+.component-config-section .cds--accordion__heading:hover {
+  background-color: var(--cds-layer-hover-01);
+}
+
+.component-config-section .cds--accordion__content {
+  padding: 1.5rem;
+  background-color: var(--cds-layer-02);
+}
+
+/* Accordion Title */
+.component-config-section__accordion-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.component-config-section__component-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.component-config-section__component-tags {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Accordion Content */
+.component-config-section__accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Component Header (tags inside accordion) */
+.component-config-section__component-header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+}
+
+.component-config-section__component-description {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--cds-layer-accent-01);
+  border-left: 3px solid var(--cds-border-interactive);
+  border-radius: 4px;
+}
+
+.component-config-section__component-description svg {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  fill: var(--cds-icon-primary);
+}
+
+.component-config-section__component-description span {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--cds-text-primary);
+  line-height: 1.5;
+}
+
+.component-config-section__component-notes {
+  padding: 1rem;
+  background-color: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+}
+
+.component-config-section__component-notes h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.component-config-section__component-notes ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.component-config-section__component-notes li {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary);
+  line-height: 1.5;
+}
+
+.component-config-section__component-notes li:last-child {
+  margin-bottom: 0;
+}
+
+/* Validation Summary */
+.component-config-section__validation-summary {
+  margin-top: 1rem;
+}
+
+/* Tag Overrides */
+.component-config-section .cds--tag {
+  min-height: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .component-config-section__header {
+    padding: 1rem;
+  }
+
+  .component-config-section__title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .component-config-section__actions {
+    width: 100%;
+  }
+
+  .component-config-section__actions button {
+    flex: 1;
+  }
+
+  .component-config-section__summary {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .component-config-section__accordion-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .component-config-section .cds--accordion__heading {
+    padding: 0.75rem 1rem;
+  }
+
+  .component-config-section .cds--accordion__content {
+    padding: 1rem;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.component-config-section {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Made with Bob */

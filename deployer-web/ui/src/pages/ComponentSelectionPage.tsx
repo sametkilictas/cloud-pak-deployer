@@ -11,6 +11,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Grid,
   Column,
@@ -30,6 +31,7 @@ import { Component } from '../types';
 import './ComponentSelectionPage.css';
 
 export const ComponentSelectionPage: React.FC = () => {
+  const navigate = useNavigate();
   const {
     components,
     selectedComponents,
@@ -99,8 +101,8 @@ export const ComponentSelectionPage: React.FC = () => {
   };
 
   const handleProceedToConfiguration = () => {
-    // Navigate to configuration page
-    window.location.href = '/configuration';
+    // Navigate to configuration page using React Router
+    navigate('/configuration');
   };
 
   return (

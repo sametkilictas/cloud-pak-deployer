@@ -4,6 +4,7 @@
  */
 
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { Component, DependencyGraph, Conflict } from '@/types';
 import { DependencyResolver } from '../services/dependency/DependencyResolver';
 import { DependencyResolverEnhanced, DependencyExplanation } from '../services/dependency/DependencyResolverEnhanced';
@@ -49,7 +50,9 @@ interface ComponentStore {
   getComponentExplanation: (componentId: string) => DependencyExplanation;
 }
 
-export const useComponentStore = create<ComponentStore>((set, get) => ({
+export const useComponentStore = create<ComponentStore>()(
+  persist(
+    (set, get) => ({
   // Initial State
   components: [],
   selectedComponents: new Set(),
@@ -317,6 +320,51 @@ export const useComponentStore = create<ComponentStore>((set, get) => ({
       Array.from(selectedComponents)
     );
   }
-}));
+    }),
+    {
+      name: 'cpd-component-selection',
+      storage: {
+        getItem: (name) => {
+          const str = localStorage.getItem(name);
+          if (!str) return null;
+          const { state } = JSON.parse(str);
+          return {
+            state: {
+              ...state,
+              // Convert arrays back to Sets
+              selectedComponents: new Set(state.selectedComponents || []),
+              autoSelectedComponents: new Set(state.autoSelectedComponents || []),
+              externalDependencies: new Set(state.externalDependencies || []),
+            },
+          };
+        },
+        setItem: (name, value) => {
+          const { state } = value;
+          localStorage.setItem(
+            name,
+            JSON.stringify({
+              state: {
+                ...state,
+                // Convert Sets to arrays for storage
+                selectedComponents: Array.from(state.selectedComponents),
+                autoSelectedComponents: Array.from(state.autoSelectedComponents),
+                externalDependencies: Array.from(state.externalDependencies),
+              },
+            })
+          );
+        },
+        removeItem: (name) => localStorage.removeItem(name),
+      },
+      partialize: (state) => ({
+        selectedComponents: state.selectedComponents,
+        autoSelectedComponents: state.autoSelectedComponents,
+        dependencyGraph: state.dependencyGraph,
+        conflicts: state.conflicts,
+        explanations: state.explanations,
+        externalDependencies: state.externalDependencies,
+      }),
+    }
+  )
+);
 
 // Made with Bob

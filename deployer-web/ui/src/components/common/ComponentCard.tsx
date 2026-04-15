@@ -5,14 +5,15 @@
  */
 
 import React from 'react';
-import { Tile, Checkbox, Button, Tag } from '@carbon/react';
+import { Tile, Checkbox, Button, Tag, Tooltip } from '@carbon/react';
 import {
   Information,
   CheckmarkFilled,
   WarningAlt,
   Locked,
   Network_3,
-  DataBase
+  DataBase,
+  Misuse
 } from '@carbon/icons-react';
 import { Component } from '@/types';
 import './ComponentCard.css';
@@ -40,9 +41,11 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
   onDeselect,
   onShowInfo
 }) => {
+  const isDisabled = component.disabled || false;
+
   const handleCheckboxChange = () => {
-    if (isAutoSelected) {
-      return; // Cannot toggle auto-selected components
+    if (isAutoSelected || isDisabled) {
+      return; // Cannot toggle auto-selected or disabled components
     }
     if (isSelected) {
       onDeselect();
@@ -55,12 +58,13 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
     <Tile
       className={`component-card ${isSelected ? 'selected' : ''} ${
         isAutoSelected ? 'auto-selected' : ''
-      } ${isConflicted ? 'conflicted' : ''}`}
+      } ${isConflicted ? 'conflicted' : ''} ${isDisabled ? 'disabled' : ''}`}
     >
       {/* Status Indicator Bar */}
-      {(isSelected || isAutoSelected || isConflicted) && (
+      {(isSelected || isAutoSelected || isConflicted || isDisabled) && (
         <div className={`component-card__status-bar ${
           isConflicted ? 'status-bar--error' :
+          isDisabled ? 'status-bar--disabled' :
           isAutoSelected ? 'status-bar--info' :
           'status-bar--success'
         }`} />
@@ -69,7 +73,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
       <div className="component-card__header">
         <div className="component-card__title-section">
           <h4 className="component-card__title">{component.name}</h4>
-          {isSelected && !isConflicted && (
+          {isSelected && !isConflicted && !isDisabled && (
             <CheckmarkFilled className="component-card__check-icon" size={20} />
           )}
           {isConflicted && (
@@ -78,9 +82,19 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           {isAutoSelected && (
             <Locked className="component-card__lock-icon" size={16} />
           )}
+          {isDisabled && (
+            <Tooltip align="top" label={component.disabledReason || 'Not available'}>
+              <Misuse className="component-card__disabled-icon" size={20} />
+            </Tooltip>
+          )}
         </div>
         <div className="component-card__tags">
-          {isAutoSelected && (
+          {isDisabled && (
+            <Tag type="gray" size="sm">
+              Not Available
+            </Tag>
+          )}
+          {isAutoSelected && !isDisabled && (
             <Tag type="blue" size="sm">
               Auto-selected
             </Tag>
@@ -90,7 +104,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
               Conflict
             </Tag>
           )}
-          {component.category && (
+          {component.category && !isDisabled && (
             <Tag type="gray" size="sm">
               {component.category}
             </Tag>
@@ -130,13 +144,20 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
         </div>
       )}
 
+      {isDisabled && component.disabledReason && (
+        <div className="component-card__disabled-message">
+          <Misuse size={16} />
+          <span>{component.disabledReason}</span>
+        </div>
+      )}
+
       <div className="component-card__footer">
         <Checkbox
           id={`select-${component.id}`}
           labelText="Select"
           checked={isSelected}
           onChange={handleCheckboxChange}
-          disabled={isAutoSelected}
+          disabled={isAutoSelected || isDisabled}
         />
         <Button
           kind="ghost"
@@ -144,6 +165,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           renderIcon={Information}
           onClick={onShowInfo}
           iconDescription="View dependencies"
+          disabled={isDisabled}
         >
           Details
         </Button>
