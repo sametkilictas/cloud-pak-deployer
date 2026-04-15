@@ -2310,6 +2310,157 @@ export const DATAPRODUCT_SCHEMA: ComponentConfigSchema = {
 };
 
 // ============================================================================
+// Batch 3 - Remaining Component Schemas (Part 2 of 4)
+// ============================================================================
+
+/**
+ * Data Privacy Schema
+ */
+export const DP_SCHEMA: ComponentConfigSchema = {
+  componentName: 'dp',
+  displayName: 'Data Privacy',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Data Privacy Risk Assessment Schema
+ */
+export const DPRA_SCHEMA: ComponentConfigSchema = {
+  componentName: 'dpra',
+  displayName: 'Data Privacy Risk Assessment',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Product Master Schema
+ */
+export const PRODUCTMASTER_SCHEMA: ComponentConfigSchema = {
+  componentName: 'productmaster',
+  displayName: 'Product Master',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        createSizeField(false),
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * IBM StreamSets Schema
+ */
+export const STREAMSETS_SCHEMA: ComponentConfigSchema = {
+  componentName: 'streamsets',
+  displayName: 'IBM StreamSets',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+/**
+ * Synthetic Data Generator Schema
+ */
+export const SYNTHETICDATA_SCHEMA: ComponentConfigSchema = {
+  componentName: 'syntheticdata',
+  displayName: 'Synthetic Data Generator',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ]
+        }
+      ]
+    }
+  ],
+  supportsInstances: false,
+  supportsModels: false
+};
+
+// ============================================================================
 // Schema Registry
 // ============================================================================
 
@@ -2358,12 +2509,17 @@ export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
   'replication': REPLICATION_SCHEMA,
   'rstudio': RSTUDIO_SCHEMA,
   
-  // Batch 3 - Remaining Component Schemas (5 schemas so far)
+  // Batch 3 - Remaining Component Schemas (10 schemas so far)
   'bigsql': BIGSQL_SCHEMA,
   'dashboard': DASHBOARD_SCHEMA,
   'datagate': DATAGATE_SCHEMA,
   'datalineage': DATALINEAGE_SCHEMA,
   'dataproduct': DATAPRODUCT_SCHEMA,
+  'dp': DP_SCHEMA,
+  'dpra': DPRA_SCHEMA,
+  'productmaster': PRODUCTMASTER_SCHEMA,
+  'streamsets': STREAMSETS_SCHEMA,
+  'syntheticdata': SYNTHETICDATA_SCHEMA,
   
   // Additional components can be added here
   // For components without specific schemas, a default schema will be used
