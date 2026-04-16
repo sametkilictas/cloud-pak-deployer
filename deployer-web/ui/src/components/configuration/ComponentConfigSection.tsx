@@ -229,21 +229,30 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                       isRequired={component.required}
                       onChange={(fieldName: string, value: any) => {
                         // CRITICAL: Pass originalName to match cartridge name
-                        // Handle nested installation_options fields
+                        // Handle nested fields (installation_options, license_service, etc.)
                         const updatedConfig = { ...config };
                         
-                        // Check if this field belongs to installation_options section
-                        const installationOptionsSection = schema.sections.find(s => s.id === 'installation_options' || s.id === 'advanced' || s.id === 'features');
-                        const isInstallationOption = installationOptionsSection?.fields.some(f => f.name === fieldName);
+                        // Find which section this field belongs to
+                        let sectionId: string | null = null;
+                        for (const section of schema.sections) {
+                          if (section.fields.some(f => f.name === fieldName)) {
+                            sectionId = section.id;
+                            break;
+                          }
+                        }
                         
-                        if (isInstallationOption) {
-                          // Nest under installation_options
-                          updatedConfig.installation_options = {
-                            ...(config.installation_options || {}),
+                        // Determine if this field should be nested
+                        const nestedSections = ['installation_options', 'advanced', 'features', 'license_service'];
+                        const shouldNest = sectionId && nestedSections.includes(sectionId);
+                        
+                        if (shouldNest && sectionId) {
+                          // Nest under the section id (e.g., installation_options, license_service)
+                          updatedConfig[sectionId] = {
+                            ...(config[sectionId] || {}),
                             [fieldName]: value
                           };
                         } else {
-                          // Top-level field
+                          // Top-level field (basic section fields like state, size, etc.)
                           updatedConfig[fieldName] = value;
                         }
                         

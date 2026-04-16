@@ -63,20 +63,41 @@ export function generateCartridges(
 ): CartridgeConfig[] {
   const cartridges: CartridgeConfig[] = [];
 
-  // Always include foundation cartridges
-  cartridges.push({
+  // Always include foundation cartridges with user configuration merged
+  // cp-foundation
+  const cpFoundationUserConfig = componentConfigs['cp-foundation'] || {};
+  const cpFoundationDefaults = {
     name: 'cp-foundation',
     state: 'installed',
     scale: 'level_1',
     license_service: {
       threads_per_core: 2
     }
-  });
+  };
+  
+  // Clean up any misplaced fields in user config (e.g., threads_per_core at top level)
+  const cleanedCpFoundationConfig = { ...cpFoundationUserConfig };
+  if (cleanedCpFoundationConfig.threads_per_core !== undefined) {
+    // Move threads_per_core to license_service if it's at top level
+    if (!cleanedCpFoundationConfig.license_service) {
+      cleanedCpFoundationConfig.license_service = {};
+    }
+    cleanedCpFoundationConfig.license_service.threads_per_core = cleanedCpFoundationConfig.threads_per_core;
+    delete cleanedCpFoundationConfig.threads_per_core;
+  }
+  
+  // Use deepMerge for proper nested merging
+  const cpFoundationConfig = deepMerge(cpFoundationDefaults, cleanedCpFoundationConfig);
+  cartridges.push(cpFoundationConfig);
 
-  cartridges.push({
+  // lite
+  const liteUserConfig = componentConfigs['lite'] || {};
+  const liteDefaults = {
     name: 'lite',
     state: 'installed'
-  });
+  };
+  const liteConfig = deepMerge(liteDefaults, liteUserConfig);
+  cartridges.push(liteConfig);
 
   // Add selected components using originalName
   for (const component of selectedComponents) {
