@@ -222,6 +222,17 @@ export const ComponentSelectionPage: React.FC = () => {
       {selectedCount > 0 && (
         <div className="action-buttons">
           <Button
+            kind="danger--tertiary"
+            size="lg"
+            onClick={() => {
+              if (window.confirm('Are you sure you want to deselect all components?')) {
+                useComponentStore.getState().clearSelection();
+              }
+            }}
+          >
+            Deselect All
+          </Button>
+          <Button
             kind="primary"
             size="lg"
             onClick={handleProceedToConfiguration}
