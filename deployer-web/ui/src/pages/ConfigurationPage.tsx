@@ -373,12 +373,35 @@ export const ConfigurationPage: React.FC = () => {
               <TabPanel>
                 <div className="configuration-page__tab-content">
                   <GlobalConfigSection
-                    config={configuration?.global_config || {}}
+                    config={configuration || {}}
                     onChange={(field, value) => {
-                      // Update global config through store
-                      const updates: any = {};
-                      updates[field] = value;
-                      useConfigStore.getState().updateGlobalConfig(updates);
+                      // Handle nested field paths (e.g., "openshift.0.ocp_version")
+                      const store = useConfigStore.getState();
+                      const config = store.configuration;
+                      if (!config) return;
+
+                      const updatedConfig = JSON.parse(JSON.stringify(config));
+                      const parts = field.split('.');
+                      
+                      let target: any = updatedConfig;
+                      for (let i = 0; i < parts.length - 1; i++) {
+                        const part = parts[i];
+                        const index = parseInt(part);
+                        if (!isNaN(index)) {
+                          target = target[index];
+                        } else {
+                          if (!target[part]) target[part] = {};
+                          target = target[part];
+                        }
+                      }
+                      
+                      const lastPart = parts[parts.length - 1];
+                      target[lastPart] = value;
+                      
+                      useConfigStore.setState({
+                        configuration: updatedConfig,
+                        isDirty: true
+                      });
                     }}
                     errors={validationErrors}
                   />
