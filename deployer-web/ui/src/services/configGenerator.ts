@@ -117,11 +117,16 @@ export function generateCartridges(
     // Merge with reference defaults - defaults provide base, user config overrides
     const mergedConfig = mergeWithDefaults(component.originalName, userConfig);
     
+    // Add component name prefix to description for clarity in YAML
+    const enhancedDescription = component.description
+      ? `${component.name} - ${component.description}`
+      : component.name;
+    
     const cartridge: CartridgeConfig = {
       name: component.originalName, // ← CRITICAL: Use originalName, not id
-      description: component.description,
       state: userConfig.state || 'installed',
-      ...mergedConfig
+      ...mergedConfig,
+      description: enhancedDescription  // ← Set AFTER merge to override any default description
     };
 
     // Remove undefined values

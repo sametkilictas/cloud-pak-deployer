@@ -179,39 +179,51 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
             const isValid = validationStatus[component.id] !== false;
             const isExpanded = expandedItems.has(component.id);
 
+            // Create title with tags
+            const accordionTitle = (
+              <div className="component-config-section__accordion-title">
+                <span className="component-config-section__component-name">
+                  {component.name}
+                </span>
+                <div className="component-config-section__component-tags">
+                  {component.required && (
+                    <Tag type="purple" size="sm">
+                      Core Component
+                    </Tag>
+                  )}
+                  {component.category && (
+                    <Tag type="cool-gray" size="sm">
+                      {component.category}
+                    </Tag>
+                  )}
+                  {!isValid && (
+                    <Tag type="red" size="sm" renderIcon={WarningAlt}>
+                      Invalid
+                    </Tag>
+                  )}
+                  {isValid && (() => {
+                    // Check if component has custom configuration beyond defaults
+                    // Default fields that don't count as "configured": name, state, description, size
+                    const defaultFields = ['name', 'state', 'description', 'size'];
+                    const customFields = Object.keys(config).filter(key => !defaultFields.includes(key));
+                    return customFields.length > 0;
+                  })() && (
+                    <Tag type="green" size="sm" renderIcon={Checkmark}>
+                      Configured
+                    </Tag>
+                  )}
+                </div>
+              </div>
+            );
+
             return (
               <AccordionItem
                 key={component.id}
-                title={component.name}
+                title={accordionTitle}
                 open={isExpanded}
                 onHeadingClick={() => toggleExpanded(component.id)}
               >
                 <div className="component-config-section__accordion-content">
-                  {/* Component Header with Tags */}
-                  <div className="component-config-section__component-header">
-                    <div className="component-config-section__component-tags">
-                      {component.required && (
-                        <Tag type="purple" size="sm">
-                          Core Component
-                        </Tag>
-                      )}
-                      {component.category && (
-                        <Tag type="cool-gray" size="sm">
-                          {component.category}
-                        </Tag>
-                      )}
-                      {!isValid && (
-                        <Tag type="red" size="sm" renderIcon={WarningAlt}>
-                          Invalid
-                        </Tag>
-                      )}
-                      {isValid && Object.keys(config).length > 0 && (
-                        <Tag type="green" size="sm" renderIcon={Checkmark}>
-                          Configured
-                        </Tag>
-                      )}
-                    </div>
-                  </div>
 
                   {/* Component Description */}
                   {component.description && (

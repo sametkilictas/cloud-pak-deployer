@@ -56,9 +56,9 @@
 
 /* Fields container */
 .config-form__fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   width: 100%;
 }
 
@@ -66,11 +66,20 @@
 .config-form__field {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* Make certain fields span full width */
 .config-form__field--full-width {
-  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* Field row for side-by-side layout */
+.config-form__field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  align-items: start;
 }
 
 /* Accordion styling for collapsible sections */
@@ -114,8 +123,43 @@
   width: 100%;
 }
 
+/* Toggle field styling for better alignment */
 .config-form__field .cds--toggle {
-  margin-top: 0.5rem;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2.5rem;
+}
+
+.config-form__field .cds--toggle .cds--toggle__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.config-form__field .cds--toggle .cds--toggle__switch {
+  margin-left: auto;
+  margin-right: 0;
+  flex-shrink: 0;
+  order: 2;
+}
+
+.config-form__field .cds--toggle .cds--toggle__text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  order: 1;
+}
+
+.config-form__field .cds--toggle .cds--toggle__text--left {
+  order: 3;
+  margin-left: 0.5rem;
+}
+
+.config-form__field .cds--toggle .cds--toggle__text--right {
+  order: 3;
+  margin-left: 0.5rem;
 }
 
 /* Number input adjustments */
@@ -166,6 +210,19 @@
   font-weight: 600;
   color: var(--cds-text-primary);
   margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Consistent input heights */
+.config-form__field .cds--text-input,
+.config-form__field .cds--number-input input,
+.config-form__field .cds--select-input {
+  height: 2.5rem;
+}
+
+/* Better spacing for form groups */
+.config-form__field .cds--form-item {
+  margin-bottom: 0;
 }
 
 /* Required field indicator */
