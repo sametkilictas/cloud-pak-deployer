@@ -105,6 +105,13 @@ export function generateCartridges(
       }
     });
 
+    // Remove empty installation_options object
+    if (cartridge.installation_options &&
+        typeof cartridge.installation_options === 'object' &&
+        Object.keys(cartridge.installation_options).length === 0) {
+      delete cartridge.installation_options;
+    }
+
     cartridges.push(cartridge);
   }
 

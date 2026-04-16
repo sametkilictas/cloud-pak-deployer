@@ -12,6 +12,7 @@ import type {
 } from './dependency.types';
 
 export type ComponentCategory =
+  | 'Foundation'
   | 'AI & Machine Learning'
   | 'Data Management'
   | 'Analytics'
@@ -44,6 +45,7 @@ export interface Component {
   size?: ComponentSize;
   disabled?: boolean;
   disabledReason?: string;
+  required?: boolean; // Foundation components that must always be installed
   // Dependency structure for graph visualization (simplified)
   dependencies?: {
     required: string[];

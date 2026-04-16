@@ -4,8 +4,47 @@
  */
 
 import { Component } from '@/types';
+export const FOUNDATION_COMPONENTS: Component[] = [
+  {
+    id: 'cp-foundation',
+    name: 'Cloud Pak Foundation',
+    originalName: 'cp-foundation',
+    description: 'Core foundation services required for all Cloud Pak deployments',
+    category: 'Foundation',
+    restrictions: [],
+    externalDependencies: [],
+    serviceDependencies: [],
+    componentDependencies: [],
+    configSchema: {
+      fields: []
+    },
+    state: 'installed',
+    version: '5.3.0',
+    required: true,
+    disabled: false
+  },
+  {
+    id: 'lite',
+    name: 'Lite',
+    originalName: 'lite',
+    description: 'Lightweight services required for Cloud Pak for Data',
+    category: 'Foundation',
+    restrictions: [],
+    externalDependencies: [],
+    serviceDependencies: [],
+    componentDependencies: [],
+    configSchema: {
+      fields: []
+    },
+    state: 'installed',
+    version: '5.3.0',
+    required: true,
+    disabled: false
+  }
+];
 
-export const MOCK_COMPONENTS: Component[] = [
+
+const REGULAR_COMPONENTS: Component[] = [
   {
     id: 'watson-ml',
     name: 'Watson Machine Learning',
@@ -2600,6 +2639,13 @@ export const MOCK_COMPONENTS: Component[] = [
     state: 'removed',
     version: '5.3.0'
   }
+];
+
+// Combine foundation and regular components
+// Foundation components appear first and are pre-selected
+export const MOCK_COMPONENTS: Component[] = [
+  ...FOUNDATION_COMPONENTS,
+  ...REGULAR_COMPONENTS
 ];
 
 // Helper function to get component by ID

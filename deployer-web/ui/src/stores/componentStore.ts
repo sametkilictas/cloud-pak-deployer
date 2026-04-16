@@ -77,10 +77,15 @@ export const useComponentStore = create<ComponentStore>()(
       const resolver = new DependencyResolver(components);
       const resolverEnhanced = new DependencyResolverEnhanced(components);
 
+      // Pre-select required foundation components
+      const requiredComponents = components.filter(c => c.required);
+      const selectedIds = new Set(requiredComponents.map(c => c.id));
+
       set({
         components,
         resolver,
         resolverEnhanced,
+        selectedComponents: selectedIds,
         isLoading: false
       });
     } catch (error) {
@@ -133,7 +138,14 @@ export const useComponentStore = create<ComponentStore>()(
 
   // Deselect a component
   deselectComponent: (componentId: string) => {
-    const { selectedComponents, autoSelectedComponents, resolverEnhanced } = get();
+    const { selectedComponents, autoSelectedComponents, resolverEnhanced, components } = get();
+
+    // Cannot deselect required components
+    const component = components.find(c => c.id === componentId);
+    if (component?.required) {
+      console.warn('Cannot deselect required component:', componentId);
+      return;
+    }
 
     // Cannot deselect auto-selected components
     if (autoSelectedComponents.has(componentId)) {
@@ -179,7 +191,13 @@ export const useComponentStore = create<ComponentStore>()(
 
   // Toggle component selection
   toggleComponent: (componentId: string) => {
-    const { selectedComponents, autoSelectedComponents } = get();
+    const { selectedComponents, autoSelectedComponents, components } = get();
+
+    // Cannot toggle required components
+    const component = components.find(c => c.id === componentId);
+    if (component?.required) {
+      return;
+    }
 
     // Cannot toggle auto-selected components
     if (autoSelectedComponents.has(componentId)) {
@@ -222,10 +240,15 @@ export const useComponentStore = create<ComponentStore>()(
     });
   },
 
-  // Clear all selections
+  // Clear all selections (except required components)
   clearSelection: () => {
+    const { components } = get();
+    // Keep required components selected
+    const requiredComponents = components.filter(c => c.required);
+    const selectedIds = new Set(requiredComponents.map(c => c.id));
+    
     set({
-      selectedComponents: new Set(),
+      selectedComponents: selectedIds,
       autoSelectedComponents: new Set(),
       conflicts: [],
       explanations: {},
