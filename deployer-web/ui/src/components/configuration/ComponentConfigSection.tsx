@@ -190,6 +190,11 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                   {/* Component Header with Tags */}
                   <div className="component-config-section__component-header">
                     <div className="component-config-section__component-tags">
+                      {component.required && (
+                        <Tag type="purple" size="sm">
+                          Core Component
+                        </Tag>
+                      )}
                       {component.category && (
                         <Tag type="cool-gray" size="sm">
                           {component.category}

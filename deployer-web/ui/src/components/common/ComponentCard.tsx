@@ -89,6 +89,11 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
           )}
         </div>
         <div className="component-card__tags">
+          {component.required && (
+            <Tag type="purple" size="sm">
+              Core Component
+            </Tag>
+          )}
           {isDisabled && (
             <Tag type="gray" size="sm">
               Not Available
