@@ -1,6 +1,6 @@
 /**
  * GlobalConfigSection Component
- * 
+ *
  * Handles global configuration settings for Cloud Pak deployment.
  * Includes environment name, cloud platform, optimization settings, etc.
  */
@@ -14,7 +14,8 @@ import {
   FormGroup,
   InlineNotification,
   Accordion,
-  AccordionItem
+  AccordionItem,
+  MultiSelect
 } from '@carbon/react';
 import { Information } from '@carbon/icons-react';
 import './GlobalConfigSection.css';
@@ -32,13 +33,39 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
   errors = {},
   disabled = false
 }) => {
-  // Cloud platform options
+  // Cloud platform options (temporarily only existing-ocp is active)
   const cloudPlatforms = useMemo(() => [
     { value: 'existing-ocp', label: 'Existing OpenShift' },
-    { value: 'aws', label: 'AWS' },
-    { value: 'azure', label: 'Azure' },
-    { value: 'ibm-cloud', label: 'IBM Cloud' },
-    { value: 'vsphere', label: 'VMware vSphere' }
+    // Temporarily disabled - will be enabled in future releases
+    // { value: 'aws', label: 'AWS' },
+    // { value: 'azure', label: 'Azure' },
+    // { value: 'ibm-cloud', label: 'IBM Cloud' },
+    // { value: 'vsphere', label: 'VMware vSphere' }
+  ], []);
+
+  // CP4D Entitlement options from reference-config.yaml
+  const entitlementOptions = useMemo(() => [
+    'cpd-enterprise',
+    'cpd-standard',
+    'cognos-analytics',
+    'data-product-hub',
+    'datastage',
+    'ikc-premium',
+    'ikc-standard',
+    'openpages',
+    'planning-analytics',
+    'product-master',
+    'speech-to-text',
+    'text-to-speech',
+    'watson-assistant',
+    'watson-discovery',
+    'watsonx-ai',
+    'watsonx-code-assistant-ansible',
+    'watsonx-code-assistant-z',
+    'watsonx-data',
+    'watsonx-gov-mm',
+    'watsonx-gov-rc',
+    'watsonx-orchestrate'
   ], []);
 
   // Handle field change
@@ -77,8 +104,8 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                 <TextInput
                   id="environment_name"
                   labelText="Environment Name"
-                  value={config.environment_name || ''}
-                  onChange={(e) => handleChange('environment_name', e.target.value)}
+                  value={config.global_config?.environment_name || ''}
+                  onChange={(e) => handleChange('global_config.environment_name', e.target.value)}
                   invalid={hasError('environment_name')}
                   invalidText={getFieldError('environment_name')}
                   disabled={disabled}
@@ -92,8 +119,8 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                 <TextInput
                   id="env_id"
                   labelText="Environment ID"
-                  value={config.env_id || ''}
-                  onChange={(e) => handleChange('env_id', e.target.value)}
+                  value={config.global_config?.env_id || ''}
+                  onChange={(e) => handleChange('global_config.env_id', e.target.value)}
                   invalid={hasError('env_id')}
                   invalidText={getFieldError('env_id')}
                   disabled={disabled}
@@ -107,12 +134,12 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                 <Select
                   id="cloud_platform"
                   labelText="Cloud Platform"
-                  value={config.cloud_platform || 'existing-ocp'}
-                  onChange={(e) => handleChange('cloud_platform', e.target.value)}
+                  value={config.global_config?.cloud_platform || 'existing-ocp'}
+                  onChange={(e) => handleChange('global_config.cloud_platform', e.target.value)}
                   invalid={hasError('cloud_platform')}
                   invalidText={getFieldError('cloud_platform')}
                   disabled={disabled}
-                  helperText="Select the target cloud platform for deployment"
+                  helperText="Select the target cloud platform for deployment (currently only Existing OpenShift is supported)"
                 >
                   {cloudPlatforms.map(platform => (
                     <SelectItem
@@ -140,8 +167,8 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                       labelText="Optimize Deployment"
                       labelA="Disabled"
                       labelB="Enabled"
-                      toggled={config.optimize_deploy ?? true}
-                      onToggle={(checked) => handleChange('optimize_deploy', checked)}
+                      toggled={config.global_config?.optimize_deploy ?? true}
+                      onToggle={(checked) => handleChange('global_config.optimize_deploy', checked)}
                       disabled={disabled}
                     />
                     <p className="global-config-section__toggle-help">
@@ -156,8 +183,8 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                       labelText="Confirm Before Destroy"
                       labelA="No"
                       labelB="Yes"
-                      toggled={config.confirm_destroy ?? false}
-                      onToggle={(checked) => handleChange('confirm_destroy', checked)}
+                      toggled={config.global_config?.confirm_destroy ?? false}
+                      onToggle={(checked) => handleChange('global_config.confirm_destroy', checked)}
                       disabled={disabled}
                     />
                     <p className="global-config-section__toggle-help">
@@ -168,7 +195,7 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
               </FormGroup>
 
               {/* Warning for confirm_destroy */}
-              {config.confirm_destroy === false && (
+              {config.global_config?.confirm_destroy === false && (
                 <InlineNotification
                   kind="warning"
                   title="Warning"
@@ -270,6 +297,90 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                     <p className="global-config-section__toggle-help">
                       Enable Multi-Cloud Gateway for object storage
                     </p>
+                  </div>
+
+                  {/* MCG Sub-configuration (shown when MCG is enabled) */}
+                  {config.openshift?.[0]?.mcg?.install && (
+                    <>
+                      <div className="global-config-section__field">
+                        <Select
+                          id="mcg_storage_type"
+                          labelText="MCG Storage Type"
+                          value={config.openshift?.[0]?.mcg?.storage_type || 'storage-class'}
+                          onChange={(e) => handleChange('openshift.0.mcg.storage_type', e.target.value)}
+                          disabled={disabled}
+                          helperText="Storage type for MCG"
+                        >
+                          <SelectItem value="storage-class" text="Storage Class" />
+                          <SelectItem value="pv" text="Persistent Volume" />
+                        </Select>
+                      </div>
+
+                      <div className="global-config-section__field">
+                        <TextInput
+                          id="mcg_storage_class"
+                          labelText="MCG Storage Class"
+                          value={config.openshift?.[0]?.mcg?.storage_class || 'managed-nfs-storage'}
+                          onChange={(e) => handleChange('openshift.0.mcg.storage_class', e.target.value)}
+                          disabled={disabled}
+                          placeholder="managed-nfs-storage"
+                          helperText="Storage class name for MCG"
+                        />
+                      </div>
+                    </>
+                  )}
+
+                  {/* OpenShift AI Sub-configuration (shown when not 'no') */}
+                  {config.openshift?.[0]?.openshift_ai?.install !== 'no' && (
+                    <div className="global-config-section__field">
+                      <Select
+                        id="openshift_ai_channel"
+                        labelText="OpenShift AI Channel"
+                        value={config.openshift?.[0]?.openshift_ai?.channel || 'auto'}
+                        onChange={(e) => handleChange('openshift.0.openshift_ai.channel', e.target.value)}
+                        disabled={disabled}
+                        helperText="Update channel for OpenShift AI"
+                      >
+                        <SelectItem value="auto" text="Auto" />
+                        <SelectItem value="stable" text="Stable" />
+                        <SelectItem value="fast" text="Fast" />
+                      </Select>
+                    </div>
+                  )}
+
+                  {/* OpenShift Storage Configuration */}
+                  <div className="global-config-section__field global-config-section__field--full">
+                    <h5 style={{ marginTop: '1rem', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 600 }}>
+                      OpenShift Storage
+                    </h5>
+                  </div>
+
+                  <div className="global-config-section__field">
+                    <TextInput
+                      id="storage_name"
+                      labelText="Storage Name"
+                      value={config.openshift?.[0]?.openshift_storage?.[0]?.storage_name || 'auto-storage'}
+                      onChange={(e) => handleChange('openshift.0.openshift_storage.0.storage_name', e.target.value)}
+                      disabled={disabled}
+                      placeholder="auto-storage"
+                      helperText="Name for the storage configuration"
+                    />
+                  </div>
+
+                  <div className="global-config-section__field">
+                    <Select
+                      id="storage_type"
+                      labelText="Storage Type"
+                      value={config.openshift?.[0]?.openshift_storage?.[0]?.storage_type || 'auto'}
+                      onChange={(e) => handleChange('openshift.0.openshift_storage.0.storage_type', e.target.value)}
+                      disabled={disabled}
+                      helperText="Type of storage to configure"
+                    >
+                      <SelectItem value="auto" text="Auto" />
+                      <SelectItem value="ocs" text="OpenShift Container Storage" />
+                      <SelectItem value="nfs" text="NFS" />
+                      <SelectItem value="portworx" text="Portworx" />
+                    </Select>
                   </div>
                 </div>
               </FormGroup>
@@ -410,6 +521,26 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                     />
                     <p className="global-config-section__toggle-help">
                       Install day 0 patches during deployment
+                    </p>
+                  </div>
+
+                  {/* CP4D Entitlement */}
+                  <div className="global-config-section__field global-config-section__field--full">
+                    <MultiSelect
+                      id="cp4d_entitlement"
+                      titleText="CP4D Entitlements"
+                      label="Select entitlements"
+                      items={entitlementOptions.map(opt => ({ id: opt, label: opt }))}
+                      itemToString={(item) => item?.label || ''}
+                      initialSelectedItems={(config.cp4d?.[0]?.cp4d_entitlement || ['cpd-enterprise']).map((e: string) => ({ id: e, label: e }))}
+                      onChange={(e: any) => {
+                        const selected = (e.selectedItems || []).map((item: any) => item.id);
+                        handleChange('cp4d.0.cp4d_entitlement', selected);
+                      }}
+                      disabled={disabled}
+                    />
+                    <p className="global-config-section__toggle-help">
+                      Select one or more entitlements for your deployment (from reference-config.yaml)
                     </p>
                   </div>
                 </div>
