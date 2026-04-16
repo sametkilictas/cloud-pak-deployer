@@ -99,12 +99,14 @@
   gap: 1.5rem;
   flex: 1;
   min-height: 0;
+  align-items: stretch;
 }
 
 .configuration-page__panel {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  height: 100%;
   background-color: var(--cds-layer-01);
   border: 1px solid var(--cds-border-subtle-01);
   border-radius: 4px;
@@ -118,6 +120,7 @@
 .configuration-page__panel--right {
   position: sticky;
   top: 0;
+  height: 100%;
 }
 
 .configuration-page__tab-content {
