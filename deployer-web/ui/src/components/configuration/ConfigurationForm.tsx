@@ -38,6 +38,7 @@ interface ConfigurationFormProps {
   errors?: Record<string, string[]>;
   disabled?: boolean;
   showValidation?: boolean;
+  isRequired?: boolean;
 }
 
 export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({
@@ -47,7 +48,8 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({
   onValidate,
   errors = {},
   disabled = false,
-  showValidation = true
+  showValidation = true,
+  isRequired = false
 }) => {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
@@ -172,13 +174,20 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({
             onChange={(e) => handleFieldChange(field, e.target.value)}
           >
             <SelectItem value="" text="Select an option" />
-            {field.options?.map(option => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                text={option.label}
-              />
-            ))}
+            {field.options?.map(option => {
+              // Disable "removed" option for required components on state field
+              const isRemovedOption = field.name === 'state' && option.value === 'removed';
+              const shouldDisable = isRequired && isRemovedOption;
+              
+              return (
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  text={option.label}
+                  disabled={shouldDisable}
+                />
+              );
+            })}
           </Select>
         );
 

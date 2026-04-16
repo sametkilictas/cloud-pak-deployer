@@ -221,6 +221,7 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                     <ConfigurationForm
                       sections={schema.sections}
                       values={config}
+                      isRequired={component.required}
                       onChange={(fieldName: string, value: any) => {
                         // CRITICAL: Pass originalName to match cartridge name
                         // Handle nested installation_options fields
