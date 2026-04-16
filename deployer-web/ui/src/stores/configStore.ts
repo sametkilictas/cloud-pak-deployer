@@ -167,12 +167,28 @@ export const useConfigStore = create<ConfigStore>((set, get) => ({
         });
       }
       
+      // Extract cp4d config without cartridges (they'll be added by generator)
+      const cp4dConfig = configuration.cp4d?.[0] ? {
+        project: configuration.cp4d[0].project,
+        openshift_cluster_name: configuration.cp4d[0].openshift_cluster_name,
+        cp4d_version: configuration.cp4d[0].cp4d_version,
+        cp4d_entitlement: configuration.cp4d[0].cp4d_entitlement,
+        cp4d_production_license: configuration.cp4d[0].cp4d_production_license,
+        accept_licenses: configuration.cp4d[0].accept_licenses,
+        db2u_limited_privileges: configuration.cp4d[0].db2u_limited_privileges,
+        operators_project: configuration.cp4d[0].operators_project,
+        ibm_cert_manager: configuration.cp4d[0].ibm_cert_manager,
+        install_day0_patch: configuration.cp4d[0].install_day0_patch,
+        state: configuration.cp4d[0].state
+      } : undefined;
+      
       // Use the proper config generator to build complete config
       const generatedConfig = generateConfigYAML(
         selectedComponents,
         componentConfigs,
         configuration.global_config,
-        configuration.openshift?.[0]
+        configuration.openshift?.[0],
+        cp4dConfig
       );
       
       // Convert to YAML string

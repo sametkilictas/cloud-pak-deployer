@@ -124,65 +124,101 @@ export function generateCartridges(
 }
 
 /**
+ * Deep merge helper function
+ */
+function deepMerge(target: any, source: any): any {
+  const output = { ...target };
+  
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach(key => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          output[key] = source[key];
+        } else {
+          output[key] = deepMerge(target[key], source[key]);
+        }
+      } else {
+        output[key] = source[key];
+      }
+    });
+  }
+  
+  return output;
+}
+
+function isObject(item: any): boolean {
+  return item && typeof item === 'object' && !Array.isArray(item);
+}
+
+/**
  * Generate complete config.yaml structure
  */
 export function generateConfigYAML(
   selectedComponents: Component[],
   componentConfigs: Record<string, any>,
   globalConfig?: Partial<GlobalConfig>,
-  openshiftConfig?: Partial<OpenShiftConfig>
+  openshiftConfig?: Partial<OpenShiftConfig>,
+  cp4dConfig?: any
 ): ConfigYAML {
   const cartridges = generateCartridges(selectedComponents, componentConfigs);
 
-  const config: ConfigYAML = {
-    global_config: {
-      environment_name: globalConfig?.environment_name || 'demo',
-      cloud_platform: globalConfig?.cloud_platform || 'existing-ocp',
-      confirm_destroy: globalConfig?.confirm_destroy ?? false,
-      optimize_deploy: globalConfig?.optimize_deploy ?? true,
-      env_id: globalConfig?.env_id || 'cpd-demo',
-      ...globalConfig
+  // Default configurations
+  const defaultGlobalConfig = {
+    environment_name: 'demo',
+    cloud_platform: 'existing-ocp',
+    confirm_destroy: false,
+    optimize_deploy: true,
+    env_id: 'cpd-demo'
+  };
+
+  const defaultOpenshiftConfig = {
+    name: '{{ env_id }}',
+    ocp_version: 'detect',
+    cluster_name: '{{ env_id }}',
+    domain_name: 'example.com',
+    mcg: {
+      install: false,
+      storage_type: 'storage-class',
+      storage_class: 'managed-nfs-storage'
     },
-    openshift: [
+    gpu: {
+      install: 'auto'
+    },
+    openshift_ai: {
+      install: 'auto',
+      channel: 'auto'
+    },
+    openshift_storage: [
       {
-        name: openshiftConfig?.name || '{{ env_id }}',
-        ocp_version: openshiftConfig?.ocp_version || 'detect',
-        cluster_name: openshiftConfig?.cluster_name || '{{ env_id }}',
-        domain_name: openshiftConfig?.domain_name || 'example.com',
-        mcg: {
-          install: false,
-          storage_type: 'storage-class',
-          storage_class: 'managed-nfs-storage'
-        },
-        gpu: {
-          install: 'auto'
-        },
-        openshift_ai: {
-          install: 'auto',
-          channel: 'auto'
-        },
-        openshift_storage: [
-          {
-            storage_name: 'auto-storage',
-            storage_type: 'auto'
-          }
-        ],
-        ...openshiftConfig
+        storage_name: 'auto-storage',
+        storage_type: 'auto'
       }
+    ]
+  };
+
+  const defaultCp4dConfig = {
+    project: 'cpd',
+    openshift_cluster_name: '{{ env_id }}',
+    cp4d_version: 'latest',
+    cp4d_entitlement: ['cpd-enterprise'],
+    cp4d_production_license: true,
+    accept_licenses: false,
+    db2u_limited_privileges: false,
+    operators_project: 'cpd-operators',
+    ibm_cert_manager: false,
+    install_day0_patch: true,
+    state: 'installed'
+  };
+
+  // Merge user config with defaults (user config takes precedence)
+  const config: ConfigYAML = {
+    global_config: deepMerge(defaultGlobalConfig, globalConfig || {}),
+    openshift: [
+      deepMerge(defaultOpenshiftConfig, openshiftConfig || {})
     ],
     cp4d: [
       {
-        project: 'cpd',
-        openshift_cluster_name: '{{ env_id }}',
-        cp4d_version: 'latest',
-        cp4d_entitlement: ['cpd-enterprise'],
-        cp4d_production_license: true,
-        accept_licenses: false,
-        db2u_limited_privileges: false,
-        operators_project: 'cpd-operators',
-        ibm_cert_manager: false,
-        install_day0_patch: true,
-        state: 'installed',
+        ...deepMerge(defaultCp4dConfig, cp4dConfig || {}),
         cartridges
       }
     ]
