@@ -10,9 +10,17 @@
 
 /* Page Header */
 .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 2px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.page-header-content {
+  flex: 1;
 }
 
 .page-header h1 {
@@ -27,6 +35,12 @@
   color: var(--cds-text-secondary, #525252);
   margin: 0;
   line-height: 1.6;
+}
+
+.page-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 /* Selection Summary */
@@ -209,6 +223,19 @@
 
 /* Responsive Design */
 @media (max-width: 672px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-header-actions {
+    width: 100%;
+  }
+
+  .page-header-actions .cds--btn {
+    width: 100%;
+  }
+
   .page-header h1 {
     font-size: 1.75rem;
   }

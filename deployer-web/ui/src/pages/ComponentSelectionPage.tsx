@@ -109,11 +109,28 @@ export const ComponentSelectionPage: React.FC = () => {
     <div className="component-selection-page">
       {/* Page Header */}
       <div className="page-header">
-        <h1>Select Components</h1>
-        <p className="page-subtitle">
-          Choose the Cloud Pak for Data components you want to deploy. 
-          Dependencies will be automatically selected.
-        </p>
+        <div className="page-header-content">
+          <h1>Select Components</h1>
+          <p className="page-subtitle">
+            Choose the Cloud Pak for Data components you want to deploy.
+            Dependencies will be automatically selected.
+          </p>
+        </div>
+        {selectedCount > 0 && (
+          <div className="page-header-actions">
+            <Button
+              kind="danger--tertiary"
+              size="md"
+              onClick={() => {
+                if (window.confirm('Are you sure you want to deselect all components?')) {
+                  useComponentStore.getState().clearSelection();
+                }
+              }}
+            >
+              Deselect All
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Selection Summary */}
@@ -221,17 +238,6 @@ export const ComponentSelectionPage: React.FC = () => {
       {/* Action Buttons */}
       {selectedCount > 0 && (
         <div className="action-buttons">
-          <Button
-            kind="danger--tertiary"
-            size="lg"
-            onClick={() => {
-              if (window.confirm('Are you sure you want to deselect all components?')) {
-                useComponentStore.getState().clearSelection();
-              }
-            }}
-          >
-            Deselect All
-          </Button>
           <Button
             kind="primary"
             size="lg"
