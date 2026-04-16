@@ -99,14 +99,13 @@
   gap: 1.5rem;
   flex: 1;
   min-height: 0;
-  align-items: stretch;
+  align-items: start;
 }
 
 .configuration-page__panel {
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  height: 100%;
+  min-height: 600px;
   background-color: var(--cds-layer-01);
   border: 1px solid var(--cds-border-subtle-01);
   border-radius: 4px;
@@ -115,12 +114,15 @@
 
 .configuration-page__panel--left {
   overflow-y: auto;
+  height: auto;
 }
 
 .configuration-page__panel--right {
   position: sticky;
-  top: 0;
-  height: 100%;
+  top: 2rem;
+  height: fit-content;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
 }
 
 .configuration-page__tab-content {
