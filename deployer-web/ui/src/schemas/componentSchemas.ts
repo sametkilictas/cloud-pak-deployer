@@ -133,6 +133,100 @@ const createInstanceDescriptionField = (defaultDescription: string): FormFieldSc
 // ============================================================================
 
 /**
+ * CP Foundation Schema
+ * Core foundation component required for all Cloud Pak for Data deployments
+ */
+export const CP_FOUNDATION_SCHEMA: ComponentConfigSchema = {
+  componentName: 'cp-foundation',
+  displayName: 'Cloud Pak Foundation',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      description: 'Core foundation settings',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ],
+          helpText: 'Installation state (required component - cannot be removed)',
+        },
+        {
+          name: 'scale',
+          label: 'Scale',
+          type: 'select',
+          required: false,
+          defaultValue: 'level_1',
+          options: [
+            { value: 'level_1', label: 'Level 1' },
+            { value: 'level_2', label: 'Level 2' },
+            { value: 'level_3', label: 'Level 3' }
+          ],
+          helpText: 'Foundation scale level for resource allocation',
+        }
+      ]
+    },
+    {
+      id: 'license_service',
+      title: 'License Service',
+      description: 'License service configuration',
+      fields: [
+        {
+          name: 'threads_per_core',
+          label: 'Threads Per Core',
+          type: 'number',
+          required: false,
+          defaultValue: 2,
+          min: 1,
+          max: 4,
+          helpText: 'Number of threads per CPU core for license calculation',
+          validation: {
+            min: { value: 1, message: 'Must be at least 1' },
+            max: { value: 4, message: 'Cannot exceed 4' }
+          }
+        }
+      ]
+    }
+  ]
+};
+
+/**
+ * Lite Schema
+ * Lite component required for all Cloud Pak for Data deployments
+ */
+export const LITE_SCHEMA: ComponentConfigSchema = {
+  componentName: 'lite',
+  displayName: 'Lite',
+  sections: [
+    {
+      id: 'basic',
+      title: 'Basic Configuration',
+      description: 'Lite component settings',
+      fields: [
+        {
+          name: 'state',
+          label: 'State',
+          type: 'select',
+          required: true,
+          defaultValue: 'installed',
+          options: [
+            { value: 'installed', label: 'Installed' },
+            { value: 'removed', label: 'Removed' }
+          ],
+          helpText: 'Installation state (required component - cannot be removed)',
+        }
+      ]
+    }
+  ]
+};
+
+/**
  * Watson Studio (ws) Schema
  */
 export const WS_SCHEMA: ComponentConfigSchema = {
@@ -2963,6 +3057,10 @@ export const SCHEDULER_SCHEMA: ComponentConfigSchema = {
  * Maps component names to their configuration schemas
  */
 export const COMPONENT_SCHEMAS: Record<string, ComponentConfigSchema> = {
+  // Foundation Components (Required)
+  'cp-foundation': CP_FOUNDATION_SCHEMA,
+  'lite': LITE_SCHEMA,
+  
   // Core Components
   'ws': WS_SCHEMA,
   'wml': WML_SCHEMA,
