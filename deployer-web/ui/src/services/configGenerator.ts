@@ -85,6 +85,11 @@ export function generateCartridges(
       continue;
     }
 
+    // Skip foundation components (already added above)
+    if (component.originalName === 'cp-foundation' || component.originalName === 'lite') {
+      continue;
+    }
+
     // Get user configuration (if any)
     const userConfig = componentConfigs[component.originalName] || {};
     
