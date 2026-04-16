@@ -1,0 +1,310 @@
+/**
+ * Deployment Page Styles
+ */
+
+.deployment-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.deployment-page__header {
+  margin-bottom: 2rem;
+}
+
+.deployment-page__header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--cds-text-primary);
+}
+
+.deployment-page__subtitle {
+  font-size: 1rem;
+  color: var(--cds-text-secondary);
+  margin: 0;
+}
+
+/* Pre-Deployment Summary */
+.deployment-page__pre-deployment {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.deployment-summary-tile {
+  padding: 2rem;
+}
+
+.deployment-summary-tile h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--cds-text-primary);
+}
+
+.deployment-summary__section {
+  margin-bottom: 2rem;
+}
+
+.deployment-summary__section h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--cds-text-primary);
+}
+
+.deployment-summary__components {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.deployment-summary__config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.deployment-summary__config .config-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.deployment-summary__config .label {
+  font-weight: 600;
+  min-width: 120px;
+  color: var(--cds-text-secondary);
+}
+
+.deployment-summary__config .value {
+  color: var(--cds-text-primary);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.deployment-summary__actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--cds-border-subtle);
+}
+
+/* Active Deployment */
+.deployment-page__active {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.deployment-progress-tile {
+  padding: 2rem;
+}
+
+.deployment-progress__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.deployment-progress__header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cds-text-primary);
+}
+
+.deployment-progress__bar {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.deployment-progress__bar .progress-percentage {
+  position: absolute;
+  right: 0;
+  top: -1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.deployment-progress__stage {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--cds-layer-01);
+  border-radius: 4px;
+}
+
+.deployment-progress__stage .stage-label {
+  font-weight: 600;
+  color: var(--cds-text-secondary);
+  margin: 0;
+}
+
+.deployment-progress__stage .stage-value {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--cds-text-primary);
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.deployment-progress__actions {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cds-border-subtle);
+}
+
+.deployment-logs-section {
+  margin-top: 1.5rem;
+}
+
+/* Post-Deployment */
+.deployment-page__post-deployment {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.deployment-result-tile {
+  padding: 2rem;
+}
+
+.deployment-result-tile--success {
+  border-left: 4px solid var(--cds-support-success);
+}
+
+.deployment-result-tile--error {
+  border-left: 4px solid var(--cds-support-error);
+}
+
+.deployment-result__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.deployment-result__header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cds-text-primary);
+}
+
+.result-icon {
+  flex-shrink: 0;
+}
+
+.result-icon--success {
+  color: var(--cds-support-success);
+}
+
+.result-icon--error {
+  color: var(--cds-support-error);
+}
+
+.deployment-result__credentials {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--cds-layer-01);
+  border-radius: 4px;
+}
+
+.deployment-result__credentials h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--cds-text-primary);
+}
+
+.credentials-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.credential-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.credential-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-secondary);
+}
+
+.credential-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.credential-value code {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  background: var(--cds-layer-02);
+  border: 1px solid var(--cds-border-subtle);
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--cds-text-primary);
+}
+
+.deployment-result__actions {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cds-border-subtle);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .deployment-page {
+    padding: 1rem;
+  }
+
+  .deployment-page__header h1 {
+    font-size: 1.5rem;
+  }
+
+  .deployment-summary__actions,
+  .deployment-progress__actions,
+  .deployment-result__actions {
+    flex-direction: column;
+  }
+
+  .deployment-summary__actions button,
+  .deployment-progress__actions button,
+  .deployment-result__actions button {
+    width: 100%;
+  }
+
+  .deployment-progress__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .deployment-progress__stage {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Dark Mode Adjustments */
+[data-carbon-theme="g100"] .deployment-summary__config .value,
+[data-carbon-theme="g100"] .deployment-progress__stage .stage-value,
+[data-carbon-theme="g100"] .credential-value code {
+  color: var(--cds-text-primary);
+}
+
+/* Made with Bob */

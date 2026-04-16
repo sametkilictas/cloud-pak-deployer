@@ -100,56 +100,50 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
           <FormGroup legendText="">
             <div className="global-config-section__fields">
               {/* Environment Name */}
-              <div className="global-config-section__field">
-                <TextInput
-                  id="environment_name"
-                  labelText="Environment Name"
-                  value={config.global_config?.environment_name || ''}
-                  onChange={(e) => handleChange('global_config.environment_name', e.target.value)}
-                  invalid={hasError('environment_name')}
-                  invalidText={getFieldError('environment_name')}
-                  disabled={disabled}
-                  placeholder="e.g., demo, production, development"
-                  helperText="A descriptive name for this deployment environment"
-                />
-              </div>
+              <TextInput
+                id="environment_name"
+                labelText="Environment Name"
+                value={config.global_config?.environment_name || ''}
+                onChange={(e) => handleChange('global_config.environment_name', e.target.value)}
+                invalid={hasError('environment_name')}
+                invalidText={getFieldError('environment_name')}
+                disabled={disabled}
+                placeholder="e.g., demo, production, development"
+                helperText="A descriptive name for this deployment environment"
+              />
 
               {/* Environment ID */}
-              <div className="global-config-section__field">
-                <TextInput
-                  id="env_id"
-                  labelText="Environment ID"
-                  value={config.global_config?.env_id || ''}
-                  onChange={(e) => handleChange('global_config.env_id', e.target.value)}
-                  invalid={hasError('env_id')}
-                  invalidText={getFieldError('env_id')}
-                  disabled={disabled}
-                  placeholder="e.g., cpd-demo"
-                  helperText="Unique identifier for this environment (lowercase, alphanumeric with hyphens)"
-                />
-              </div>
+              <TextInput
+                id="env_id"
+                labelText="Environment ID"
+                value={config.global_config?.env_id || ''}
+                onChange={(e) => handleChange('global_config.env_id', e.target.value)}
+                invalid={hasError('env_id')}
+                invalidText={getFieldError('env_id')}
+                disabled={disabled}
+                placeholder="e.g., cpd-demo"
+                helperText="Unique identifier for this environment (lowercase, alphanumeric with hyphens)"
+              />
 
               {/* Cloud Platform */}
-              <div className="global-config-section__field global-config-section__field--full">
-                <Select
-                  id="cloud_platform"
-                  labelText="Cloud Platform"
-                  value={config.global_config?.cloud_platform || 'existing-ocp'}
-                  onChange={(e) => handleChange('global_config.cloud_platform', e.target.value)}
-                  invalid={hasError('cloud_platform')}
-                  invalidText={getFieldError('cloud_platform')}
-                  disabled={disabled}
-                  helperText="Select the target cloud platform for deployment (currently only Existing OpenShift is supported)"
-                >
-                  {cloudPlatforms.map(platform => (
-                    <SelectItem
-                      key={platform.value}
-                      value={platform.value}
-                      text={platform.label}
-                    />
-                  ))}
-                </Select>
-              </div>
+              <Select
+                id="cloud_platform"
+                labelText="Cloud Platform"
+                value={config.global_config?.cloud_platform || 'existing-ocp'}
+                onChange={(e) => handleChange('global_config.cloud_platform', e.target.value)}
+                invalid={hasError('cloud_platform')}
+                invalidText={getFieldError('cloud_platform')}
+                disabled={disabled}
+                helperText="Select the target cloud platform for deployment (currently only Existing OpenShift is supported)"
+              >
+                {cloudPlatforms.map(platform => (
+                  <SelectItem
+                    key={platform.value}
+                    value={platform.value}
+                    text={platform.label}
+                  />
+                ))}
+              </Select>
             </div>
           </FormGroup>
         </div>
@@ -159,37 +153,47 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
           <AccordionItem title="Deployment Options" open={true}>
             <div className="global-config-section__accordion-content">
               <FormGroup legendText="">
-                <div className="global-config-section__toggles">
+                <div className="global-config-section__fields">
                   {/* Optimize Deploy */}
-                  <div className="global-config-section__toggle">
-                    <Toggle
-                      id="optimize_deploy"
-                      labelText="Optimize Deployment"
-                      labelA="Disabled"
-                      labelB="Enabled"
-                      toggled={config.global_config?.optimize_deploy ?? true}
-                      onToggle={(checked) => handleChange('global_config.optimize_deploy', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Enable deployment optimizations for faster installation
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">Optimize Deployment</span>
+                        <p className="global-config-section__toggle-help">
+                          Enable deployment optimizations for faster installation
+                        </p>
+                      </div>
+                      <Toggle
+                        id="optimize_deploy"
+                        labelText=""
+                        labelA="Disabled"
+                        labelB="Enabled"
+                        toggled={config.global_config?.optimize_deploy ?? true}
+                        onToggle={(checked) => handleChange('global_config.optimize_deploy', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* Confirm Destroy */}
-                  <div className="global-config-section__toggle">
-                    <Toggle
-                      id="confirm_destroy"
-                      labelText="Confirm Before Destroy"
-                      labelA="No"
-                      labelB="Yes"
-                      toggled={config.global_config?.confirm_destroy ?? false}
-                      onToggle={(checked) => handleChange('global_config.confirm_destroy', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Require confirmation before destroying resources
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">Confirm Before Destroy</span>
+                        <p className="global-config-section__toggle-help">
+                          Require confirmation before destroying resources
+                        </p>
+                      </div>
+                      <Toggle
+                        id="confirm_destroy"
+                        labelText=""
+                        labelA="No"
+                        labelB="Yes"
+                        toggled={config.global_config?.confirm_destroy ?? false}
+                        onToggle={(checked) => handleChange('global_config.confirm_destroy', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
                 </div>
               </FormGroup>
@@ -213,175 +217,158 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
               <FormGroup legendText="">
                 <div className="global-config-section__fields">
                   {/* OCP Version */}
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="ocp_version"
-                      labelText="OCP Version"
-                      value={config.openshift?.[0]?.ocp_version || 'detect'}
-                      onChange={(e) => handleChange('openshift.0.ocp_version', e.target.value)}
-                      disabled={disabled}
-                      placeholder="detect or specific version"
-                      helperText="OpenShift version (use 'detect' for auto-detection)"
-                    />
-                  </div>
+                  <TextInput
+                    id="ocp_version"
+                    labelText="OCP Version"
+                    value={config.openshift?.[0]?.ocp_version || 'detect'}
+                    onChange={(e) => handleChange('openshift.0.ocp_version', e.target.value)}
+                    disabled={disabled}
+                    placeholder="detect or specific version"
+                    helperText="OpenShift version (use 'detect' for auto-detection)"
+                  />
 
                   {/* Cluster Name */}
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="cluster_name"
-                      labelText="Cluster Name"
-                      value={config.openshift?.[0]?.cluster_name || '{{ env_id }}'}
-                      onChange={(e) => handleChange('openshift.0.cluster_name', e.target.value)}
-                      disabled={disabled}
-                      placeholder="{{ env_id }}"
-                      helperText="OpenShift cluster name"
-                    />
-                  </div>
+                  <TextInput
+                    id="cluster_name"
+                    labelText="Cluster Name"
+                    value={config.openshift?.[0]?.cluster_name || '{{ env_id }}'}
+                    onChange={(e) => handleChange('openshift.0.cluster_name', e.target.value)}
+                    disabled={disabled}
+                    placeholder="{{ env_id }}"
+                    helperText="OpenShift cluster name"
+                  />
 
                   {/* Domain Name */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <TextInput
-                      id="domain_name"
-                      labelText="Domain Name"
-                      value={config.openshift?.[0]?.domain_name || 'example.com'}
-                      onChange={(e) => handleChange('openshift.0.domain_name', e.target.value)}
-                      disabled={disabled}
-                      placeholder="example.com"
-                      helperText="Domain name for the cluster"
-                    />
-                  </div>
+                  <TextInput
+                    id="domain_name"
+                    labelText="Domain Name"
+                    value={config.openshift?.[0]?.domain_name || 'example.com'}
+                    onChange={(e) => handleChange('openshift.0.domain_name', e.target.value)}
+                    disabled={disabled}
+                    placeholder="example.com"
+                    helperText="Domain name for the cluster"
+                  />
 
                   {/* GPU Install */}
-                  <div className="global-config-section__field">
-                    <Select
-                      id="gpu_install"
-                      labelText="GPU Installation"
-                      value={config.openshift?.[0]?.gpu?.install || 'auto'}
-                      onChange={(e) => handleChange('openshift.0.gpu.install', e.target.value)}
-                      disabled={disabled}
-                      helperText="GPU operator installation"
-                    >
-                      <SelectItem value="auto" text="Auto" />
-                      <SelectItem value="yes" text="Yes" />
-                      <SelectItem value="no" text="No" />
-                    </Select>
-                  </div>
+                  <Select
+                    id="gpu_install"
+                    labelText="GPU Installation"
+                    value={config.openshift?.[0]?.gpu?.install || 'auto'}
+                    onChange={(e) => handleChange('openshift.0.gpu.install', e.target.value)}
+                    disabled={disabled}
+                    helperText="GPU operator installation"
+                  >
+                    <SelectItem value="auto" text="Auto" />
+                    <SelectItem value="yes" text="Yes" />
+                    <SelectItem value="no" text="No" />
+                  </Select>
 
                   {/* OpenShift AI Install */}
-                  <div className="global-config-section__field">
-                    <Select
-                      id="openshift_ai_install"
-                      labelText="OpenShift AI"
-                      value={config.openshift?.[0]?.openshift_ai?.install || 'auto'}
-                      onChange={(e) => handleChange('openshift.0.openshift_ai.install', e.target.value)}
-                      disabled={disabled}
-                      helperText="OpenShift AI installation"
-                    >
-                      <SelectItem value="auto" text="Auto" />
-                      <SelectItem value="yes" text="Yes" />
-                      <SelectItem value="no" text="No" />
-                    </Select>
-                  </div>
+                  <Select
+                    id="openshift_ai_install"
+                    labelText="OpenShift AI"
+                    value={config.openshift?.[0]?.openshift_ai?.install || 'auto'}
+                    onChange={(e) => handleChange('openshift.0.openshift_ai.install', e.target.value)}
+                    disabled={disabled}
+                    helperText="OpenShift AI installation"
+                  >
+                    <SelectItem value="auto" text="Auto" />
+                    <SelectItem value="yes" text="Yes" />
+                    <SelectItem value="no" text="No" />
+                  </Select>
 
                   {/* MCG Install */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <Toggle
-                      id="mcg_install"
-                      labelText="Multi-Cloud Gateway (MCG)"
-                      labelA="Disabled"
-                      labelB="Enabled"
-                      toggled={config.openshift?.[0]?.mcg?.install ?? false}
-                      onToggle={(checked) => handleChange('openshift.0.mcg.install', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Enable Multi-Cloud Gateway for object storage
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">Multi-Cloud Gateway (MCG)</span>
+                        <p className="global-config-section__toggle-help">
+                          Enable Multi-Cloud Gateway for object storage
+                        </p>
+                      </div>
+                      <Toggle
+                        id="mcg_install"
+                        labelText=""
+                        labelA="Disabled"
+                        labelB="Enabled"
+                        toggled={config.openshift?.[0]?.mcg?.install ?? false}
+                        onToggle={(checked) => handleChange('openshift.0.mcg.install', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* MCG Sub-configuration (shown when MCG is enabled) */}
                   {config.openshift?.[0]?.mcg?.install && (
                     <>
-                      <div className="global-config-section__field">
-                        <Select
-                          id="mcg_storage_type"
-                          labelText="MCG Storage Type"
-                          value={config.openshift?.[0]?.mcg?.storage_type || 'storage-class'}
-                          onChange={(e) => handleChange('openshift.0.mcg.storage_type', e.target.value)}
-                          disabled={disabled}
-                          helperText="Storage type for MCG"
-                        >
-                          <SelectItem value="storage-class" text="Storage Class" />
-                          <SelectItem value="pv" text="Persistent Volume" />
-                        </Select>
-                      </div>
+                      <Select
+                        id="mcg_storage_type"
+                        labelText="MCG Storage Type"
+                        value={config.openshift?.[0]?.mcg?.storage_type || 'storage-class'}
+                        onChange={(e) => handleChange('openshift.0.mcg.storage_type', e.target.value)}
+                        disabled={disabled}
+                        helperText="Storage type for MCG"
+                      >
+                        <SelectItem value="storage-class" text="Storage Class" />
+                        <SelectItem value="pv" text="Persistent Volume" />
+                      </Select>
 
-                      <div className="global-config-section__field">
-                        <TextInput
-                          id="mcg_storage_class"
-                          labelText="MCG Storage Class"
-                          value={config.openshift?.[0]?.mcg?.storage_class || 'managed-nfs-storage'}
-                          onChange={(e) => handleChange('openshift.0.mcg.storage_class', e.target.value)}
-                          disabled={disabled}
-                          placeholder="managed-nfs-storage"
-                          helperText="Storage class name for MCG"
-                        />
-                      </div>
+                      <TextInput
+                        id="mcg_storage_class"
+                        labelText="MCG Storage Class"
+                        value={config.openshift?.[0]?.mcg?.storage_class || 'managed-nfs-storage'}
+                        onChange={(e) => handleChange('openshift.0.mcg.storage_class', e.target.value)}
+                        disabled={disabled}
+                        placeholder="managed-nfs-storage"
+                        helperText="Storage class name for MCG"
+                      />
                     </>
                   )}
 
                   {/* OpenShift AI Sub-configuration (shown when not 'no') */}
                   {config.openshift?.[0]?.openshift_ai?.install !== 'no' && (
-                    <div className="global-config-section__field">
-                      <Select
-                        id="openshift_ai_channel"
-                        labelText="OpenShift AI Channel"
-                        value={config.openshift?.[0]?.openshift_ai?.channel || 'auto'}
-                        onChange={(e) => handleChange('openshift.0.openshift_ai.channel', e.target.value)}
-                        disabled={disabled}
-                        helperText="Update channel for OpenShift AI"
-                      >
-                        <SelectItem value="auto" text="Auto" />
-                        <SelectItem value="stable" text="Stable" />
-                        <SelectItem value="fast" text="Fast" />
-                      </Select>
-                    </div>
+                    <Select
+                      id="openshift_ai_channel"
+                      labelText="OpenShift AI Channel"
+                      value={config.openshift?.[0]?.openshift_ai?.channel || 'auto'}
+                      onChange={(e) => handleChange('openshift.0.openshift_ai.channel', e.target.value)}
+                      disabled={disabled}
+                      helperText="Update channel for OpenShift AI"
+                    >
+                      <SelectItem value="auto" text="Auto" />
+                      <SelectItem value="stable" text="Stable" />
+                      <SelectItem value="fast" text="Fast" />
+                    </Select>
                   )}
 
                   {/* OpenShift Storage Configuration */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <h5 style={{ marginTop: '1rem', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 600 }}>
-                      OpenShift Storage
-                    </h5>
+                  <div className="global-config-section__subsection-title">
+                    OpenShift Storage
                   </div>
 
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="storage_name"
-                      labelText="Storage Name"
-                      value={config.openshift?.[0]?.openshift_storage?.[0]?.storage_name || 'auto-storage'}
-                      onChange={(e) => handleChange('openshift.0.openshift_storage.0.storage_name', e.target.value)}
-                      disabled={disabled}
-                      placeholder="auto-storage"
-                      helperText="Name for the storage configuration"
-                    />
-                  </div>
+                  <TextInput
+                    id="storage_name"
+                    labelText="Storage Name"
+                    value={config.openshift?.[0]?.openshift_storage?.[0]?.storage_name || 'auto-storage'}
+                    onChange={(e) => handleChange('openshift.0.openshift_storage.0.storage_name', e.target.value)}
+                    disabled={disabled}
+                    placeholder="auto-storage"
+                    helperText="Name for the storage configuration"
+                  />
 
-                  <div className="global-config-section__field">
-                    <Select
-                      id="storage_type"
-                      labelText="Storage Type"
-                      value={config.openshift?.[0]?.openshift_storage?.[0]?.storage_type || 'auto'}
-                      onChange={(e) => handleChange('openshift.0.openshift_storage.0.storage_type', e.target.value)}
-                      disabled={disabled}
-                      helperText="Type of storage to configure"
-                    >
-                      <SelectItem value="auto" text="Auto" />
-                      <SelectItem value="ocs" text="OpenShift Container Storage" />
-                      <SelectItem value="nfs" text="NFS" />
-                      <SelectItem value="portworx" text="Portworx" />
-                    </Select>
-                  </div>
+                  <Select
+                    id="storage_type"
+                    labelText="Storage Type"
+                    value={config.openshift?.[0]?.openshift_storage?.[0]?.storage_type || 'auto'}
+                    onChange={(e) => handleChange('openshift.0.openshift_storage.0.storage_type', e.target.value)}
+                    disabled={disabled}
+                    helperText="Type of storage to configure"
+                  >
+                    <SelectItem value="auto" text="Auto" />
+                    <SelectItem value="ocs" text="OpenShift Container Storage" />
+                    <SelectItem value="nfs" text="NFS" />
+                    <SelectItem value="portworx" text="Portworx" />
+                  </Select>
                 </div>
               </FormGroup>
             </div>
@@ -393,139 +380,156 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
               <FormGroup legendText="">
                 <div className="global-config-section__fields">
                   {/* Project */}
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="cp4d_project"
-                      labelText="Project Name"
-                      value={config.cp4d?.[0]?.project || 'cpd'}
-                      onChange={(e) => handleChange('cp4d.0.project', e.target.value)}
-                      disabled={disabled}
-                      placeholder="cpd"
-                      helperText="OpenShift project/namespace for CP4D"
-                    />
-                  </div>
+                  <TextInput
+                    id="cp4d_project"
+                    labelText="Project Name"
+                    value={config.cp4d?.[0]?.project || 'cpd'}
+                    onChange={(e) => handleChange('cp4d.0.project', e.target.value)}
+                    disabled={disabled}
+                    placeholder="cpd"
+                    helperText="OpenShift project/namespace for CP4D"
+                  />
 
                   {/* Operators Project */}
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="operators_project"
-                      labelText="Operators Project"
-                      value={config.cp4d?.[0]?.operators_project || 'cpd-operators'}
-                      onChange={(e) => handleChange('cp4d.0.operators_project', e.target.value)}
-                      disabled={disabled}
-                      placeholder="cpd-operators"
-                      helperText="Project for CP4D operators"
-                    />
-                  </div>
+                  <TextInput
+                    id="operators_project"
+                    labelText="Operators Project"
+                    value={config.cp4d?.[0]?.operators_project || 'cpd-operators'}
+                    onChange={(e) => handleChange('cp4d.0.operators_project', e.target.value)}
+                    disabled={disabled}
+                    placeholder="cpd-operators"
+                    helperText="Project for CP4D operators"
+                  />
 
                   {/* CP4D Version */}
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="cp4d_version"
-                      labelText="CP4D Version"
-                      value={config.cp4d?.[0]?.cp4d_version || 'latest'}
-                      onChange={(e) => handleChange('cp4d.0.cp4d_version', e.target.value)}
-                      disabled={disabled}
-                      placeholder="latest or specific version"
-                      helperText="Cloud Pak for Data version"
-                    />
-                  </div>
+                  <TextInput
+                    id="cp4d_version"
+                    labelText="CP4D Version"
+                    value={config.cp4d?.[0]?.cp4d_version || 'latest'}
+                    onChange={(e) => handleChange('cp4d.0.cp4d_version', e.target.value)}
+                    disabled={disabled}
+                    placeholder="latest or specific version"
+                    helperText="Cloud Pak for Data version"
+                  />
 
                   {/* OpenShift Cluster Name Reference */}
-                  <div className="global-config-section__field">
-                    <TextInput
-                      id="openshift_cluster_name"
-                      labelText="OpenShift Cluster Reference"
-                      value={config.cp4d?.[0]?.openshift_cluster_name || '{{ env_id }}'}
-                      onChange={(e) => handleChange('cp4d.0.openshift_cluster_name', e.target.value)}
-                      disabled={disabled}
-                      placeholder="{{ env_id }}"
-                      helperText="Reference to OpenShift cluster name"
-                    />
-                  </div>
+                  <TextInput
+                    id="openshift_cluster_name"
+                    labelText="OpenShift Cluster Reference"
+                    value={config.cp4d?.[0]?.openshift_cluster_name || '{{ env_id }}'}
+                    onChange={(e) => handleChange('cp4d.0.openshift_cluster_name', e.target.value)}
+                    disabled={disabled}
+                    placeholder="{{ env_id }}"
+                    helperText="Reference to OpenShift cluster name"
+                  />
 
                   {/* Production License */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <Toggle
-                      id="cp4d_production_license"
-                      labelText="Production License"
-                      labelA="No"
-                      labelB="Yes"
-                      toggled={config.cp4d?.[0]?.cp4d_production_license ?? true}
-                      onToggle={(checked) => handleChange('cp4d.0.cp4d_production_license', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Use production license (required for production deployments)
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">Production License</span>
+                        <p className="global-config-section__toggle-help">
+                          Use production license (required for production deployments)
+                        </p>
+                      </div>
+                      <Toggle
+                        id="cp4d_production_license"
+                        labelText=""
+                        labelA="No"
+                        labelB="Yes"
+                        toggled={config.cp4d?.[0]?.cp4d_production_license ?? true}
+                        onToggle={(checked) => handleChange('cp4d.0.cp4d_production_license', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* Accept Licenses */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <Toggle
-                      id="accept_licenses"
-                      labelText="Accept Licenses"
-                      labelA="No"
-                      labelB="Yes"
-                      toggled={config.cp4d?.[0]?.accept_licenses ?? false}
-                      onToggle={(checked) => handleChange('cp4d.0.accept_licenses', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Accept IBM Cloud Pak for Data licenses
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">Accept Licenses</span>
+                        <p className="global-config-section__toggle-help">
+                          Accept IBM Cloud Pak for Data licenses
+                        </p>
+                      </div>
+                      <Toggle
+                        id="accept_licenses"
+                        labelText=""
+                        labelA="No"
+                        labelB="Yes"
+                        toggled={config.cp4d?.[0]?.accept_licenses ?? false}
+                        onToggle={(checked) => handleChange('cp4d.0.accept_licenses', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* DB2U Limited Privileges */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <Toggle
-                      id="db2u_limited_privileges"
-                      labelText="DB2U Limited Privileges"
-                      labelA="No"
-                      labelB="Yes"
-                      toggled={config.cp4d?.[0]?.db2u_limited_privileges ?? false}
-                      onToggle={(checked) => handleChange('cp4d.0.db2u_limited_privileges', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Run DB2U with limited privileges (for restricted environments)
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">DB2U Limited Privileges</span>
+                        <p className="global-config-section__toggle-help">
+                          Run DB2U with limited privileges (for restricted environments)
+                        </p>
+                      </div>
+                      <Toggle
+                        id="db2u_limited_privileges"
+                        labelText=""
+                        labelA="No"
+                        labelB="Yes"
+                        toggled={config.cp4d?.[0]?.db2u_limited_privileges ?? false}
+                        onToggle={(checked) => handleChange('cp4d.0.db2u_limited_privileges', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* IBM Cert Manager */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <Toggle
-                      id="ibm_cert_manager"
-                      labelText="IBM Certificate Manager"
-                      labelA="No"
-                      labelB="Yes"
-                      toggled={config.cp4d?.[0]?.ibm_cert_manager ?? false}
-                      onToggle={(checked) => handleChange('cp4d.0.ibm_cert_manager', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Use IBM Certificate Manager instead of Red Hat cert-manager
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">IBM Certificate Manager</span>
+                        <p className="global-config-section__toggle-help">
+                          Use IBM Certificate Manager instead of Red Hat cert-manager
+                        </p>
+                      </div>
+                      <Toggle
+                        id="ibm_cert_manager"
+                        labelText=""
+                        labelA="No"
+                        labelB="Yes"
+                        toggled={config.cp4d?.[0]?.ibm_cert_manager ?? false}
+                        onToggle={(checked) => handleChange('cp4d.0.ibm_cert_manager', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* Install Day0 Patch */}
-                  <div className="global-config-section__field global-config-section__field--full">
-                    <Toggle
-                      id="install_day0_patch"
-                      labelText="Install Day 0 Patch"
-                      labelA="No"
-                      labelB="Yes"
-                      toggled={config.cp4d?.[0]?.install_day0_patch ?? true}
-                      onToggle={(checked) => handleChange('cp4d.0.install_day0_patch', checked)}
-                      disabled={disabled}
-                    />
-                    <p className="global-config-section__toggle-help">
-                      Install day 0 patches during deployment
-                    </p>
+                  <div className="global-config-section__toggle-field">
+                    <div className="global-config-section__toggle-wrapper">
+                      <div className="global-config-section__toggle-label">
+                        <span className="global-config-section__toggle-title">Install Day 0 Patch</span>
+                        <p className="global-config-section__toggle-help">
+                          Install day 0 patches during deployment
+                        </p>
+                      </div>
+                      <Toggle
+                        id="install_day0_patch"
+                        labelText=""
+                        labelA="No"
+                        labelB="Yes"
+                        toggled={config.cp4d?.[0]?.install_day0_patch ?? true}
+                        onToggle={(checked) => handleChange('cp4d.0.install_day0_patch', checked)}
+                        disabled={disabled}
+                      />
+                    </div>
                   </div>
 
                   {/* CP4D Entitlement */}
-                  <div className="global-config-section__field global-config-section__field--full">
+                  <div className="global-config-section__multiselect-field">
                     <MultiSelect
                       id="cp4d_entitlement"
                       titleText="CP4D Entitlements"
@@ -539,7 +543,7 @@ export const GlobalConfigSection: React.FC<GlobalConfigSectionProps> = ({
                       }}
                       disabled={disabled}
                     />
-                    <p className="global-config-section__toggle-help">
+                    <p className="global-config-section__field-help">
                       Select one or more entitlements for your deployment (from reference-config.yaml)
                     </p>
                   </div>

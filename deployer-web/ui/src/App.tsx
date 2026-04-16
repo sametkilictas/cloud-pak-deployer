@@ -16,9 +16,9 @@ import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ComponentSelectionPage } from './pages/ComponentSelectionPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
+import { DeploymentPage } from './pages/DeploymentPage';
 
 // Placeholder page components - will be implemented
-const DeploymentPage = () => <div className="p-4"><h1>Deployment</h1><p>Monitor deployment progress</p></div>;
 const HistoryPage = () => <div className="p-4"><h1>History</h1><p>View deployment history</p></div>;
 const DocumentationPage = () => <div className="p-4"><h1>Documentation</h1><p>Help and documentation</p></div>;
 

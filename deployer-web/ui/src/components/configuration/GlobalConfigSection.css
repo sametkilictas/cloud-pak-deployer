@@ -56,41 +56,70 @@
   color: var(--cds-text-primary);
 }
 
-/* Fields Container */
+/* Fields Container - Vertical Flex Layout */
 .global-config-section__fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-}
-
-.global-config-section__field {
   display: flex;
   flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
 }
 
-.global-config-section__field--full {
-  grid-column: 1 / -1;
-}
-
-/* Toggles Container */
-.global-config-section__toggles {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.global-config-section__toggle {
+/* Toggle Field with Right-Aligned Switch */
+.global-config-section__toggle-field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+.global-config-section__toggle-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.global-config-section__toggle-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.global-config-section__toggle-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
 .global-config-section__toggle-help {
   margin: 0;
-  margin-left: 3rem;
   font-size: 0.75rem;
   color: var(--cds-text-helper);
   line-height: 1.4;
+}
+
+/* MultiSelect Field */
+.global-config-section__multiselect-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.global-config-section__field-help {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--cds-text-helper);
+  line-height: 1.4;
+}
+
+/* Subsection Title */
+.global-config-section__subsection-title {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
 }
 
 /* Accordion Content */
@@ -220,13 +249,13 @@
     padding: 1rem;
   }
 
-  .global-config-section__fields {
-    grid-template-columns: 1fr;
+  .global-config-section__toggle-wrapper {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .global-config-section__toggle-help {
-    margin-left: 0;
-    margin-top: 0.5rem;
+  .global-config-section__toggle-wrapper .cds--toggle {
+    align-self: flex-start;
   }
 }
 
