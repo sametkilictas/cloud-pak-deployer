@@ -117,7 +117,9 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({
         </div>
       </div>
 
-      <p className="component-card__description">{component.description}</p>
+      <p className="component-card__description">
+        <strong>{component.name}:</strong> {component.description}
+      </p>
 
       {/* Dependency Indicators */}
       {(dependencyCount > 0 || externalDependencyCount > 0 || component.restrictions.length > 0) && (

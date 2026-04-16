@@ -217,7 +217,7 @@ export const ComponentConfigSection: React.FC<ComponentConfigSectionProps> = ({
                   {component.description && (
                     <div className="component-config-section__component-description">
                       <Information size={16} />
-                      <span>{component.description}</span>
+                      <span><strong>{component.name}:</strong> {component.description}</span>
                     </div>
                   )}
 
