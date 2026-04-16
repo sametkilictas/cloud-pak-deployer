@@ -109,18 +109,40 @@ export const ComponentSelectionPage: React.FC = () => {
     <div className="component-selection-page">
       {/* Page Header */}
       <div className="page-header">
-        <div className="page-header-content">
-          <h1>Select Components</h1>
-          <p className="page-subtitle">
-            Choose the Cloud Pak for Data components you want to deploy.
-            Dependencies will be automatically selected.
-          </p>
+        <h1>Select Components</h1>
+        <p className="page-subtitle">
+          Choose the Cloud Pak for Data components you want to deploy.
+          Dependencies will be automatically selected.
+        </p>
+      </div>
+
+      {/* Selection Summary */}
+      <div className="selection-summary">
+        <div className="summary-items">
+          <div className="summary-item">
+            <CheckmarkFilled size={20} className="summary-icon" />
+            <span className="summary-label">Selected:</span>
+            <span className="summary-value">{selectedCount}</span>
+          </div>
+          {autoSelectedCount > 0 && (
+            <div className="summary-item auto-selected">
+              <span className="summary-label">Auto-selected dependencies:</span>
+              <span className="summary-value">{autoSelectedCount}</span>
+            </div>
+          )}
+          {conflictCount > 0 && (
+            <div className="summary-item conflicts">
+              <WarningAlt size={20} className="summary-icon warning" />
+              <span className="summary-label">Conflicts detected:</span>
+              <span className="summary-value">{conflictCount}</span>
+            </div>
+          )}
         </div>
         {selectedCount > 0 && (
-          <div className="page-header-actions">
+          <div className="summary-actions">
             <Button
               kind="danger--tertiary"
-              size="md"
+              size="sm"
               onClick={() => {
                 if (window.confirm('Are you sure you want to deselect all components?')) {
                   useComponentStore.getState().clearSelection();
@@ -129,28 +151,6 @@ export const ComponentSelectionPage: React.FC = () => {
             >
               Deselect All
             </Button>
-          </div>
-        )}
-      </div>
-
-      {/* Selection Summary */}
-      <div className="selection-summary">
-        <div className="summary-item">
-          <CheckmarkFilled size={20} className="summary-icon" />
-          <span className="summary-label">Selected:</span>
-          <span className="summary-value">{selectedCount}</span>
-        </div>
-        {autoSelectedCount > 0 && (
-          <div className="summary-item auto-selected">
-            <span className="summary-label">Auto-selected dependencies:</span>
-            <span className="summary-value">{autoSelectedCount}</span>
-          </div>
-        )}
-        {conflictCount > 0 && (
-          <div className="summary-item conflicts">
-            <WarningAlt size={20} className="summary-icon warning" />
-            <span className="summary-label">Conflicts detected:</span>
-            <span className="summary-value">{conflictCount}</span>
           </div>
         )}
       </div>
